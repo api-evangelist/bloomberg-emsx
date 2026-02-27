@@ -1,0 +1,56 @@
+name: Bloomberg EMSX API
+description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform for trading operations
+image: https://www.bloomberg.com/company/logos/bloomberg-logo.png
+url: https://www.bloomberg.com/professional/product/emsx/
+created: '2024'
+modified: '2024'
+specificationVersion: '0.18'
+tags:
+- trading
+- execution management
+- order management
+- financial services
+- bloomberg
+apis:
+- name: Bloomberg EMSX API
+  description: API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform
+  image: https://www.bloomberg.com/company/logos/bloomberg-logo.png
+  humanURL: https://www.bloomberg.com/professional/support/api-library/
+  baseURL: https://api.bloomberg.com/emsx
+  tags:
+  - trading
+  - orders
+  - execution
+  - equity
+  - fixed income
+  properties:
+  - type: Documentation
+    url: https://www.bloomberg.com/professional/support/api-library/
+  - type: OpenAPI
+    url: https://api.bloomberg.com/emsx/openapi.json
+  - type: Authentication
+    url: https://www.bloomberg.com/professional/support/api-library/
+  - type: SDK
+    url: https://www.bloomberg.com/professional/support/api-library/
+  - type: RateLimits
+    url: https://www.bloomberg.com/professional/support/documentation/
+  - type: GettingStarted
+    url: https://www.bloomberg.com/professional/support/api-library/
+  - type: Support
+    url: https://www.bloomberg.com/professional/support/
+  - type: TermsOfService
+    url: https://www.bloomberg.com/notices/tos/
+  contact:
+  - type: Support
+    url: https://www.bloomberg.com/professional/support/
+maintainers:
+- name: Bloomberg L.P.
+  email: support@bloomberg.com
+  url: https://www.bloomberg.com
+common:
+- type: Portal
+  url: https://www.bloomberg.com/professional/
+- type: Authentication
+  url: https://www.bloomberg.com/professional/support/api-library/
+- type: Status
+  url: https://www.bloomberg.com/notices/
