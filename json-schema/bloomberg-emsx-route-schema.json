@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.bloomberg.com/schemas/emsx/route.json",
+  "title": "Bloomberg EMSX Route",
+  "description": "A route in the Bloomberg Execution Management System (EMSX) representing the assignment of an order (or portion thereof) to a specific broker for execution. Routes contain broker details, execution strategy, pricing instructions, and fill status.",
+  "type": "object",
+  "required": ["orderSequenceNumber", "broker", "amount"],
+  "properties": {
+    "routeId": {
+      "type": "integer",
+      "description": "EMSX route identifier, unique within the blotter"
+    },
+    "orderSequenceNumber": {
+      "type": "integer",
+      "description": "Parent order sequence number linking this route to its order"
+    },
+    "ticker": {
+      "type": "string",
+      "description": "Bloomberg security ticker symbol"
+    },
+    "side": {
+      "type": "string",
+      "enum": ["BUY", "SELL", "SHORT", "COVER"],
+      "description": "Route side, inherited from the parent order"
+    },
+    "amount": {
+      "type": "number",
+      "minimum": 1,
+      "description": "Quantity assigned to this route"
+    },
+    "filledAmount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Quantity filled on this route"
+    },
+    "averagePrice": {
+      "type": "number",
+      "description": "Volume-weighted average fill price on this route"
+    },
+    "remainingAmount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Remaining unfilled quantity on this route"
+    },
+    "broker": {
+      "type": "string",
+      "description": "Bloomberg broker code identifying the executing broker"
+    },
+    "brokerName": {
+      "type": "string",
+      "description": "Full name of the executing broker"
+    },
+    "strategy": {
+      "type": "string",
+      "description": "Execution strategy name (e.g., VWAP, TWAP, DMA, Iceberg)"
+    },
+    "strategyParameters": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Strategy-specific configurable parameters"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["NEW", "WORKING", "PARTIALLY_FILLED", "FILLED", "CANCELLED", "REJECTED"],
+      "description": "Current lifecycle status of the route"
+    },
+    "limitPrice": {
+      "type": "number",
+      "description": "Limit price for the route"
+    },
+    "orderType": {
+      "type": "string",
+      "enum": ["MKT", "LMT", "STP", "STP_LMT", "MOC", "LOC", "VWAP", "TWAP"],
+      "description": "Order type on the route"
+    },
+    "timeInForce": {
+      "type": "string",
+      "enum": ["DAY", "GTC", "IOC", "FOK", "GTD", "OPG", "CLO"],
+      "description": "Time in force on the route"
+    },
+    "account": {
+      "type": "string",
+      "description": "Trading account identifier"
+    },
+    "exchange": {
+      "type": "string",
+      "description": "Destination exchange or marketplace"
+    },
+    "reasonCode": {
+      "type": "string",
+      "description": "Rejection or cancellation reason code from the broker"
+    },
+    "reasonDescription": {
+      "type": "string",
+      "description": "Human-readable reason for rejection or cancellation"
+    },
+    "createdTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the route was created"
+    },
+    "lastModifiedTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the route was last modified"
+    },
+    "lastFillTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of the most recent fill on this route"
+    },
+    "customFields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom user-defined fields"
+    }
+  }
+}

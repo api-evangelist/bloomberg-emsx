@@ -1,0 +1,1525 @@
+openapi: 3.1.0
+info:
+  title: Bloomberg EMSX Trading API
+  description: >-
+    Bloomberg Execution Management System (EMSX) API provides programmatic
+    access to Bloomberg's order and execution management platform. It enables
+    automated order creation, routing, modification, and execution monitoring
+    for equity, fixed income, futures, and options trading across global
+    markets. The API supports order lifecycle management, broker selection,
+    route management, and real-time fill notifications through the Bloomberg
+    Terminal and B-PIPE infrastructure.
+  version: '1.0'
+  contact:
+    name: Bloomberg Professional Support
+    url: https://www.bloomberg.com/professional/support/
+  termsOfService: https://www.bloomberg.com/notices/tos/
+externalDocs:
+  description: Bloomberg EMSX API Documentation
+  url: https://www.bloomberg.com/professional/support/api-library/
+servers:
+  - url: https://api.bloomberg.com/emsxapi/v1
+    description: Bloomberg EMSX Production API
+tags:
+  - name: Orders
+    description: Create, modify, delete, and query trading orders
+  - name: Routes
+    description: Create, modify, delete, and manage order routes to brokers
+  - name: Fills
+    description: Query and monitor trade executions and fills
+  - name: Brokers
+    description: Query available brokers and broker strategies
+  - name: Teams
+    description: Manage EMSX trading teams
+  - name: Field Lists
+    description: Retrieve available order and route fields
+security:
+  - bearerAuth: []
+paths:
+  /orders:
+    get:
+      operationId: listOrders
+      summary: List orders
+      description: >-
+        Retrieve a list of orders in the EMSX blotter. Supports filtering by
+        status, ticker, side, and date range. Returns order-level fields
+        including ticker, amount, limit price, order type, time in force,
+        and current fill status.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/teamName'
+        - name: status
+          in: query
+          description: Filter orders by status
+          schema:
+            type: string
+            enum:
+              - NEW
+              - WORKING
+              - PARTIALLY_FILLED
+              - FILLED
+              - CANCELLED
+              - REJECTED
+              - EXPIRED
+        - name: ticker
+          in: query
+          description: Filter by Bloomberg security ticker
+          schema:
+            type: string
+        - name: side
+          in: query
+          description: Filter by order side
+          schema:
+            type: string
+            enum:
+              - BUY
+              - SELL
+              - SHORT
+              - COVER
+        - name: fromDate
+          in: query
+          description: Filter orders created on or after this date
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          description: Filter orders created on or before this date
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          description: Maximum number of orders to return
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of orders to skip for pagination
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  totalCount:
+                    type: integer
+                    description: Total number of orders matching the filter
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createOrder
+      summary: Create a new order
+      description: >-
+        Create a new order in the EMSX blotter. The order is placed on the
+        blotter and can subsequently be routed to a broker for execution.
+        Supports equity, fixed income, futures, and options instruments.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/teamName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          description: Order validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders/{orderSequenceNumber}:
+    get:
+      operationId: getOrder
+      summary: Get order details
+      description: >-
+        Retrieve detailed information about a specific order by its EMSX
+        sequence number, including all order fields, current status, and
+        associated routes.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/orderSequenceNumber'
+      responses:
+        '200':
+          description: Order details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: modifyOrder
+      summary: Modify an existing order
+      description: >-
+        Modify fields on an existing order such as amount, limit price,
+        order type, or time in force. Only unfilled or partially filled
+        orders can be modified.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/orderSequenceNumber'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyOrderRequest'
+      responses:
+        '200':
+          description: Order modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Order cannot be modified in its current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: deleteOrder
+      summary: Delete an order
+      description: >-
+        Delete an order from the EMSX blotter. Only orders with no active
+        routes can be deleted. Orders with active routes must have their
+        routes cancelled first.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/orderSequenceNumber'
+      responses:
+        '204':
+          description: Order deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Order has active routes and cannot be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders/createAndRoute:
+    post:
+      operationId: createOrderAndRoute
+      summary: Create an order and route it simultaneously
+      description: >-
+        Create a new order and immediately route it to a specified broker
+        in a single operation. This combines order creation and route
+        creation for streamlined execution workflows.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/teamName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAndRouteRequest'
+      responses:
+        '201':
+          description: Order created and routed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAndRouteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Order or route validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders/groupRoute:
+    post:
+      operationId: groupRouteOrders
+      summary: Route multiple orders to a broker
+      description: >-
+        Route a group of existing orders to a specified broker in a single
+        batch operation. All orders in the group are routed with the same
+        broker and strategy parameters.
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupRouteRequest'
+      responses:
+        '200':
+          description: Orders routed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GroupRouteResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /routes:
+    get:
+      operationId: listRoutes
+      summary: List routes
+      description: >-
+        Retrieve a list of routes across all orders. Supports filtering by
+        route status, broker, and associated order. Returns route-level
+        fields including broker, strategy, filled amount, and average price.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/teamName'
+        - name: status
+          in: query
+          description: Filter routes by status
+          schema:
+            type: string
+            enum:
+              - NEW
+              - WORKING
+              - PARTIALLY_FILLED
+              - FILLED
+              - CANCELLED
+              - REJECTED
+        - name: broker
+          in: query
+          description: Filter by broker code
+          schema:
+            type: string
+        - name: orderSequenceNumber
+          in: query
+          description: Filter routes by parent order sequence number
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Maximum number of routes to return
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of routes to skip for pagination
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of routes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  routes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Route'
+                  totalCount:
+                    type: integer
+                    description: Total number of routes matching the filter
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /routes/{routeId}:
+    get:
+      operationId: getRoute
+      summary: Get route details
+      description: >-
+        Retrieve detailed information about a specific route, including
+        broker, strategy, fill status, and all route-level fields.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/routeId'
+      responses:
+        '200':
+          description: Route details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: modifyRoute
+      summary: Modify an existing route
+      description: >-
+        Modify fields on an existing route such as amount, limit price,
+        or strategy parameters. Only working or partially filled routes
+        can be modified.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/routeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyRouteRequest'
+      responses:
+        '200':
+          description: Route modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Route cannot be modified in its current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: cancelRoute
+      summary: Cancel a route
+      description: >-
+        Cancel an active route. Sends a cancel request to the broker.
+        Only working or partially filled routes can be cancelled.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/routeId'
+      responses:
+        '204':
+          description: Route cancellation requested successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Route cannot be cancelled in its current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /routes/manualFill:
+    post:
+      operationId: createManualFill
+      summary: Create a manual fill
+      description: >-
+        Manually record a fill against a route. Used for reporting
+        executions that occurred outside of electronic routing, such as
+        voice-brokered trades.
+      tags:
+        - Routes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualFillRequest'
+      responses:
+        '201':
+          description: Manual fill created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FillResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Fill validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /fills:
+    get:
+      operationId: listFills
+      summary: List fills
+      description: >-
+        Retrieve a list of trade executions and fills. Supports filtering
+        by ticker, broker, date range, and associated order or route.
+      tags:
+        - Fills
+      parameters:
+        - $ref: '#/components/parameters/teamName'
+        - name: ticker
+          in: query
+          description: Filter fills by Bloomberg security ticker
+          schema:
+            type: string
+        - name: broker
+          in: query
+          description: Filter fills by broker code
+          schema:
+            type: string
+        - name: orderSequenceNumber
+          in: query
+          description: Filter fills by parent order sequence number
+          schema:
+            type: integer
+        - name: routeId
+          in: query
+          description: Filter fills by route identifier
+          schema:
+            type: integer
+        - name: fromDate
+          in: query
+          description: Filter fills on or after this date
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          description: Filter fills on or before this date
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          description: Maximum number of fills to return
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+        - name: offset
+          in: query
+          description: Number of fills to skip for pagination
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of fills retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fills:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Fill'
+                  totalCount:
+                    type: integer
+                    description: Total number of fills matching the filter
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /fills/{fillId}:
+    get:
+      operationId: getFill
+      summary: Get fill details
+      description: >-
+        Retrieve detailed information about a specific fill or execution,
+        including price, quantity, broker, timestamp, and settlement details.
+      tags:
+        - Fills
+      parameters:
+        - name: fillId
+          in: path
+          required: true
+          description: Unique identifier of the fill
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Fill details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fill'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /brokers:
+    get:
+      operationId: listBrokers
+      summary: List available brokers
+      description: >-
+        Retrieve a list of brokers available for routing orders. Can be
+        filtered by asset class and security type. Returns broker codes,
+        names, and supported strategies.
+      tags:
+        - Brokers
+      parameters:
+        - name: assetClass
+          in: query
+          description: Filter brokers by asset class
+          schema:
+            type: string
+            enum:
+              - Equity
+              - Fixed Income
+              - Futures
+              - Options
+              - FX
+        - name: ticker
+          in: query
+          description: >-
+            Bloomberg ticker to find brokers available for a specific security
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of available brokers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brokers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Broker'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /brokers/{brokerCode}/strategies:
+    get:
+      operationId: listBrokerStrategies
+      summary: List broker strategies
+      description: >-
+        Retrieve the list of execution strategies available from a specific
+        broker, including algorithmic strategies and their configurable
+        parameters.
+      tags:
+        - Brokers
+      parameters:
+        - name: brokerCode
+          in: path
+          required: true
+          description: Bloomberg broker code
+          schema:
+            type: string
+        - name: assetClass
+          in: query
+          description: Filter strategies by asset class
+          schema:
+            type: string
+            enum:
+              - Equity
+              - Fixed Income
+              - Futures
+              - Options
+              - FX
+      responses:
+        '200':
+          description: List of broker strategies
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  strategies:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BrokerStrategy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Broker not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /teams:
+    get:
+      operationId: listTeams
+      summary: List EMSX teams
+      description: >-
+        Retrieve a list of EMSX trading teams that the authenticated
+        user has access to.
+      tags:
+        - Teams
+      responses:
+        '200':
+          description: List of teams
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teams:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Team'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /fields/order:
+    get:
+      operationId: listOrderFields
+      summary: List available order fields
+      description: >-
+        Retrieve the list of available fields for orders, including field
+        names, types, and descriptions.
+      tags:
+        - Field Lists
+      responses:
+        '200':
+          description: List of order fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fields:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FieldDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /fields/route:
+    get:
+      operationId: listRouteFields
+      summary: List available route fields
+      description: >-
+        Retrieve the list of available fields for routes, including field
+        names, types, and descriptions.
+      tags:
+        - Field Lists
+      responses:
+        '200':
+          description: List of route fields
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fields:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FieldDefinition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Bloomberg API authentication token obtained via Bloomberg B-PIPE
+        or Bloomberg Terminal authentication
+  parameters:
+    orderSequenceNumber:
+      name: orderSequenceNumber
+      in: path
+      required: true
+      description: EMSX order sequence number
+      schema:
+        type: integer
+    routeId:
+      name: routeId
+      in: path
+      required: true
+      description: EMSX route identifier
+      schema:
+        type: integer
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Order:
+      type: object
+      properties:
+        sequenceNumber:
+          type: integer
+          description: EMSX order sequence number (unique identifier)
+        ticker:
+          type: string
+          description: Bloomberg security ticker symbol
+        side:
+          type: string
+          enum:
+            - BUY
+            - SELL
+            - SHORT
+            - COVER
+          description: Order side
+        amount:
+          type: number
+          description: Total order quantity
+        orderType:
+          type: string
+          enum:
+            - MKT
+            - LMT
+            - STP
+            - STP_LMT
+            - MOC
+            - LOC
+            - VWAP
+            - TWAP
+          description: Order type
+        limitPrice:
+          type: number
+          description: Limit price for limit orders
+        stopPrice:
+          type: number
+          description: Stop price for stop orders
+        timeInForce:
+          type: string
+          enum:
+            - DAY
+            - GTC
+            - IOC
+            - FOK
+            - GTD
+            - OPG
+            - CLO
+          description: Time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Expiration date for GTD orders
+        status:
+          type: string
+          enum:
+            - NEW
+            - WORKING
+            - PARTIALLY_FILLED
+            - FILLED
+            - CANCELLED
+            - REJECTED
+            - EXPIRED
+          description: Current order status
+        filledAmount:
+          type: number
+          description: Total quantity filled across all routes
+        averagePrice:
+          type: number
+          description: Volume-weighted average fill price
+        remainingAmount:
+          type: number
+          description: Remaining unfilled quantity
+        assetClass:
+          type: string
+          enum:
+            - Equity
+            - Fixed Income
+            - Futures
+            - Options
+            - FX
+          description: Asset class of the security
+        exchange:
+          type: string
+          description: Exchange or marketplace
+        currency:
+          type: string
+          description: Trading currency (ISO 4217)
+        account:
+          type: string
+          description: Trading account identifier
+        notes:
+          type: string
+          description: Free-text notes attached to the order
+        traderName:
+          type: string
+          description: Name of the trader who created the order
+        createdTime:
+          type: string
+          format: date-time
+          description: Timestamp when the order was created
+        lastModifiedTime:
+          type: string
+          format: date-time
+          description: Timestamp when the order was last modified
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteSummary'
+          description: Summary of routes associated with this order
+        customFields:
+          type: object
+          additionalProperties: true
+          description: Custom user-defined fields
+    CreateOrderRequest:
+      type: object
+      required:
+        - ticker
+        - side
+        - amount
+        - orderType
+        - timeInForce
+      properties:
+        ticker:
+          type: string
+          description: Bloomberg security ticker symbol
+        side:
+          type: string
+          enum:
+            - BUY
+            - SELL
+            - SHORT
+            - COVER
+          description: Order side
+        amount:
+          type: number
+          minimum: 1
+          description: Order quantity
+        orderType:
+          type: string
+          enum:
+            - MKT
+            - LMT
+            - STP
+            - STP_LMT
+            - MOC
+            - LOC
+            - VWAP
+            - TWAP
+          description: Order type
+        limitPrice:
+          type: number
+          description: Limit price (required for LMT and STP_LMT orders)
+        stopPrice:
+          type: number
+          description: Stop price (required for STP and STP_LMT orders)
+        timeInForce:
+          type: string
+          enum:
+            - DAY
+            - GTC
+            - IOC
+            - FOK
+            - GTD
+            - OPG
+            - CLO
+          description: Time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Expiration date (required for GTD orders)
+        account:
+          type: string
+          description: Trading account identifier
+        notes:
+          type: string
+          description: Free-text notes
+        customFields:
+          type: object
+          additionalProperties: true
+          description: Custom user-defined fields
+    ModifyOrderRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          minimum: 1
+          description: Updated order quantity
+        orderType:
+          type: string
+          enum:
+            - MKT
+            - LMT
+            - STP
+            - STP_LMT
+            - MOC
+            - LOC
+            - VWAP
+            - TWAP
+          description: Updated order type
+        limitPrice:
+          type: number
+          description: Updated limit price
+        stopPrice:
+          type: number
+          description: Updated stop price
+        timeInForce:
+          type: string
+          enum:
+            - DAY
+            - GTC
+            - IOC
+            - FOK
+            - GTD
+            - OPG
+            - CLO
+          description: Updated time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Updated expiration date
+        notes:
+          type: string
+          description: Updated notes
+    CreateAndRouteRequest:
+      type: object
+      required:
+        - ticker
+        - side
+        - amount
+        - orderType
+        - timeInForce
+        - broker
+      properties:
+        ticker:
+          type: string
+          description: Bloomberg security ticker symbol
+        side:
+          type: string
+          enum:
+            - BUY
+            - SELL
+            - SHORT
+            - COVER
+          description: Order side
+        amount:
+          type: number
+          minimum: 1
+          description: Order quantity
+        orderType:
+          type: string
+          enum:
+            - MKT
+            - LMT
+            - STP
+            - STP_LMT
+            - MOC
+            - LOC
+            - VWAP
+            - TWAP
+          description: Order type
+        limitPrice:
+          type: number
+          description: Limit price
+        stopPrice:
+          type: number
+          description: Stop price
+        timeInForce:
+          type: string
+          enum:
+            - DAY
+            - GTC
+            - IOC
+            - FOK
+            - GTD
+            - OPG
+            - CLO
+          description: Time in force
+        broker:
+          type: string
+          description: Broker code for routing
+        strategy:
+          type: string
+          description: Broker execution strategy
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Strategy-specific parameters
+        account:
+          type: string
+          description: Trading account identifier
+        notes:
+          type: string
+          description: Free-text notes
+    CreateAndRouteResponse:
+      type: object
+      properties:
+        orderSequenceNumber:
+          type: integer
+          description: EMSX order sequence number
+        routeId:
+          type: integer
+          description: Route identifier
+        status:
+          type: string
+          description: Combined status message
+    GroupRouteRequest:
+      type: object
+      required:
+        - orderSequenceNumbers
+        - broker
+      properties:
+        orderSequenceNumbers:
+          type: array
+          items:
+            type: integer
+          description: List of order sequence numbers to route
+        broker:
+          type: string
+          description: Broker code for routing
+        strategy:
+          type: string
+          description: Broker execution strategy
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Strategy-specific parameters
+    GroupRouteResult:
+      type: object
+      properties:
+        orderSequenceNumber:
+          type: integer
+          description: Order sequence number
+        routeId:
+          type: integer
+          description: Created route identifier
+        status:
+          type: string
+          description: Routing result status
+        message:
+          type: string
+          description: Status message or error detail
+    OrderResponse:
+      type: object
+      properties:
+        sequenceNumber:
+          type: integer
+          description: EMSX order sequence number
+        status:
+          type: string
+          description: Order status
+        message:
+          type: string
+          description: Status message
+    Route:
+      type: object
+      properties:
+        routeId:
+          type: integer
+          description: EMSX route identifier
+        orderSequenceNumber:
+          type: integer
+          description: Parent order sequence number
+        ticker:
+          type: string
+          description: Bloomberg security ticker
+        side:
+          type: string
+          enum:
+            - BUY
+            - SELL
+            - SHORT
+            - COVER
+          description: Route side
+        amount:
+          type: number
+          description: Route quantity
+        filledAmount:
+          type: number
+          description: Quantity filled on this route
+        averagePrice:
+          type: number
+          description: Average fill price on this route
+        remainingAmount:
+          type: number
+          description: Remaining unfilled quantity
+        broker:
+          type: string
+          description: Broker code
+        brokerName:
+          type: string
+          description: Full broker name
+        strategy:
+          type: string
+          description: Execution strategy name
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Strategy-specific parameters
+        status:
+          type: string
+          enum:
+            - NEW
+            - WORKING
+            - PARTIALLY_FILLED
+            - FILLED
+            - CANCELLED
+            - REJECTED
+          description: Current route status
+        limitPrice:
+          type: number
+          description: Limit price for the route
+        orderType:
+          type: string
+          description: Order type on the route
+        timeInForce:
+          type: string
+          description: Time in force on the route
+        account:
+          type: string
+          description: Trading account
+        exchange:
+          type: string
+          description: Destination exchange
+        reasonCode:
+          type: string
+          description: Rejection or cancellation reason code
+        reasonDescription:
+          type: string
+          description: Human-readable reason description
+        createdTime:
+          type: string
+          format: date-time
+          description: Timestamp when route was created
+        lastModifiedTime:
+          type: string
+          format: date-time
+          description: Timestamp when route was last modified
+        lastFillTime:
+          type: string
+          format: date-time
+          description: Timestamp of the most recent fill
+        customFields:
+          type: object
+          additionalProperties: true
+          description: Custom user-defined fields
+    RouteSummary:
+      type: object
+      properties:
+        routeId:
+          type: integer
+          description: Route identifier
+        broker:
+          type: string
+          description: Broker code
+        status:
+          type: string
+          description: Route status
+        filledAmount:
+          type: number
+          description: Quantity filled
+        averagePrice:
+          type: number
+          description: Average fill price
+    ModifyRouteRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          minimum: 1
+          description: Updated route quantity
+        limitPrice:
+          type: number
+          description: Updated limit price
+        orderType:
+          type: string
+          description: Updated order type
+        timeInForce:
+          type: string
+          description: Updated time in force
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Updated strategy parameters
+    RouteResponse:
+      type: object
+      properties:
+        routeId:
+          type: integer
+          description: Route identifier
+        status:
+          type: string
+          description: Route status
+        message:
+          type: string
+          description: Status message
+    ManualFillRequest:
+      type: object
+      required:
+        - orderSequenceNumber
+        - routeId
+        - fillAmount
+        - fillPrice
+      properties:
+        orderSequenceNumber:
+          type: integer
+          description: Parent order sequence number
+        routeId:
+          type: integer
+          description: Route identifier to fill against
+        fillAmount:
+          type: number
+          minimum: 1
+          description: Fill quantity
+        fillPrice:
+          type: number
+          description: Fill price
+        broker:
+          type: string
+          description: Executing broker code
+        settlementDate:
+          type: string
+          format: date
+          description: Settlement date
+        notes:
+          type: string
+          description: Notes for the manual fill
+    Fill:
+      type: object
+      properties:
+        fillId:
+          type: integer
+          description: Unique fill identifier
+        orderSequenceNumber:
+          type: integer
+          description: Parent order sequence number
+        routeId:
+          type: integer
+          description: Parent route identifier
+        ticker:
+          type: string
+          description: Bloomberg security ticker
+        side:
+          type: string
+          enum:
+            - BUY
+            - SELL
+            - SHORT
+            - COVER
+          description: Fill side
+        fillAmount:
+          type: number
+          description: Filled quantity
+        fillPrice:
+          type: number
+          description: Fill price
+        broker:
+          type: string
+          description: Executing broker code
+        brokerName:
+          type: string
+          description: Executing broker name
+        exchange:
+          type: string
+          description: Exchange where the fill occurred
+        currency:
+          type: string
+          description: Trade currency (ISO 4217)
+        settlementDate:
+          type: string
+          format: date
+          description: Settlement date
+        tradeDate:
+          type: string
+          format: date
+          description: Trade date
+        fillTime:
+          type: string
+          format: date-time
+          description: Timestamp of the fill
+        account:
+          type: string
+          description: Trading account
+        isManual:
+          type: boolean
+          description: Whether this is a manually entered fill
+        contraParty:
+          type: string
+          description: Counterparty identifier
+    FillResponse:
+      type: object
+      properties:
+        fillId:
+          type: integer
+          description: Created fill identifier
+        status:
+          type: string
+          description: Fill status
+        message:
+          type: string
+          description: Status message
+    Broker:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Bloomberg broker code
+        name:
+          type: string
+          description: Full broker name
+        assetClasses:
+          type: array
+          items:
+            type: string
+          description: Supported asset classes
+        supportsAlgoTrading:
+          type: boolean
+          description: Whether the broker supports algorithmic trading
+        strategies:
+          type: array
+          items:
+            type: string
+          description: List of available strategy names
+        isActive:
+          type: boolean
+          description: Whether the broker is currently active
+    BrokerStrategy:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Strategy name
+        description:
+          type: string
+          description: Strategy description
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrategyParameter'
+          description: Configurable strategy parameters
+    StrategyParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name
+        description:
+          type: string
+          description: Parameter description
+        type:
+          type: string
+          enum:
+            - string
+            - integer
+            - number
+            - boolean
+          description: Parameter data type
+        required:
+          type: boolean
+          description: Whether the parameter is required
+        defaultValue:
+          description: Default value for the parameter
+        allowedValues:
+          type: array
+          items: {}
+          description: List of allowed values if restricted
+    Team:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Team name
+        description:
+          type: string
+          description: Team description
+        members:
+          type: array
+          items:
+            type: string
+          description: List of team member identifiers
+    FieldDefinition:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Field name
+        description:
+          type: string
+          description: Field description
+        type:
+          type: string
+          description: Field data type
+        isReadOnly:
+          type: boolean
+          description: Whether the field is read-only
+        isRequired:
+          type: boolean
+          description: Whether the field is required for creation
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information

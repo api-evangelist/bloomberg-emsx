@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.bloomberg.com/schemas/emsx/order.json",
+  "title": "Bloomberg EMSX Order",
+  "description": "A trading order in the Bloomberg Execution Management System (EMSX) blotter representing an intent to buy or sell a financial instrument. Orders contain instrument details, quantity, pricing instructions, and lifecycle status, and may have one or more routes to brokers for execution.",
+  "type": "object",
+  "required": ["ticker", "side", "amount", "orderType", "timeInForce"],
+  "properties": {
+    "sequenceNumber": {
+      "type": "integer",
+      "description": "EMSX order sequence number, the unique identifier for the order within the blotter"
+    },
+    "ticker": {
+      "type": "string",
+      "description": "Bloomberg security ticker symbol identifying the instrument to trade",
+      "minLength": 1
+    },
+    "side": {
+      "type": "string",
+      "enum": ["BUY", "SELL", "SHORT", "COVER"],
+      "description": "Order side indicating the direction of the trade"
+    },
+    "amount": {
+      "type": "number",
+      "minimum": 1,
+      "description": "Total order quantity in shares, contracts, or face value"
+    },
+    "orderType": {
+      "type": "string",
+      "enum": ["MKT", "LMT", "STP", "STP_LMT", "MOC", "LOC", "VWAP", "TWAP"],
+      "description": "Order type specifying pricing and execution behavior"
+    },
+    "limitPrice": {
+      "type": "number",
+      "description": "Limit price for limit orders (LMT, STP_LMT, LOC)"
+    },
+    "stopPrice": {
+      "type": "number",
+      "description": "Stop trigger price for stop orders (STP, STP_LMT)"
+    },
+    "timeInForce": {
+      "type": "string",
+      "enum": ["DAY", "GTC", "IOC", "FOK", "GTD", "OPG", "CLO"],
+      "description": "Time in force instruction governing how long the order remains active"
+    },
+    "goodTillDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Expiration date for GTD (Good Till Date) orders"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["NEW", "WORKING", "PARTIALLY_FILLED", "FILLED", "CANCELLED", "REJECTED", "EXPIRED"],
+      "description": "Current lifecycle status of the order"
+    },
+    "filledAmount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total quantity filled across all routes"
+    },
+    "averagePrice": {
+      "type": "number",
+      "description": "Volume-weighted average fill price across all executions"
+    },
+    "remainingAmount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Remaining unfilled quantity (amount minus filledAmount)"
+    },
+    "assetClass": {
+      "type": "string",
+      "enum": ["Equity", "Fixed Income", "Futures", "Options", "FX"],
+      "description": "Asset class of the instrument being traded"
+    },
+    "exchange": {
+      "type": "string",
+      "description": "Primary exchange or marketplace for the instrument"
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "Trading currency in ISO 4217 three-letter code"
+    },
+    "account": {
+      "type": "string",
+      "description": "Trading account identifier for allocation"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-text notes attached to the order by the trader"
+    },
+    "traderName": {
+      "type": "string",
+      "description": "Name of the trader who created the order"
+    },
+    "createdTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the order was created"
+    },
+    "lastModifiedTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the order was last modified"
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/RouteSummary"
+      },
+      "description": "Summary of routes associated with this order"
+    },
+    "customFields": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom user-defined fields configured in the EMSX blotter"
+    }
+  },
+  "$defs": {
+    "RouteSummary": {
+      "type": "object",
+      "description": "Summary of a route associated with an order",
+      "properties": {
+        "routeId": {
+          "type": "integer",
+          "description": "Route identifier"
+        },
+        "broker": {
+          "type": "string",
+          "description": "Broker code"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["NEW", "WORKING", "PARTIALLY_FILLED", "FILLED", "CANCELLED", "REJECTED"],
+          "description": "Route status"
+        },
+        "filledAmount": {
+          "type": "number",
+          "description": "Quantity filled on this route"
+        },
+        "averagePrice": {
+          "type": "number",
+          "description": "Average fill price on this route"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "emsx": "https://www.bloomberg.com/schemas/emsx/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/FND/",
+
+    "Order": {
+      "@id": "emsx:Order",
+      "@context": {
+        "sequenceNumber": "emsx:sequenceNumber",
+        "ticker": "emsx:ticker",
+        "side": "emsx:side",
+        "amount": {
+          "@id": "emsx:amount",
+          "@type": "xsd:decimal"
+        },
+        "orderType": "emsx:orderType",
+        "limitPrice": {
+          "@id": "emsx:limitPrice",
+          "@type": "xsd:decimal"
+        },
+        "stopPrice": {
+          "@id": "emsx:stopPrice",
+          "@type": "xsd:decimal"
+        },
+        "timeInForce": "emsx:timeInForce",
+        "status": "emsx:orderStatus",
+        "filledAmount": {
+          "@id": "emsx:filledAmount",
+          "@type": "xsd:decimal"
+        },
+        "averagePrice": {
+          "@id": "emsx:averagePrice",
+          "@type": "xsd:decimal"
+        },
+        "remainingAmount": {
+          "@id": "emsx:remainingAmount",
+          "@type": "xsd:decimal"
+        },
+        "assetClass": "emsx:assetClass",
+        "exchange": "emsx:exchange",
+        "currency": "emsx:currency",
+        "account": "emsx:account",
+        "notes": "schema:description",
+        "traderName": "schema:name",
+        "createdTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "lastModifiedTime": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Route": {
+      "@id": "emsx:Route",
+      "@context": {
+        "routeId": "emsx:routeId",
+        "orderSequenceNumber": "emsx:orderSequenceNumber",
+        "ticker": "emsx:ticker",
+        "side": "emsx:side",
+        "amount": {
+          "@id": "emsx:amount",
+          "@type": "xsd:decimal"
+        },
+        "filledAmount": {
+          "@id": "emsx:filledAmount",
+          "@type": "xsd:decimal"
+        },
+        "averagePrice": {
+          "@id": "emsx:averagePrice",
+          "@type": "xsd:decimal"
+        },
+        "broker": "emsx:brokerCode",
+        "brokerName": "schema:name",
+        "strategy": "emsx:strategy",
+        "status": "emsx:routeStatus",
+        "limitPrice": {
+          "@id": "emsx:limitPrice",
+          "@type": "xsd:decimal"
+        },
+        "exchange": "emsx:exchange",
+        "createdTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "lastModifiedTime": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "lastFillTime": {
+          "@id": "emsx:lastFillTime",
+          "@type": "xsd:dateTime"
+        }
+      }
+    },
+
+    "Fill": {
+      "@id": "emsx:Fill",
+      "@context": {
+        "fillId": "emsx:fillId",
+        "orderSequenceNumber": "emsx:orderSequenceNumber",
+        "routeId": "emsx:routeId",
+        "ticker": "emsx:ticker",
+        "side": "emsx:side",
+        "fillAmount": {
+          "@id": "emsx:fillAmount",
+          "@type": "xsd:decimal"
+        },
+        "fillPrice": {
+          "@id": "emsx:fillPrice",
+          "@type": "xsd:decimal"
+        },
+        "broker": "emsx:brokerCode",
+        "brokerName": "schema:name",
+        "exchange": "emsx:exchange",
+        "currency": "emsx:currency",
+        "settlementDate": {
+          "@id": "emsx:settlementDate",
+          "@type": "xsd:date"
+        },
+        "tradeDate": {
+          "@id": "emsx:tradeDate",
+          "@type": "xsd:date"
+        },
+        "fillTime": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "account": "emsx:account",
+        "isManual": {
+          "@id": "emsx:isManual",
+          "@type": "xsd:boolean"
+        },
+        "contraParty": "emsx:contraParty"
+      }
+    },
+
+    "Broker": {
+      "@id": "emsx:Broker",
+      "@context": {
+        "code": "emsx:brokerCode",
+        "name": "schema:name",
+        "assetClasses": "emsx:assetClasses",
+        "supportsAlgoTrading": {
+          "@id": "emsx:supportsAlgoTrading",
+          "@type": "xsd:boolean"
+        },
+        "isActive": {
+          "@id": "emsx:isActive",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+
+    "BrokerStrategy": {
+      "@id": "emsx:BrokerStrategy",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description"
+      }
+    },
+
+    "Team": {
+      "@id": "emsx:Team",
+      "@context": {
+        "name": "schema:name",
+        "description": "schema:description"
+      }
+    }
+  }
+}

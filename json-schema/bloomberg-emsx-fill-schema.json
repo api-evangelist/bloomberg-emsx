@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.bloomberg.com/schemas/emsx/fill.json",
+  "title": "Bloomberg EMSX Fill",
+  "description": "A fill (execution) in the Bloomberg Execution Management System (EMSX) representing a completed or partial trade execution against a route. Fills contain execution price, quantity, broker, exchange, and settlement information.",
+  "type": "object",
+  "required": ["orderSequenceNumber", "routeId", "fillAmount", "fillPrice"],
+  "properties": {
+    "fillId": {
+      "type": "integer",
+      "description": "Unique fill identifier within the EMSX blotter"
+    },
+    "orderSequenceNumber": {
+      "type": "integer",
+      "description": "Parent order sequence number"
+    },
+    "routeId": {
+      "type": "integer",
+      "description": "Parent route identifier"
+    },
+    "ticker": {
+      "type": "string",
+      "description": "Bloomberg security ticker symbol"
+    },
+    "side": {
+      "type": "string",
+      "enum": ["BUY", "SELL", "SHORT", "COVER"],
+      "description": "Side of the fill"
+    },
+    "fillAmount": {
+      "type": "number",
+      "minimum": 0,
+      "exclusiveMinimum": true,
+      "description": "Executed quantity in this fill"
+    },
+    "fillPrice": {
+      "type": "number",
+      "description": "Execution price for this fill"
+    },
+    "broker": {
+      "type": "string",
+      "description": "Bloomberg broker code of the executing broker"
+    },
+    "brokerName": {
+      "type": "string",
+      "description": "Full name of the executing broker"
+    },
+    "exchange": {
+      "type": "string",
+      "description": "Exchange or venue where the execution occurred"
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "Trade currency in ISO 4217 three-letter code"
+    },
+    "settlementDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Settlement date for the trade"
+    },
+    "tradeDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Trade date (date the execution occurred)"
+    },
+    "fillTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of the fill execution"
+    },
+    "account": {
+      "type": "string",
+      "description": "Trading account identifier"
+    },
+    "isManual": {
+      "type": "boolean",
+      "description": "Whether this fill was manually entered (e.g., for voice-brokered trades)"
+    },
+    "contraParty": {
+      "type": "string",
+      "description": "Counterparty identifier for the trade"
+    }
+  }
+}

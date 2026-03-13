@@ -3,7 +3,7 @@ description: Bloomberg Execution Management System (EMSX) API provides programma
 image: https://www.bloomberg.com/company/logos/bloomberg-logo.png
 url: https://www.bloomberg.com/professional/product/emsx/
 created: '2024'
-modified: '2024'
+modified: '2026-03-04'
 specificationVersion: '0.18'
 tags:
 - trading
@@ -12,22 +12,32 @@ tags:
 - financial services
 - bloomberg
 apis:
-- name: Bloomberg EMSX API
-  description: API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform
+- name: Bloomberg EMSX Trading API
+  description: >-
+    API for order creation, routing, management and execution monitoring
+    through Bloomberg EMSX platform. Supports order lifecycle management,
+    broker selection, route management, fill tracking, and real-time
+    execution notifications for equity, fixed income, futures, and options
+    trading.
   image: https://www.bloomberg.com/company/logos/bloomberg-logo.png
   humanURL: https://www.bloomberg.com/professional/support/api-library/
-  baseURL: https://api.bloomberg.com/emsx
+  baseURL: https://api.bloomberg.com/emsxapi/v1
   tags:
   - trading
   - orders
   - execution
   - equity
   - fixed income
+  - routes
+  - fills
+  - brokers
   properties:
   - type: Documentation
     url: https://www.bloomberg.com/professional/support/api-library/
   - type: OpenAPI
     url: https://api.bloomberg.com/emsx/openapi.json
+  - type: OpenAPI
+    url: openapi/bloomberg-emsx-trading-openapi.yml
   - type: Authentication
     url: https://www.bloomberg.com/professional/support/api-library/
   - type: SDK
@@ -44,9 +54,8 @@ apis:
   - type: Support
     url: https://www.bloomberg.com/professional/support/
 maintainers:
-- name: Bloomberg L.P.
-  email: support@bloomberg.com
-  url: https://www.bloomberg.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
 common:
 - type: Portal
   url: https://www.bloomberg.com/professional/
@@ -54,3 +63,11 @@ common:
   url: https://www.bloomberg.com/professional/support/api-library/
 - type: Status
   url: https://www.bloomberg.com/notices/
+- type: JSON-LD
+  url: json-ld/bloomberg-emsx-context.jsonld
+- type: JSONSchema
+  url: json-schema/bloomberg-emsx-order-schema.json
+- type: JSONSchema
+  url: json-schema/bloomberg-emsx-route-schema.json
+- type: JSONSchema
+  url: json-schema/bloomberg-emsx-fill-schema.json
