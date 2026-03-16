@@ -1,5 +1,5 @@
 aid: bloomberg-emsx
-name: Bloomberg EMSX API
+name: Bloomberg EMSX
 description: >-
   Bloomberg Execution Management System (EMSX) API provides programmatic access
   to Bloomberg's order and execution management platform for trading operations.
