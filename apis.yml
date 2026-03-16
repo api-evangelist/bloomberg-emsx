@@ -1,73 +1,55 @@
+aid: bloomberg-emsx
 name: Bloomberg EMSX API
-description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform for trading operations
-image: https://www.bloomberg.com/company/logos/bloomberg-logo.png
-url: https://www.bloomberg.com/professional/product/emsx/
-created: '2024'
-modified: '2026-03-04'
-specificationVersion: '0.18'
+description: >-
+  Bloomberg Execution Management System (EMSX) API provides programmatic access
+  to Bloomberg's order and execution management platform for trading operations.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- trading
-- execution management
-- order management
-- financial services
-- bloomberg
+  - Trading
+  - Execution Management
+  - Order Management
+  - Financial Services
+  - Bloomberg
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/bloomberg-emsx/refs/heads/main/apis.yml
+created: '2024-01-01'
+modified: '2026-03-16'
+specificationVersion: '0.19'
 apis:
-- name: Bloomberg EMSX Trading API
-  description: >-
-    API for order creation, routing, management and execution monitoring
-    through Bloomberg EMSX platform. Supports order lifecycle management,
-    broker selection, route management, fill tracking, and real-time
-    execution notifications for equity, fixed income, futures, and options
-    trading.
-  image: https://www.bloomberg.com/company/logos/bloomberg-logo.png
-  humanURL: https://www.bloomberg.com/professional/support/api-library/
-  baseURL: https://api.bloomberg.com/emsxapi/v1
-  tags:
-  - trading
-  - orders
-  - execution
-  - equity
-  - fixed income
-  - routes
-  - fills
-  - brokers
-  properties:
+  - aid: bloomberg-emsx:bloomberg-emsx-trading-api
+    name: Bloomberg EMSX Trading API
+    description: >-
+      API for order creation, routing, management and execution monitoring
+      through Bloomberg EMSX platform. Supports order lifecycle management,
+      broker selection, route management, fill tracking, and real-time execution
+      notifications for equity, fixed income, futures, and options trading.
+    humanURL: https://emsx-api-doc.readthedocs.io/
+    tags:
+      - Trading
+      - Orders
+      - Execution
+      - Equity
+      - Fixed Income
+      - Routes
+      - Fills
+      - Brokers
+    properties:
+      - type: Documentation
+        url: https://emsx-api-doc.readthedocs.io/
+      - type: Reference
+        url: https://www.bloomberg.com/professional/support/api-library/
+common:
+  - type: Portal
+    url: https://www.bloomberg.com/professional/
   - type: Documentation
     url: https://www.bloomberg.com/professional/support/api-library/
-  - type: OpenAPI
-    url: https://api.bloomberg.com/emsx/openapi.json
-  - type: OpenAPI
-    url: openapi/bloomberg-emsx-trading-openapi.yml
-  - type: Authentication
-    url: https://www.bloomberg.com/professional/support/api-library/
-  - type: SDK
-    url: https://www.bloomberg.com/professional/support/api-library/
-  - type: RateLimits
-    url: https://www.bloomberg.com/professional/support/documentation/
-  - type: GettingStarted
-    url: https://www.bloomberg.com/professional/support/api-library/
-  - type: Support
-    url: https://www.bloomberg.com/professional/support/
-  - type: TermsOfService
+  - type: Terms of Service
     url: https://www.bloomberg.com/notices/tos/
-  contact:
+  - type: Privacy Policy
+    url: https://www.bloomberg.com/privacy/
   - type: Support
     url: https://www.bloomberg.com/professional/support/
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-common:
-- type: Portal
-  url: https://www.bloomberg.com/professional/
-- type: Authentication
-  url: https://www.bloomberg.com/professional/support/api-library/
-- type: Status
-  url: https://www.bloomberg.com/notices/
-- type: JSON-LD
-  url: json-ld/bloomberg-emsx-context.jsonld
-- type: JSONSchema
-  url: json-schema/bloomberg-emsx-order-schema.json
-- type: JSONSchema
-  url: json-schema/bloomberg-emsx-route-schema.json
-- type: JSONSchema
-  url: json-schema/bloomberg-emsx-fill-schema.json
+  - FN: Kin Lane
+    email: kin@apievangelist.com
