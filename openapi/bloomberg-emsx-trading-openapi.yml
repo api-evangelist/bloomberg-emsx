@@ -39,7 +39,7 @@ paths:
   /orders:
     get:
       operationId: listOrders
-      summary: List orders
+      summary: Bloomberg EMSX List orders
       description: >-
         Retrieve a list of orders in the EMSX blotter. Supports filtering by
         status, ticker, side, and date range. Returns order-level fields
@@ -123,7 +123,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
     post:
       operationId: createOrder
-      summary: Create a new order
+      summary: Bloomberg EMSX Create a new order
       description: >-
         Create a new order in the EMSX blotter. The order is placed on the
         blotter and can subsequently be routed to a broker for execution.
@@ -160,7 +160,7 @@ paths:
   /orders/{orderSequenceNumber}:
     get:
       operationId: getOrder
-      summary: Get order details
+      summary: Bloomberg EMSX Get order details
       description: >-
         Retrieve detailed information about a specific order by its EMSX
         sequence number, including all order fields, current status, and
@@ -182,7 +182,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: modifyOrder
-      summary: Modify an existing order
+      summary: Bloomberg EMSX Modify an existing order
       description: >-
         Modify fields on an existing order such as amount, limit price,
         order type, or time in force. Only unfilled or partially filled
@@ -218,7 +218,7 @@ paths:
                 $ref: '#/components/schemas/Error'
     delete:
       operationId: deleteOrder
-      summary: Delete an order
+      summary: Bloomberg EMSX Delete an order
       description: >-
         Delete an order from the EMSX blotter. Only orders with no active
         routes can be deleted. Orders with active routes must have their
@@ -243,7 +243,7 @@ paths:
   /orders/createAndRoute:
     post:
       operationId: createOrderAndRoute
-      summary: Create an order and route it simultaneously
+      summary: Bloomberg EMSX Create an order and route it simultaneously
       description: >-
         Create a new order and immediately route it to a specified broker
         in a single operation. This combines order creation and route
@@ -278,7 +278,7 @@ paths:
   /orders/groupRoute:
     post:
       operationId: groupRouteOrders
-      summary: Route multiple orders to a broker
+      summary: Bloomberg EMSX Route multiple orders to a broker
       description: >-
         Route a group of existing orders to a specified broker in a single
         batch operation. All orders in the group are routed with the same
@@ -310,7 +310,7 @@ paths:
   /routes:
     get:
       operationId: listRoutes
-      summary: List routes
+      summary: Bloomberg EMSX List routes
       description: >-
         Retrieve a list of routes across all orders. Supports filtering by
         route status, broker, and associated order. Returns route-level
@@ -376,7 +376,7 @@ paths:
   /routes/{routeId}:
     get:
       operationId: getRoute
-      summary: Get route details
+      summary: Bloomberg EMSX Get route details
       description: >-
         Retrieve detailed information about a specific route, including
         broker, strategy, fill status, and all route-level fields.
@@ -397,7 +397,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     patch:
       operationId: modifyRoute
-      summary: Modify an existing route
+      summary: Bloomberg EMSX Modify an existing route
       description: >-
         Modify fields on an existing route such as amount, limit price,
         or strategy parameters. Only working or partially filled routes
@@ -433,7 +433,7 @@ paths:
                 $ref: '#/components/schemas/Error'
     delete:
       operationId: cancelRoute
-      summary: Cancel a route
+      summary: Bloomberg EMSX Cancel a route
       description: >-
         Cancel an active route. Sends a cancel request to the broker.
         Only working or partially filled routes can be cancelled.
@@ -457,7 +457,7 @@ paths:
   /routes/manualFill:
     post:
       operationId: createManualFill
-      summary: Create a manual fill
+      summary: Bloomberg EMSX Create a manual fill
       description: >-
         Manually record a fill against a route. Used for reporting
         executions that occurred outside of electronic routing, such as
@@ -490,7 +490,7 @@ paths:
   /fills:
     get:
       operationId: listFills
-      summary: List fills
+      summary: Bloomberg EMSX List fills
       description: >-
         Retrieve a list of trade executions and fills. Supports filtering
         by ticker, broker, date range, and associated order or route.
@@ -565,7 +565,7 @@ paths:
   /fills/{fillId}:
     get:
       operationId: getFill
-      summary: Get fill details
+      summary: Bloomberg EMSX Get fill details
       description: >-
         Retrieve detailed information about a specific fill or execution,
         including price, quantity, broker, timestamp, and settlement details.
@@ -592,7 +592,7 @@ paths:
   /brokers:
     get:
       operationId: listBrokers
-      summary: List available brokers
+      summary: Bloomberg EMSX List available brokers
       description: >-
         Retrieve a list of brokers available for routing orders. Can be
         filtered by asset class and security type. Returns broker codes,
@@ -634,7 +634,7 @@ paths:
   /brokers/{brokerCode}/strategies:
     get:
       operationId: listBrokerStrategies
-      summary: List broker strategies
+      summary: Bloomberg EMSX List broker strategies
       description: >-
         Retrieve the list of execution strategies available from a specific
         broker, including algorithmic strategies and their configurable
@@ -682,7 +682,7 @@ paths:
   /teams:
     get:
       operationId: listTeams
-      summary: List EMSX teams
+      summary: Bloomberg EMSX List EMSX teams
       description: >-
         Retrieve a list of EMSX trading teams that the authenticated
         user has access to.
@@ -705,7 +705,7 @@ paths:
   /fields/order:
     get:
       operationId: listOrderFields
-      summary: List available order fields
+      summary: Bloomberg EMSX List available order fields
       description: >-
         Retrieve the list of available fields for orders, including field
         names, types, and descriptions.
@@ -728,7 +728,7 @@ paths:
   /fields/route:
     get:
       operationId: listRouteFields
-      summary: List available route fields
+      summary: Bloomberg EMSX List available route fields
       description: >-
         Retrieve the list of available fields for routes, including field
         names, types, and descriptions.
