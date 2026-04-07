@@ -6,11 +6,11 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Trading
-  - Execution Management
-  - Order Management
-  - Financial Services
   - Bloomberg
+  - Execution Management
+  - Financial Services
+  - Order Management
+  - Trading
 url: >-
   https://raw.githubusercontent.com/api-evangelist/bloomberg-emsx/refs/heads/main/apis.yml
 created: '2024-01-01'
@@ -26,14 +26,14 @@ apis:
       notifications for equity, fixed income, futures, and options trading.
     humanURL: https://emsx-api-doc.readthedocs.io/
     tags:
-      - Trading
-      - Orders
-      - Execution
-      - Equity
-      - Fixed Income
-      - Routes
-      - Fills
       - Brokers
+      - Equity
+      - Execution
+      - Fills
+      - Fixed Income
+      - Orders
+      - Routes
+      - Trading
     properties:
       - type: Documentation
         url: https://emsx-api-doc.readthedocs.io/

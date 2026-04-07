@@ -21,18 +21,18 @@ servers:
   - url: https://api.bloomberg.com/emsxapi/v1
     description: Bloomberg EMSX Production API
 tags:
+  - name: Brokers
+    description: Query available brokers and broker strategies
+  - name: Field Lists
+    description: Retrieve available order and route fields
+  - name: Fills
+    description: Query and monitor trade executions and fills
   - name: Orders
     description: Create, modify, delete, and query trading orders
   - name: Routes
     description: Create, modify, delete, and manage order routes to brokers
-  - name: Fills
-    description: Query and monitor trade executions and fills
-  - name: Brokers
-    description: Query available brokers and broker strategies
   - name: Teams
     description: Manage EMSX trading teams
-  - name: Field Lists
-    description: Retrieve available order and route fields
 security:
   - bearerAuth: []
 paths:
