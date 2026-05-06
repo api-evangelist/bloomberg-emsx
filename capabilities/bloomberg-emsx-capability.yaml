@@ -1,0 +1,839 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bloomberg EMSX Trading API
+  description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution
+    management platform. It enables automated order creation, routing, modification, and execution monitoring for equity,
+    fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker
+    selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.
+  tags:
+  - Bloomberg
+  - Emsx
+  - API
+  created: '2026-05-06'
+  modified: '2026-05-06'
+capability:
+  consumes:
+  - type: http
+    namespace: bloomberg-emsx
+    baseUri: https://api.bloomberg.com/emsxapi/v1
+    description: Bloomberg EMSX Trading API HTTP API.
+    authentication:
+      type: bearer
+      token: '{{BLOOMBERG_EMSX_TOKEN}}'
+    resources:
+    - name: orders
+      path: /orders
+      operations:
+      - name: listorders
+        method: GET
+        description: Bloomberg EMSX List orders
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter orders by status
+        - name: ticker
+          in: query
+          type: string
+          description: Filter by Bloomberg security ticker
+        - name: side
+          in: query
+          type: string
+          description: Filter by order side
+        - name: fromDate
+          in: query
+          type: string
+          description: Filter orders created on or after this date
+        - name: toDate
+          in: query
+          type: string
+          description: Filter orders created on or before this date
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of orders to return
+        - name: offset
+          in: query
+          type: integer
+          description: Number of orders to skip for pagination
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createorder
+        method: POST
+        description: Bloomberg EMSX Create a new order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orders-ordersequencenumber
+      path: /orders/{orderSequenceNumber}
+      operations:
+      - name: getorder
+        method: GET
+        description: Bloomberg EMSX Get order details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: modifyorder
+        method: PATCH
+        description: Bloomberg EMSX Modify an existing order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deleteorder
+        method: DELETE
+        description: Bloomberg EMSX Delete an order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orders-createandroute
+      path: /orders/createAndRoute
+      operations:
+      - name: createorderandroute
+        method: POST
+        description: Bloomberg EMSX Create an order and route it simultaneously
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orders-grouproute
+      path: /orders/groupRoute
+      operations:
+      - name: grouprouteorders
+        method: POST
+        description: Bloomberg EMSX Route multiple orders to a broker
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: routes
+      path: /routes
+      operations:
+      - name: listroutes
+        method: GET
+        description: Bloomberg EMSX List routes
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter routes by status
+        - name: broker
+          in: query
+          type: string
+          description: Filter by broker code
+        - name: orderSequenceNumber
+          in: query
+          type: integer
+          description: Filter routes by parent order sequence number
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of routes to return
+        - name: offset
+          in: query
+          type: integer
+          description: Number of routes to skip for pagination
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: routes-routeid
+      path: /routes/{routeId}
+      operations:
+      - name: getroute
+        method: GET
+        description: Bloomberg EMSX Get route details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: modifyroute
+        method: PATCH
+        description: Bloomberg EMSX Modify an existing route
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: cancelroute
+        method: DELETE
+        description: Bloomberg EMSX Cancel a route
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: routes-manualfill
+      path: /routes/manualFill
+      operations:
+      - name: createmanualfill
+        method: POST
+        description: Bloomberg EMSX Create a manual fill
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: fills
+      path: /fills
+      operations:
+      - name: listfills
+        method: GET
+        description: Bloomberg EMSX List fills
+        inputParameters:
+        - name: ticker
+          in: query
+          type: string
+          description: Filter fills by Bloomberg security ticker
+        - name: broker
+          in: query
+          type: string
+          description: Filter fills by broker code
+        - name: orderSequenceNumber
+          in: query
+          type: integer
+          description: Filter fills by parent order sequence number
+        - name: routeId
+          in: query
+          type: integer
+          description: Filter fills by route identifier
+        - name: fromDate
+          in: query
+          type: string
+          description: Filter fills on or after this date
+        - name: toDate
+          in: query
+          type: string
+          description: Filter fills on or before this date
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of fills to return
+        - name: offset
+          in: query
+          type: integer
+          description: Number of fills to skip for pagination
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: fills-fillid
+      path: /fills/{fillId}
+      operations:
+      - name: getfill
+        method: GET
+        description: Bloomberg EMSX Get fill details
+        inputParameters:
+        - name: fillId
+          in: path
+          type: integer
+          required: true
+          description: Unique identifier of the fill
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: brokers
+      path: /brokers
+      operations:
+      - name: listbrokers
+        method: GET
+        description: Bloomberg EMSX List available brokers
+        inputParameters:
+        - name: assetClass
+          in: query
+          type: string
+          description: Filter brokers by asset class
+        - name: ticker
+          in: query
+          type: string
+          description: Bloomberg ticker to find brokers available for a specific security
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: brokers-brokercode-strategies
+      path: /brokers/{brokerCode}/strategies
+      operations:
+      - name: listbrokerstrategies
+        method: GET
+        description: Bloomberg EMSX List broker strategies
+        inputParameters:
+        - name: brokerCode
+          in: path
+          type: string
+          required: true
+          description: Bloomberg broker code
+        - name: assetClass
+          in: query
+          type: string
+          description: Filter strategies by asset class
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: teams
+      path: /teams
+      operations:
+      - name: listteams
+        method: GET
+        description: Bloomberg EMSX List EMSX teams
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: fields-order
+      path: /fields/order
+      operations:
+      - name: listorderfields
+        method: GET
+        description: Bloomberg EMSX List available order fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: fields-route
+      path: /fields/route
+      operations:
+      - name: listroutefields
+        method: GET
+        description: Bloomberg EMSX List available route fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    port: 8080
+    namespace: bloomberg-emsx-rest
+    description: REST adapter for Bloomberg EMSX Trading API.
+    resources:
+    - path: /orders
+      name: listorders
+      operations:
+      - method: GET
+        name: listorders
+        description: Bloomberg EMSX List orders
+        call: bloomberg-emsx.listorders
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /orders
+      name: createorder
+      operations:
+      - method: POST
+        name: createorder
+        description: Bloomberg EMSX Create a new order
+        call: bloomberg-emsx.createorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /orders/{orderSequenceNumber}
+      name: getorder
+      operations:
+      - method: GET
+        name: getorder
+        description: Bloomberg EMSX Get order details
+        call: bloomberg-emsx.getorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /orders/{orderSequenceNumber}
+      name: modifyorder
+      operations:
+      - method: PATCH
+        name: modifyorder
+        description: Bloomberg EMSX Modify an existing order
+        call: bloomberg-emsx.modifyorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /orders/{orderSequenceNumber}
+      name: deleteorder
+      operations:
+      - method: DELETE
+        name: deleteorder
+        description: Bloomberg EMSX Delete an order
+        call: bloomberg-emsx.deleteorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /orders/createAndRoute
+      name: createorderandroute
+      operations:
+      - method: POST
+        name: createorderandroute
+        description: Bloomberg EMSX Create an order and route it simultaneously
+        call: bloomberg-emsx.createorderandroute
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /orders/groupRoute
+      name: grouprouteorders
+      operations:
+      - method: POST
+        name: grouprouteorders
+        description: Bloomberg EMSX Route multiple orders to a broker
+        call: bloomberg-emsx.grouprouteorders
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /routes
+      name: listroutes
+      operations:
+      - method: GET
+        name: listroutes
+        description: Bloomberg EMSX List routes
+        call: bloomberg-emsx.listroutes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /routes/{routeId}
+      name: getroute
+      operations:
+      - method: GET
+        name: getroute
+        description: Bloomberg EMSX Get route details
+        call: bloomberg-emsx.getroute
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /routes/{routeId}
+      name: modifyroute
+      operations:
+      - method: PATCH
+        name: modifyroute
+        description: Bloomberg EMSX Modify an existing route
+        call: bloomberg-emsx.modifyroute
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /routes/{routeId}
+      name: cancelroute
+      operations:
+      - method: DELETE
+        name: cancelroute
+        description: Bloomberg EMSX Cancel a route
+        call: bloomberg-emsx.cancelroute
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /routes/manualFill
+      name: createmanualfill
+      operations:
+      - method: POST
+        name: createmanualfill
+        description: Bloomberg EMSX Create a manual fill
+        call: bloomberg-emsx.createmanualfill
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /fills
+      name: listfills
+      operations:
+      - method: GET
+        name: listfills
+        description: Bloomberg EMSX List fills
+        call: bloomberg-emsx.listfills
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /fills/{fillId}
+      name: getfill
+      operations:
+      - method: GET
+        name: getfill
+        description: Bloomberg EMSX Get fill details
+        call: bloomberg-emsx.getfill
+        with:
+          fillId: rest.fillId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /brokers
+      name: listbrokers
+      operations:
+      - method: GET
+        name: listbrokers
+        description: Bloomberg EMSX List available brokers
+        call: bloomberg-emsx.listbrokers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /brokers/{brokerCode}/strategies
+      name: listbrokerstrategies
+      operations:
+      - method: GET
+        name: listbrokerstrategies
+        description: Bloomberg EMSX List broker strategies
+        call: bloomberg-emsx.listbrokerstrategies
+        with:
+          brokerCode: rest.brokerCode
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /teams
+      name: listteams
+      operations:
+      - method: GET
+        name: listteams
+        description: Bloomberg EMSX List EMSX teams
+        call: bloomberg-emsx.listteams
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /fields/order
+      name: listorderfields
+      operations:
+      - method: GET
+        name: listorderfields
+        description: Bloomberg EMSX List available order fields
+        call: bloomberg-emsx.listorderfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /fields/route
+      name: listroutefields
+      operations:
+      - method: GET
+        name: listroutefields
+        description: Bloomberg EMSX List available route fields
+        call: bloomberg-emsx.listroutefields
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: bloomberg-emsx-mcp
+    transport: http
+    description: MCP adapter for Bloomberg EMSX Trading API for AI agent use.
+    tools:
+    - name: listorders
+      description: Bloomberg EMSX List orders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listorders
+      with:
+        status: tools.status
+        ticker: tools.ticker
+        side: tools.side
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+        limit: tools.limit
+        offset: tools.offset
+      inputParameters:
+      - name: status
+        type: string
+        description: Filter orders by status
+      - name: ticker
+        type: string
+        description: Filter by Bloomberg security ticker
+      - name: side
+        type: string
+        description: Filter by order side
+      - name: fromDate
+        type: string
+        description: Filter orders created on or after this date
+      - name: toDate
+        type: string
+        description: Filter orders created on or before this date
+      - name: limit
+        type: integer
+        description: Maximum number of orders to return
+      - name: offset
+        type: integer
+        description: Number of orders to skip for pagination
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createorder
+      description: Bloomberg EMSX Create a new order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bloomberg-emsx.createorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getorder
+      description: Bloomberg EMSX Get order details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.getorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modifyorder
+      description: Bloomberg EMSX Modify an existing order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bloomberg-emsx.modifyorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deleteorder
+      description: Bloomberg EMSX Delete an order
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: bloomberg-emsx.deleteorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createorderandroute
+      description: Bloomberg EMSX Create an order and route it simultaneously
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bloomberg-emsx.createorderandroute
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: grouprouteorders
+      description: Bloomberg EMSX Route multiple orders to a broker
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bloomberg-emsx.grouprouteorders
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listroutes
+      description: Bloomberg EMSX List routes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listroutes
+      with:
+        status: tools.status
+        broker: tools.broker
+        orderSequenceNumber: tools.orderSequenceNumber
+        limit: tools.limit
+        offset: tools.offset
+      inputParameters:
+      - name: status
+        type: string
+        description: Filter routes by status
+      - name: broker
+        type: string
+        description: Filter by broker code
+      - name: orderSequenceNumber
+        type: integer
+        description: Filter routes by parent order sequence number
+      - name: limit
+        type: integer
+        description: Maximum number of routes to return
+      - name: offset
+        type: integer
+        description: Number of routes to skip for pagination
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getroute
+      description: Bloomberg EMSX Get route details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.getroute
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modifyroute
+      description: Bloomberg EMSX Modify an existing route
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bloomberg-emsx.modifyroute
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: cancelroute
+      description: Bloomberg EMSX Cancel a route
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: bloomberg-emsx.cancelroute
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: createmanualfill
+      description: Bloomberg EMSX Create a manual fill
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: bloomberg-emsx.createmanualfill
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listfills
+      description: Bloomberg EMSX List fills
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listfills
+      with:
+        ticker: tools.ticker
+        broker: tools.broker
+        orderSequenceNumber: tools.orderSequenceNumber
+        routeId: tools.routeId
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+        limit: tools.limit
+        offset: tools.offset
+      inputParameters:
+      - name: ticker
+        type: string
+        description: Filter fills by Bloomberg security ticker
+      - name: broker
+        type: string
+        description: Filter fills by broker code
+      - name: orderSequenceNumber
+        type: integer
+        description: Filter fills by parent order sequence number
+      - name: routeId
+        type: integer
+        description: Filter fills by route identifier
+      - name: fromDate
+        type: string
+        description: Filter fills on or after this date
+      - name: toDate
+        type: string
+        description: Filter fills on or before this date
+      - name: limit
+        type: integer
+        description: Maximum number of fills to return
+      - name: offset
+        type: integer
+        description: Number of fills to skip for pagination
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: getfill
+      description: Bloomberg EMSX Get fill details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.getfill
+      with:
+        fillId: tools.fillId
+      inputParameters:
+      - name: fillId
+        type: integer
+        description: Unique identifier of the fill
+        required: true
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listbrokers
+      description: Bloomberg EMSX List available brokers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listbrokers
+      with:
+        assetClass: tools.assetClass
+        ticker: tools.ticker
+      inputParameters:
+      - name: assetClass
+        type: string
+        description: Filter brokers by asset class
+      - name: ticker
+        type: string
+        description: Bloomberg ticker to find brokers available for a specific security
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listbrokerstrategies
+      description: Bloomberg EMSX List broker strategies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listbrokerstrategies
+      with:
+        brokerCode: tools.brokerCode
+        assetClass: tools.assetClass
+      inputParameters:
+      - name: brokerCode
+        type: string
+        description: Bloomberg broker code
+        required: true
+      - name: assetClass
+        type: string
+        description: Filter strategies by asset class
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listteams
+      description: Bloomberg EMSX List EMSX teams
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listteams
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listorderfields
+      description: Bloomberg EMSX List available order fields
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listorderfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: listroutefields
+      description: Bloomberg EMSX List available route fields
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: bloomberg-emsx.listroutefields
+      outputParameters:
+      - type: object
+        mapping: $.
+binds:
+- namespace: env
+  keys:
+    BLOOMBERG_EMSX_TOKEN: BLOOMBERG_EMSX_TOKEN
