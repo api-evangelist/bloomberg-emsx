@@ -44,9 +44,9 @@ common:
     url: https://www.bloomberg.com/professional/
   - type: Documentation
     url: https://www.bloomberg.com/professional/support/api-library/
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.bloomberg.com/notices/tos/
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.bloomberg.com/privacy/
   - type: Support
     url: https://www.bloomberg.com/professional/support/
