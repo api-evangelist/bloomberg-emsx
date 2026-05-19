@@ -1,0 +1,102 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bloomberg EMSX Trading API — Field Lists
+  description: 'Bloomberg EMSX Trading API — Field Lists. 2 operations. Lead operation: Bloomberg EMSX List available order
+    fields. Self-contained Naftiko capability covering one Bloomberg Emsx business surface.'
+  tags:
+  - Bloomberg Emsx
+  - Field Lists
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLOOMBERG_EMSX_API_KEY: BLOOMBERG_EMSX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: trading-field-lists
+    baseUri: https://api.bloomberg.com/emsxapi/v1
+    description: Bloomberg EMSX Trading API — Field Lists business capability. Self-contained, no shared references.
+    resources:
+    - name: fields-order
+      path: /fields/order
+      operations:
+      - name: listorderfields
+        method: GET
+        description: Bloomberg EMSX List available order fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: fields-route
+      path: /fields/route
+      operations:
+      - name: listroutefields
+        method: GET
+        description: Bloomberg EMSX List available route fields
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.BLOOMBERG_EMSX_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: trading-field-lists-rest
+    port: 8080
+    description: REST adapter for Bloomberg EMSX Trading API — Field Lists. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/fields/order
+      name: fields-order
+      description: REST surface for fields-order.
+      operations:
+      - method: GET
+        name: listorderfields
+        description: Bloomberg EMSX List available order fields
+        call: trading-field-lists.listorderfields
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/fields/route
+      name: fields-route
+      description: REST surface for fields-route.
+      operations:
+      - method: GET
+        name: listroutefields
+        description: Bloomberg EMSX List available route fields
+        call: trading-field-lists.listroutefields
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: trading-field-lists-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bloomberg EMSX Trading API — Field Lists. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: bloomberg-emsx-list-available-order
+      description: Bloomberg EMSX List available order fields
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trading-field-lists.listorderfields
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bloomberg-emsx-list-available-route
+      description: Bloomberg EMSX List available route fields
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trading-field-lists.listroutefields
+      outputParameters:
+      - type: object
+        mapping: $.

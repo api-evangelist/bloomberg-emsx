@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Bloomberg EMSX Trading API — Teams
+  description: 'Bloomberg EMSX Trading API — Teams. 1 operations. Lead operation: Bloomberg EMSX List EMSX teams. Self-contained
+    Naftiko capability covering one Bloomberg Emsx business surface.'
+  tags:
+  - Bloomberg Emsx
+  - Teams
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BLOOMBERG_EMSX_API_KEY: BLOOMBERG_EMSX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: trading-teams
+    baseUri: https://api.bloomberg.com/emsxapi/v1
+    description: Bloomberg EMSX Trading API — Teams business capability. Self-contained, no shared references.
+    resources:
+    - name: teams
+      path: /teams
+      operations:
+      - name: listteams
+        method: GET
+        description: Bloomberg EMSX List EMSX teams
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.BLOOMBERG_EMSX_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: trading-teams-rest
+    port: 8080
+    description: REST adapter for Bloomberg EMSX Trading API — Teams. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/teams
+      name: teams
+      description: REST surface for teams.
+      operations:
+      - method: GET
+        name: listteams
+        description: Bloomberg EMSX List EMSX teams
+        call: trading-teams.listteams
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: trading-teams-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Bloomberg EMSX Trading API — Teams. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: bloomberg-emsx-list-emsx-teams
+      description: Bloomberg EMSX List EMSX teams
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: trading-teams.listteams
+      outputParameters:
+      - type: object
+        mapping: $.
