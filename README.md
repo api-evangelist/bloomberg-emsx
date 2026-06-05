@@ -1,48 +1,61 @@
-# Bloomberg EMSX API (bloomberg-emsx)
-Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform for trading operations
+# Bloomberg EMSX (bloomberg-emsx)
 
-**URL:** [Visit APIs.json URL](https://www.bloomberg.com/professional/product/emsx/)
+Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform for trading operations.
 
-## Tags:
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bloomberg-emsx/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bloomberg-emsx/refs/heads/main/apis.yml)
 
- - trading, execution management, order management, financial services, bloomberg
+## Scope
+
+- **Type:** Index
+
+## Tags
+
+- Bloomberg
+- Execution Management
+- Financial Services
+- Order Management
+- Trading
 
 ## Timestamps
 
-- **Created:** 2024 
-- **Modified:** 2024 
+- **Created:** 2024-01-01
+- **Modified:** 2026-05-19
 
 ## APIs
 
-### Bloomberg EMSX API
-API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform
+### Bloomberg EMSX Trading API
 
-**Human URL:** [https://www.bloomberg.com/professional/support/api-library/](https://www.bloomberg.com/professional/support/api-library/)
+API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform. Supports order lifecycle management, broker selection, route management, fill tracking, and real-time execution notifications for equity, fixed income, futures, and options trading.
 
+- **Human URL:** [https://emsx-api-doc.readthedocs.io/](https://emsx-api-doc.readthedocs.io/)
 
-#### Tags:
+#### Tags
 
- - trading, orders, execution, equity, fixed income
+- Brokers
+- Equity
+- Execution
+- Fills
+- Fixed Income
+- Orders
+- Routes
+- Trading
 
 #### Properties
 
-- [Documentation](https://www.bloomberg.com/professional/support/api-library/)
-- [OpenAPI](https://api.bloomberg.com/emsx/openapi.json)
-- [Authentication](https://www.bloomberg.com/professional/support/api-library/)
-- [SDK](https://www.bloomberg.com/professional/support/api-library/)
-- [RateLimits](https://www.bloomberg.com/professional/support/documentation/)
-- [GettingStarted](https://www.bloomberg.com/professional/support/api-library/)
-- [Support](https://www.bloomberg.com/professional/support/)
-- [TermsOfService](https://www.bloomberg.com/notices/tos/)
+- [Documentation](https://emsx-api-doc.readthedocs.io/)
+- [Reference](https://www.bloomberg.com/professional/support/api-library/)
+- [Postman Collection](collections/bloomberg-emsx-trading.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/bloomberg-emsx-trading.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
 - [Portal](https://www.bloomberg.com/professional/)
-- [Authentication](https://www.bloomberg.com/professional/support/api-library/)
-- [Status](https://www.bloomberg.com/notices/)
+- [Documentation](https://www.bloomberg.com/professional/support/api-library/)
+- [Terms of Service](https://www.bloomberg.com/notices/tos/)
+- [Privacy Policy](https://www.bloomberg.com/privacy/)
+- [Support](https://www.bloomberg.com/professional/support/)
 
 ## Maintainers
 
-**FN:** Bloomberg L.P.
-
-**Email:** support@bloomberg.com
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
