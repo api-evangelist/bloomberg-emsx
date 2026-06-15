@@ -1,0 +1,4652 @@
+{
+  "item": [
+    {
+      "id": "cd093527-7338-4fb3-943d-b8310023593a",
+      "name": "Brokers",
+      "description": {
+        "content": "Query available brokers and broker strategies",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b84495c3-a3db-4d2f-83c3-7694e7f095b3",
+          "name": "Bloomberg EMSX List available brokers",
+          "request": {
+            "name": "Bloomberg EMSX List available brokers",
+            "description": {
+              "content": "Retrieve a list of brokers available for routing orders. Can be filtered by asset class and security type. Returns broker codes, names, and supported strategies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brokers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "assetClass",
+                  "value": "<string>",
+                  "description": "Filter brokers by asset class"
+                },
+                {
+                  "disabled": false,
+                  "key": "ticker",
+                  "value": "<string>",
+                  "description": "Bloomberg ticker to find brokers available for a specific security"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "68bd6358-43c5-4096-a8c1-500d28816f0f",
+              "name": "List of available brokers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"brokers\": [\n    {\n      \"code\": \"string\",\n      \"name\": \"string\",\n      \"assetClasses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"supportsAlgoTrading\": false,\n      \"strategies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isActive\": false\n    },\n    {\n      \"code\": \"string\",\n      \"name\": \"string\",\n      \"assetClasses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"supportsAlgoTrading\": true,\n      \"strategies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isActive\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f626f340-cc39-4e04-ba84-35c3bb2aec38",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3b86835-9d1c-4980-86a1-a8f3cf343451",
+          "name": "Bloomberg EMSX List broker strategies",
+          "request": {
+            "name": "Bloomberg EMSX List broker strategies",
+            "description": {
+              "content": "Retrieve the list of execution strategies available from a specific broker, including algorithmic strategies and their configurable parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brokers",
+                ":brokerCode",
+                "strategies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "assetClass",
+                  "value": "<string>",
+                  "description": "Filter strategies by asset class"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "brokerCode",
+                  "description": "(Required) Bloomberg broker code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e2c9bee1-69a5-4bf9-b4cd-ad8eb42a5bb9",
+              "name": "List of broker strategies",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers",
+                    ":brokerCode",
+                    "strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brokerCode",
+                      "description": "(Required) Bloomberg broker code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"strategies\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"number\",\n          \"required\": false,\n          \"defaultValue\": {}\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"string\",\n          \"required\": true,\n          \"defaultValue\": {}\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"integer\",\n          \"required\": true,\n          \"defaultValue\": {}\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"string\",\n          \"required\": true,\n          \"defaultValue\": {}\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bac1c3c-5343-47f0-a6b0-ebac3c03c9d9",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers",
+                    ":brokerCode",
+                    "strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brokerCode",
+                      "description": "(Required) Bloomberg broker code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b62ba4cc-5e2c-4ce2-a686-5cc53f2558de",
+              "name": "Broker not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers",
+                    ":brokerCode",
+                    "strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brokerCode",
+                      "description": "(Required) Bloomberg broker code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "d1db4d25-b60a-43c1-9dde-f2199b9f3afc",
+      "name": "Field Lists",
+      "description": {
+        "content": "Retrieve available order and route fields",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3a4ee448-8eb4-4948-bd6f-da880d8cf8d0",
+          "name": "Bloomberg EMSX List available order fields",
+          "request": {
+            "name": "Bloomberg EMSX List available order fields",
+            "description": {
+              "content": "Retrieve the list of available fields for orders, including field names, types, and descriptions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fields",
+                "order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a8a387b9-0930-47b7-8b51-4c329e807ab6",
+              "name": "List of order fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fields\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": false,\n      \"isRequired\": true\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": true,\n      \"isRequired\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c335d43-6436-408e-8c70-261d984cfe2c",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    "order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06ec4d8f-ff83-40ba-a94a-03c0da29ec10",
+          "name": "Bloomberg EMSX List available route fields",
+          "request": {
+            "name": "Bloomberg EMSX List available route fields",
+            "description": {
+              "content": "Retrieve the list of available fields for routes, including field names, types, and descriptions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fields",
+                "route"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a70aec2-a012-45f2-9c08-49124e3fcfad",
+              "name": "List of route fields",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fields\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": false,\n      \"isRequired\": true\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": true,\n      \"isRequired\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9a251fb-08ab-4884-8638-73202dc0de62",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fields",
+                    "route"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "871afbd4-6720-43fb-b001-d97b9903ecff",
+      "name": "Fills",
+      "description": {
+        "content": "Query and monitor trade executions and fills",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2aadf6d9-79de-4b37-a40e-5972f12c86de",
+          "name": "Bloomberg EMSX List fills",
+          "request": {
+            "name": "Bloomberg EMSX List fills",
+            "description": {
+              "content": "Retrieve a list of trade executions and fills. Supports filtering by ticker, broker, date range, and associated order or route.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamName",
+                  "value": "<string>",
+                  "description": "EMSX team name for shared blotter access"
+                },
+                {
+                  "disabled": false,
+                  "key": "ticker",
+                  "value": "<string>",
+                  "description": "Filter fills by Bloomberg security ticker"
+                },
+                {
+                  "disabled": false,
+                  "key": "broker",
+                  "value": "<string>",
+                  "description": "Filter fills by broker code"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderSequenceNumber",
+                  "value": "<integer>",
+                  "description": "Filter fills by parent order sequence number"
+                },
+                {
+                  "disabled": false,
+                  "key": "routeId",
+                  "value": "<integer>",
+                  "description": "Filter fills by route identifier"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "Filter fills on or after this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "Filter fills on or before this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of fills to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of fills to skip for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a7c4ed38-9465-4234-bf62-901ad804de8b",
+              "name": "List of fills retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "routeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fills\": [\n    {\n      \"fillId\": 840,\n      \"orderSequenceNumber\": 739,\n      \"routeId\": 3005,\n      \"ticker\": \"string\",\n      \"side\": \"COVER\",\n      \"fillAmount\": 4144.20731872445,\n      \"fillPrice\": 8021.489638817624,\n      \"broker\": \"string\",\n      \"brokerName\": \"string\",\n      \"exchange\": \"string\",\n      \"currency\": \"string\",\n      \"settlementDate\": \"2007-06-25\",\n      \"tradeDate\": \"1987-10-06\",\n      \"fillTime\": \"1978-07-20T04:48:18.787Z\",\n      \"account\": \"string\",\n      \"isManual\": true,\n      \"contraParty\": \"string\"\n    },\n    {\n      \"fillId\": 5491,\n      \"orderSequenceNumber\": 950,\n      \"routeId\": 5379,\n      \"ticker\": \"string\",\n      \"side\": \"SHORT\",\n      \"fillAmount\": 1236.1601916056964,\n      \"fillPrice\": 4711.420383748931,\n      \"broker\": \"string\",\n      \"brokerName\": \"string\",\n      \"exchange\": \"string\",\n      \"currency\": \"string\",\n      \"settlementDate\": \"1991-11-29\",\n      \"tradeDate\": \"2007-08-16\",\n      \"fillTime\": \"1974-08-10T08:50:32.476Z\",\n      \"account\": \"string\",\n      \"isManual\": false,\n      \"contraParty\": \"string\"\n    }\n  ],\n  \"totalCount\": 4393\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c93faf55-b7a9-49c3-ba7f-aa6dc686e863",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "routeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f45e4a5-de9c-4906-866f-ecfbc267f676",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "routeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1d315408-c26a-4598-a1b6-9627084624a2",
+          "name": "Bloomberg EMSX Get fill details",
+          "request": {
+            "name": "Bloomberg EMSX Get fill details",
+            "description": {
+              "content": "Retrieve detailed information about a specific fill or execution, including price, quantity, broker, timestamp, and settlement details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fills",
+                ":fillId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fillId",
+                  "description": "(Required) Unique identifier of the fill"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1a7ced11-84b5-45d6-8b45-3d239e210b74",
+              "name": "Fill details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fills",
+                    ":fillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fillId",
+                      "description": "(Required) Unique identifier of the fill"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fillId\": 9433,\n  \"orderSequenceNumber\": 6841,\n  \"routeId\": 5675,\n  \"ticker\": \"string\",\n  \"side\": \"BUY\",\n  \"fillAmount\": 8978.552673982373,\n  \"fillPrice\": 6873.315308169396,\n  \"broker\": \"string\",\n  \"brokerName\": \"string\",\n  \"exchange\": \"string\",\n  \"currency\": \"string\",\n  \"settlementDate\": \"2024-09-23\",\n  \"tradeDate\": \"1966-06-22\",\n  \"fillTime\": \"1948-03-10T11:25:41.328Z\",\n  \"account\": \"string\",\n  \"isManual\": true,\n  \"contraParty\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06e3dede-93fd-45b0-9e89-c9ade17aaa96",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fills",
+                    ":fillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fillId",
+                      "description": "(Required) Unique identifier of the fill"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de0dee84-93c5-44e8-997a-a76bd6babb50",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fills",
+                    ":fillId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fillId",
+                      "description": "(Required) Unique identifier of the fill"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "159d33f0-5494-4bc6-a565-d2fa2601a124",
+      "name": "Orders",
+      "description": {
+        "content": "Create, modify, delete, and query trading orders",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3f96c5bf-3cb3-4d19-ac9a-a55c1d4e4d9c",
+          "name": "Bloomberg EMSX List orders",
+          "request": {
+            "name": "Bloomberg EMSX List orders",
+            "description": {
+              "content": "Retrieve a list of orders in the EMSX blotter. Supports filtering by status, ticker, side, and date range. Returns order-level fields including ticker, amount, limit price, order type, time in force, and current fill status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamName",
+                  "value": "<string>",
+                  "description": "EMSX team name for shared blotter access"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter orders by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "ticker",
+                  "value": "<string>",
+                  "description": "Filter by Bloomberg security ticker"
+                },
+                {
+                  "disabled": false,
+                  "key": "side",
+                  "value": "<string>",
+                  "description": "Filter by order side"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "Filter orders created on or after this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "Filter orders created on or before this date"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of orders to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of orders to skip for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6cce01d6-9dc2-4465-925d-a3e060362921",
+              "name": "List of orders retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "side",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orders\": [\n    {\n      \"sequenceNumber\": 5406,\n      \"ticker\": \"string\",\n      \"side\": \"SHORT\",\n      \"amount\": 5869.583760534792,\n      \"orderType\": \"VWAP\",\n      \"limitPrice\": 5067.6095226340885,\n      \"stopPrice\": 6446.8643855124055,\n      \"timeInForce\": \"FOK\",\n      \"goodTillDate\": \"1996-06-29\",\n      \"status\": \"FILLED\",\n      \"filledAmount\": 5760.333491436137,\n      \"averagePrice\": 9953.585043929159,\n      \"remainingAmount\": 9444.11540097807,\n      \"assetClass\": \"Options\",\n      \"exchange\": \"string\",\n      \"currency\": \"string\",\n      \"account\": \"string\",\n      \"notes\": \"string\",\n      \"traderName\": \"string\",\n      \"createdTime\": \"2019-07-22T14:12:27.801Z\",\n      \"lastModifiedTime\": \"1991-12-11T22:02:40.254Z\",\n      \"routes\": [\n        {\n          \"routeId\": 1220,\n          \"broker\": \"string\",\n          \"status\": \"string\",\n          \"filledAmount\": 7034.372269759982,\n          \"averagePrice\": 6355.148443483735\n        },\n        {\n          \"routeId\": 4213,\n          \"broker\": \"string\",\n          \"status\": \"string\",\n          \"filledAmount\": 5236.669017683795,\n          \"averagePrice\": 922.3566321701393\n        }\n      ],\n      \"customFields\": {\n        \"key_0\": 2787.8202094089143\n      }\n    },\n    {\n      \"sequenceNumber\": 3402,\n      \"ticker\": \"string\",\n      \"side\": \"SELL\",\n      \"amount\": 2542.932985450923,\n      \"orderType\": \"STP\",\n      \"limitPrice\": 5932.658639019337,\n      \"stopPrice\": 2120.344940618445,\n      \"timeInForce\": \"IOC\",\n      \"goodTillDate\": \"1975-01-23\",\n      \"status\": \"WORKING\",\n      \"filledAmount\": 746.580514823082,\n      \"averagePrice\": 1320.5773275676381,\n      \"remainingAmount\": 5603.976124464677,\n      \"assetClass\": \"Equity\",\n      \"exchange\": \"string\",\n      \"currency\": \"string\",\n      \"account\": \"string\",\n      \"notes\": \"string\",\n      \"traderName\": \"string\",\n      \"createdTime\": \"1985-12-14T10:51:28.854Z\",\n      \"lastModifiedTime\": \"2005-07-25T04:50:40.538Z\",\n      \"routes\": [\n        {\n          \"routeId\": 8646,\n          \"broker\": \"string\",\n          \"status\": \"string\",\n          \"filledAmount\": 3095.6472581356807,\n          \"averagePrice\": 2960.60136278561\n        },\n        {\n          \"routeId\": 2117,\n          \"broker\": \"string\",\n          \"status\": \"string\",\n          \"filledAmount\": 6877.849631046244,\n          \"averagePrice\": 5615.9756918593\n        }\n      ],\n      \"customFields\": {\n        \"key_0\": 5832\n      }\n    }\n  ],\n  \"totalCount\": 6498\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5d9c810-69a6-4409-9c85-7e234379f19e",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "side",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04df5b0e-2d2c-425a-b66d-11e267c9aa6d",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "side",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "be39cbff-45b3-4c11-950d-09a985962bcc",
+          "name": "Bloomberg EMSX Create a new order",
+          "request": {
+            "name": "Bloomberg EMSX Create a new order",
+            "description": {
+              "content": "Create a new order in the EMSX blotter. The order is placed on the blotter and can subsequently be routed to a broker for execution. Supports equity, fixed income, futures, and options instruments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamName",
+                  "value": "<string>",
+                  "description": "EMSX team name for shared blotter access"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"goodTillDate\": \"<date>\",\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"customFields\": {\n    \"key_0\": 6128.677984457418,\n    \"key_1\": 6624.9922299896125,\n    \"key_2\": \"string\",\n    \"key_3\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "647d5ce5-bfcd-4959-8fe4-420815f9e4d4",
+              "name": "Order created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"goodTillDate\": \"<date>\",\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"customFields\": {\n    \"key_0\": 167.2449452210667\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sequenceNumber\": 4475,\n  \"status\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1e4b003-7cda-4c31-b236-1b07c659c258",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"goodTillDate\": \"<date>\",\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"customFields\": {\n    \"key_0\": 167.2449452210667\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b12ae85a-fae6-431c-a26c-8feaa7884361",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"goodTillDate\": \"<date>\",\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"customFields\": {\n    \"key_0\": 167.2449452210667\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "927ca348-70cb-4fdd-8ea4-1f9155537007",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"goodTillDate\": \"<date>\",\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"customFields\": {\n    \"key_0\": 167.2449452210667\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd4a3d6f-2326-4f27-bc62-ddd69797ed3f",
+              "name": "Order validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"goodTillDate\": \"<date>\",\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\",\n  \"customFields\": {\n    \"key_0\": 167.2449452210667\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20226f03-df26-459e-8805-965186f9c652",
+          "name": "Bloomberg EMSX Get order details",
+          "request": {
+            "name": "Bloomberg EMSX Get order details",
+            "description": {
+              "content": "Retrieve detailed information about a specific order by its EMSX sequence number, including all order fields, current status, and associated routes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderSequenceNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "orderSequenceNumber",
+                  "description": "(Required) EMSX order sequence number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "534edb40-80ed-49c2-8596-a991a12ea251",
+              "name": "Order details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sequenceNumber\": 1574,\n  \"ticker\": \"string\",\n  \"side\": \"COVER\",\n  \"amount\": 4418.119064402911,\n  \"orderType\": \"MOC\",\n  \"limitPrice\": 9625.048187837754,\n  \"stopPrice\": 9515.667306547168,\n  \"timeInForce\": \"GTC\",\n  \"goodTillDate\": \"1957-02-22\",\n  \"status\": \"FILLED\",\n  \"filledAmount\": 292.2690423322838,\n  \"averagePrice\": 1343.8572272454085,\n  \"remainingAmount\": 5530.009307843532,\n  \"assetClass\": \"FX\",\n  \"exchange\": \"string\",\n  \"currency\": \"string\",\n  \"account\": \"string\",\n  \"notes\": \"string\",\n  \"traderName\": \"string\",\n  \"createdTime\": \"2021-04-14T23:35:15.411Z\",\n  \"lastModifiedTime\": \"1957-03-23T20:33:01.963Z\",\n  \"routes\": [\n    {\n      \"routeId\": 6626,\n      \"broker\": \"string\",\n      \"status\": \"string\",\n      \"filledAmount\": 2338.4368643156995,\n      \"averagePrice\": 3177.327417914908\n    },\n    {\n      \"routeId\": 1174,\n      \"broker\": \"string\",\n      \"status\": \"string\",\n      \"filledAmount\": 9902.14493396696,\n      \"averagePrice\": 9942.498424743471\n    }\n  ],\n  \"customFields\": {\n    \"key_0\": true,\n    \"key_1\": 1855,\n    \"key_2\": 282.30387309013173\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49efcd8b-9bc3-48fe-ad86-1ad73ad77385",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fa365ff-4a1f-4efd-bc63-a6db4cfbc60a",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "697ca937-325c-4f92-a71f-ea8c994f65ac",
+          "name": "Bloomberg EMSX Modify an existing order",
+          "request": {
+            "name": "Bloomberg EMSX Modify an existing order",
+            "description": {
+              "content": "Modify fields on an existing order such as amount, limit price, order type, or time in force. Only unfilled or partially filled orders can be modified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderSequenceNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "orderSequenceNumber",
+                  "description": "(Required) EMSX order sequence number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"timeInForce\": \"<string>\",\n  \"goodTillDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a15e34ac-9f69-4062-9d4a-fa79207e7fa7",
+              "name": "Order modified successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"timeInForce\": \"<string>\",\n  \"goodTillDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sequenceNumber\": 4475,\n  \"status\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14009b5a-d59c-4415-886d-4a4791a5d0ba",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"timeInForce\": \"<string>\",\n  \"goodTillDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1bc8cb8b-b0e9-447a-879b-cabcebc2151f",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"timeInForce\": \"<string>\",\n  \"goodTillDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80a1fbdc-6b1b-4483-a75d-e4575a3329ed",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"timeInForce\": \"<string>\",\n  \"goodTillDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34d19e83-26c5-4833-8423-b2468a5a0649",
+              "name": "Order cannot be modified in its current state",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"timeInForce\": \"<string>\",\n  \"goodTillDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76799322-dd83-4b44-a0dc-da50be21b6c9",
+          "name": "Bloomberg EMSX Delete an order",
+          "request": {
+            "name": "Bloomberg EMSX Delete an order",
+            "description": {
+              "content": "Delete an order from the EMSX blotter. Only orders with no active routes can be deleted. Orders with active routes must have their routes cancelled first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderSequenceNumber"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "orderSequenceNumber",
+                  "description": "(Required) EMSX order sequence number"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e714d7b3-5d52-4a9b-9ca6-8e9e10974a9c",
+              "name": "Order deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "248ffd29-8811-4bbe-8c45-76424b92aec5",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01907505-ce3a-4080-ba39-f24525b1b27d",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c0da393-e7a9-4fef-91b7-58c9b44254c3",
+              "name": "Order has active routes and cannot be deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderSequenceNumber"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "orderSequenceNumber",
+                      "description": "(Required) EMSX order sequence number"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed32e518-6abc-4885-ad4e-b28b0eeb8e85",
+          "name": "Bloomberg EMSX Create an order and route it simultaneously",
+          "request": {
+            "name": "Bloomberg EMSX Create an order and route it simultaneously",
+            "description": {
+              "content": "Create a new order and immediately route it to a specified broker in a single operation. This combines order creation and route creation for streamlined execution workflows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                "createAndRoute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamName",
+                  "value": "<string>",
+                  "description": "EMSX team name for shared blotter access"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"broker\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": 5291.516000036628\n  },\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1064b246-31ca-46a2-aa56-f2e2f2b3b5f2",
+              "name": "Order created and routed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "createAndRoute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"broker\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": 5704.321906094261,\n    \"key_1\": 7979,\n    \"key_2\": true\n  },\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderSequenceNumber\": 3169,\n  \"routeId\": 2590,\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c18fc3a8-460c-4cb5-acc9-62aace0496b6",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "createAndRoute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"broker\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": 5704.321906094261,\n    \"key_1\": 7979,\n    \"key_2\": true\n  },\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca2d961f-0472-4cad-b37a-0f0963f6733f",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "createAndRoute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"broker\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": 5704.321906094261,\n    \"key_1\": 7979,\n    \"key_2\": true\n  },\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0425f85c-22f2-4750-b430-7d1f3f9130a5",
+              "name": "Order or route validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "createAndRoute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ticker\": \"<string>\",\n  \"side\": \"<string>\",\n  \"amount\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"broker\": \"<string>\",\n  \"limitPrice\": \"<number>\",\n  \"stopPrice\": \"<number>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": 5704.321906094261,\n    \"key_1\": 7979,\n    \"key_2\": true\n  },\n  \"account\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a9c609c-3d5b-483e-8482-ad4da3c4eef3",
+          "name": "Bloomberg EMSX Route multiple orders to a broker",
+          "request": {
+            "name": "Bloomberg EMSX Route multiple orders to a broker",
+            "description": {
+              "content": "Route a group of existing orders to a specified broker in a single batch operation. All orders in the group are routed with the same broker and strategy parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                "groupRoute"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderSequenceNumbers\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"broker\": \"<string>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": 2638,\n    \"key_1\": \"string\",\n    \"key_2\": 7887.713944616943\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5059e490-f21e-45e3-94d1-bcbda7493ffe",
+              "name": "Orders routed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "groupRoute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderSequenceNumbers\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"broker\": \"<string>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"orderSequenceNumber\": 9007,\n      \"routeId\": 8120,\n      \"status\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"orderSequenceNumber\": 4100,\n      \"routeId\": 2769,\n      \"status\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05fd1c7c-3584-4ceb-9997-07796bec4aef",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "groupRoute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderSequenceNumbers\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"broker\": \"<string>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43448124-a0b7-41cd-a6b8-3df5a8631a8a",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    "groupRoute"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderSequenceNumbers\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"broker\": \"<string>\",\n  \"strategy\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "f72b5290-2d0f-4c8b-9500-1c455eaafbdf",
+      "name": "Routes",
+      "description": {
+        "content": "Create, modify, delete, and manage order routes to brokers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fbf3d7d5-576c-48d8-a576-413faa097f1d",
+          "name": "Bloomberg EMSX List routes",
+          "request": {
+            "name": "Bloomberg EMSX List routes",
+            "description": {
+              "content": "Retrieve a list of routes across all orders. Supports filtering by route status, broker, and associated order. Returns route-level fields including broker, strategy, filled amount, and average price.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "teamName",
+                  "value": "<string>",
+                  "description": "EMSX team name for shared blotter access"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter routes by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "broker",
+                  "value": "<string>",
+                  "description": "Filter by broker code"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderSequenceNumber",
+                  "value": "<integer>",
+                  "description": "Filter routes by parent order sequence number"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of routes to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of routes to skip for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56005c98-7d2c-443b-9a8a-f45b3578754a",
+              "name": "List of routes retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"routes\": [\n    {\n      \"routeId\": 2900,\n      \"orderSequenceNumber\": 3868,\n      \"ticker\": \"string\",\n      \"side\": \"SELL\",\n      \"amount\": 4567.542399168263,\n      \"filledAmount\": 3578.424511680215,\n      \"averagePrice\": 8801.206862908943,\n      \"remainingAmount\": 6745.541354792529,\n      \"broker\": \"string\",\n      \"brokerName\": \"string\",\n      \"strategy\": \"string\",\n      \"strategyParameters\": {\n        \"key_0\": true,\n        \"key_1\": \"string\"\n      },\n      \"status\": \"NEW\",\n      \"limitPrice\": 5224.095026582607,\n      \"orderType\": \"string\",\n      \"timeInForce\": \"string\",\n      \"account\": \"string\",\n      \"exchange\": \"string\",\n      \"reasonCode\": \"string\",\n      \"reasonDescription\": \"string\",\n      \"createdTime\": \"1958-09-01T15:53:26.912Z\",\n      \"lastModifiedTime\": \"1960-10-05T00:26:11.527Z\",\n      \"lastFillTime\": \"1976-10-12T22:39:38.990Z\",\n      \"customFields\": {\n        \"key_0\": false,\n        \"key_1\": 1767\n      }\n    },\n    {\n      \"routeId\": 3802,\n      \"orderSequenceNumber\": 8415,\n      \"ticker\": \"string\",\n      \"side\": \"BUY\",\n      \"amount\": 1959.7085148529302,\n      \"filledAmount\": 3589.734288802421,\n      \"averagePrice\": 6902.385870547549,\n      \"remainingAmount\": 942.3543757581432,\n      \"broker\": \"string\",\n      \"brokerName\": \"string\",\n      \"strategy\": \"string\",\n      \"strategyParameters\": {\n        \"key_0\": \"string\"\n      },\n      \"status\": \"WORKING\",\n      \"limitPrice\": 7770.562861875037,\n      \"orderType\": \"string\",\n      \"timeInForce\": \"string\",\n      \"account\": \"string\",\n      \"exchange\": \"string\",\n      \"reasonCode\": \"string\",\n      \"reasonDescription\": \"string\",\n      \"createdTime\": \"1976-06-25T23:47:55.727Z\",\n      \"lastModifiedTime\": \"1959-05-23T12:15:42.498Z\",\n      \"lastFillTime\": \"1959-09-19T16:48:11.308Z\",\n      \"customFields\": {\n        \"key_0\": false\n      }\n    }\n  ],\n  \"totalCount\": 7370\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f97595f-9e61-4f16-8563-d9f810e77c8b",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c8b4001-9103-4508-a172-7cca48c616e5",
+              "name": "Insufficient permissions for this operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77d8218c-3b48-40fe-9b10-b00c3a7db9dc",
+          "name": "Bloomberg EMSX Get route details",
+          "request": {
+            "name": "Bloomberg EMSX Get route details",
+            "description": {
+              "content": "Retrieve detailed information about a specific route, including broker, strategy, fill status, and all route-level fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routes",
+                ":routeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "routeId",
+                  "description": "(Required) EMSX route identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e40bfb17-b34d-4d34-90e0-bc7d24a1e2ce",
+              "name": "Route details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"routeId\": 8432,\n  \"orderSequenceNumber\": 4662,\n  \"ticker\": \"string\",\n  \"side\": \"COVER\",\n  \"amount\": 6483.556636265794,\n  \"filledAmount\": 8737.098663903807,\n  \"averagePrice\": 1585.4297382005457,\n  \"remainingAmount\": 595.6704711384165,\n  \"broker\": \"string\",\n  \"brokerName\": \"string\",\n  \"strategy\": \"string\",\n  \"strategyParameters\": {\n    \"key_0\": 1453.7381843276964\n  },\n  \"status\": \"REJECTED\",\n  \"limitPrice\": 4585.852623896607,\n  \"orderType\": \"string\",\n  \"timeInForce\": \"string\",\n  \"account\": \"string\",\n  \"exchange\": \"string\",\n  \"reasonCode\": \"string\",\n  \"reasonDescription\": \"string\",\n  \"createdTime\": \"1983-09-02T18:54:48.001Z\",\n  \"lastModifiedTime\": \"1964-03-07T06:14:23.290Z\",\n  \"lastFillTime\": \"1997-08-13T17:45:00.428Z\",\n  \"customFields\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e7a802c-27b8-483b-9f36-2945052d518f",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e79ac5b-5e5f-4fd7-a2b3-db10232361e6",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb4137cf-888b-4374-8e56-db5f8c943d5d",
+          "name": "Bloomberg EMSX Modify an existing route",
+          "request": {
+            "name": "Bloomberg EMSX Modify an existing route",
+            "description": {
+              "content": "Modify fields on an existing route such as amount, limit price, or strategy parameters. Only working or partially filled routes can be modified.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routes",
+                ":routeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "routeId",
+                  "description": "(Required) EMSX route identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"limitPrice\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": true,\n    \"key_1\": 2148.1517298306076,\n    \"key_2\": \"string\",\n    \"key_3\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "25b3d58c-11f0-4869-882e-f514641b2a36",
+              "name": "Route modified successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"limitPrice\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": true,\n    \"key_1\": 2885\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"routeId\": 9266,\n  \"status\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15dc52dd-1846-43e6-8c46-72021c0d23d8",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"limitPrice\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": true,\n    \"key_1\": 2885\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abcce64c-0294-4dbb-ab99-913bad97f58b",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"limitPrice\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": true,\n    \"key_1\": 2885\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2f113d6-4b9f-4bb5-b780-3c93766e4ab1",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"limitPrice\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": true,\n    \"key_1\": 2885\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a7d21a8-5707-4f09-9982-68dd125754b6",
+              "name": "Route cannot be modified in its current state",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"limitPrice\": \"<number>\",\n  \"orderType\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"strategyParameters\": {\n    \"key_0\": true,\n    \"key_1\": 2885\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "40426ead-df61-42ad-b24f-1ac0a0a4aa57",
+          "name": "Bloomberg EMSX Cancel a route",
+          "request": {
+            "name": "Bloomberg EMSX Cancel a route",
+            "description": {
+              "content": "Cancel an active route. Sends a cancel request to the broker. Only working or partially filled routes can be cancelled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routes",
+                ":routeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "routeId",
+                  "description": "(Required) EMSX route identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5cef17ca-4306-4303-9580-9063b9b6431a",
+              "name": "Route cancellation requested successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c2295cb6-aa53-4e9e-b570-6ecbadae7d5f",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d50d1860-ace2-4168-8565-44ad1ee69f36",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e10a6491-5cc7-4823-a3b3-e8261573a6ae",
+              "name": "Route cannot be cancelled in its current state",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    ":routeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "routeId",
+                      "description": "(Required) EMSX route identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28d47453-5a3c-4767-b9e2-9a14888228f6",
+          "name": "Bloomberg EMSX Create a manual fill",
+          "request": {
+            "name": "Bloomberg EMSX Create a manual fill",
+            "description": {
+              "content": "Manually record a fill against a route. Used for reporting executions that occurred outside of electronic routing, such as voice-brokered trades.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "routes",
+                "manualFill"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderSequenceNumber\": \"<integer>\",\n  \"routeId\": \"<integer>\",\n  \"fillAmount\": \"<number>\",\n  \"fillPrice\": \"<number>\",\n  \"broker\": \"<string>\",\n  \"settlementDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "efa85d50-e734-4b04-83ca-bae9601eb7b6",
+              "name": "Manual fill created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    "manualFill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderSequenceNumber\": \"<integer>\",\n  \"routeId\": \"<integer>\",\n  \"fillAmount\": \"<number>\",\n  \"fillPrice\": \"<number>\",\n  \"broker\": \"<string>\",\n  \"settlementDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"fillId\": 8654,\n  \"status\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4d9b9c4-366a-40ea-9fa8-367ea7e16fb5",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    "manualFill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderSequenceNumber\": \"<integer>\",\n  \"routeId\": \"<integer>\",\n  \"fillAmount\": \"<number>\",\n  \"fillPrice\": \"<number>\",\n  \"broker\": \"<string>\",\n  \"settlementDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7de61bf4-85a2-4c58-a869-7d435c503c64",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    "manualFill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderSequenceNumber\": \"<integer>\",\n  \"routeId\": \"<integer>\",\n  \"fillAmount\": \"<number>\",\n  \"fillPrice\": \"<number>\",\n  \"broker\": \"<string>\",\n  \"settlementDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54e5f7a1-f8b0-4928-8bb3-32d6fe8bfdde",
+              "name": "Fill validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "routes",
+                    "manualFill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderSequenceNumber\": \"<integer>\",\n  \"routeId\": \"<integer>\",\n  \"fillAmount\": \"<number>\",\n  \"fillPrice\": \"<number>\",\n  \"broker\": \"<string>\",\n  \"settlementDate\": \"<date>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "4ba38391-d952-45f0-8630-0eb55fa9d48f",
+      "name": "Teams",
+      "description": {
+        "content": "Manage EMSX trading teams",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a6902445-6f6a-4680-83e9-a29717593e11",
+          "name": "Bloomberg EMSX List EMSX teams",
+          "request": {
+            "name": "Bloomberg EMSX List EMSX teams",
+            "description": {
+              "content": "Retrieve a list of EMSX trading teams that the authenticated user has access to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "teams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c166f67c-e818-4ac6-804d-2c676f883f00",
+              "name": "List of teams",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"teams\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"members\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"members\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9527da5b-3650-4db1-8a15-3646ce4623b4",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "teams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.bloomberg.com/emsxapi/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0bb04da8-6a35-4839-b46b-3a23cd6b1c0c",
+    "name": "Bloomberg EMSX Trading API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
+      "type": "text/plain"
+    }
+  }
+}

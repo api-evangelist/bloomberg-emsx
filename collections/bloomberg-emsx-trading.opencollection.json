@@ -1,0 +1,541 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bloomberg EMSX Trading API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/orders",
+            "params": [
+              {
+                "name": "teamName",
+                "value": "",
+                "type": "query",
+                "description": "EMSX team name for shared blotter access"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter orders by status"
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Bloomberg security ticker"
+              },
+              {
+                "name": "side",
+                "value": "",
+                "type": "query",
+                "description": "Filter by order side"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter orders created on or after this date"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter orders created on or before this date"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of orders to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of orders to skip for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of orders in the EMSX blotter. Supports filtering by status, ticker, side, and date range. Returns order-level fields including ticker, amount, limit price, order type, time in force, and current fill status."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Create a new order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bloomberg.com/emsxapi/v1/orders",
+            "params": [
+              {
+                "name": "teamName",
+                "value": "",
+                "type": "query",
+                "description": "EMSX team name for shared blotter access"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new order in the EMSX blotter. The order is placed on the blotter and can subsequently be routed to a broker for execution. Supports equity, fixed income, futures, and options instruments."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Get order details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/orders/:orderSequenceNumber",
+            "params": [
+              {
+                "name": "orderSequenceNumber",
+                "value": "",
+                "type": "path",
+                "description": "EMSX order sequence number"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific order by its EMSX sequence number, including all order fields, current status, and associated routes."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Modify an existing order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.bloomberg.com/emsxapi/v1/orders/:orderSequenceNumber",
+            "params": [
+              {
+                "name": "orderSequenceNumber",
+                "value": "",
+                "type": "path",
+                "description": "EMSX order sequence number"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify fields on an existing order such as amount, limit price, order type, or time in force. Only unfilled or partially filled orders can be modified."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Delete an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.bloomberg.com/emsxapi/v1/orders/:orderSequenceNumber",
+            "params": [
+              {
+                "name": "orderSequenceNumber",
+                "value": "",
+                "type": "path",
+                "description": "EMSX order sequence number"
+              }
+            ]
+          },
+          "docs": "Delete an order from the EMSX blotter. Only orders with no active routes can be deleted. Orders with active routes must have their routes cancelled first."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Create an order and route it simultaneously",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bloomberg.com/emsxapi/v1/orders/createAndRoute",
+            "params": [
+              {
+                "name": "teamName",
+                "value": "",
+                "type": "query",
+                "description": "EMSX team name for shared blotter access"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new order and immediately route it to a specified broker in a single operation. This combines order creation and route creation for streamlined execution workflows."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Route multiple orders to a broker",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bloomberg.com/emsxapi/v1/orders/groupRoute",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Route a group of existing orders to a specified broker in a single batch operation. All orders in the group are routed with the same broker and strategy parameters."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Routes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List routes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes",
+            "params": [
+              {
+                "name": "teamName",
+                "value": "",
+                "type": "query",
+                "description": "EMSX team name for shared blotter access"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter routes by status"
+              },
+              {
+                "name": "broker",
+                "value": "",
+                "type": "query",
+                "description": "Filter by broker code"
+              },
+              {
+                "name": "orderSequenceNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter routes by parent order sequence number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of routes to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of routes to skip for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of routes across all orders. Supports filtering by route status, broker, and associated order. Returns route-level fields including broker, strategy, filled amount, and average price."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Get route details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/:routeId",
+            "params": [
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "path",
+                "description": "EMSX route identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific route, including broker, strategy, fill status, and all route-level fields."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Modify an existing route",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/:routeId",
+            "params": [
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "path",
+                "description": "EMSX route identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify fields on an existing route such as amount, limit price, or strategy parameters. Only working or partially filled routes can be modified."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Cancel a route",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/:routeId",
+            "params": [
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "path",
+                "description": "EMSX route identifier"
+              }
+            ]
+          },
+          "docs": "Cancel an active route. Sends a cancel request to the broker. Only working or partially filled routes can be cancelled."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Create a manual fill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/manualFill",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manually record a fill against a route. Used for reporting executions that occurred outside of electronic routing, such as voice-brokered trades."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Fills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List fills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fills",
+            "params": [
+              {
+                "name": "teamName",
+                "value": "",
+                "type": "query",
+                "description": "EMSX team name for shared blotter access"
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by Bloomberg security ticker"
+              },
+              {
+                "name": "broker",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by broker code"
+              },
+              {
+                "name": "orderSequenceNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by parent order sequence number"
+              },
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by route identifier"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills on or after this date"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills on or before this date"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of fills to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of fills to skip for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of trade executions and fills. Supports filtering by ticker, broker, date range, and associated order or route."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Get fill details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fills/:fillId",
+            "params": [
+              {
+                "name": "fillId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the fill"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific fill or execution, including price, quantity, broker, timestamp, and settlement details."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Brokers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List available brokers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/brokers",
+            "params": [
+              {
+                "name": "assetClass",
+                "value": "",
+                "type": "query",
+                "description": "Filter brokers by asset class"
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "Bloomberg ticker to find brokers available for a specific security"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of brokers available for routing orders. Can be filtered by asset class and security type. Returns broker codes, names, and supported strategies."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX List broker strategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/brokers/:brokerCode/strategies",
+            "params": [
+              {
+                "name": "brokerCode",
+                "value": "",
+                "type": "path",
+                "description": "Bloomberg broker code"
+              },
+              {
+                "name": "assetClass",
+                "value": "",
+                "type": "query",
+                "description": "Filter strategies by asset class"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of execution strategies available from a specific broker, including algorithmic strategies and their configurable parameters."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List EMSX teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/teams"
+          },
+          "docs": "Retrieve a list of EMSX trading teams that the authenticated user has access to."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Field Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List available order fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fields/order"
+          },
+          "docs": "Retrieve the list of available fields for orders, including field names, types, and descriptions."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX List available route fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fields/route"
+          },
+          "docs": "Retrieve the list of available fields for routes, including field names, types, and descriptions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
