@@ -4,7 +4,7 @@ description: >-
   Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution
   management platform for trading operations.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Bloomberg
   - Execution Management
