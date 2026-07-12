@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/bloomberg-emsx-trading-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Bloomberg API authentication token obtained via Bloomberg B-PIPE or Bloomberg
+    Terminal authentication
+  sources:
+  - openapi/bloomberg-emsx-trading-openapi.yml

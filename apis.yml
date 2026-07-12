@@ -38,6 +38,12 @@ apis:
       - type: Reference
         url: https://www.bloomberg.com/professional/support/api-library/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/bloomberg-emsx-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/bloomberg-emsx-domain-security.yml
+  - type: Authentication
+    url: authentication/bloomberg-emsx-authentication.yml
   - type: Portal
     url: https://www.bloomberg.com/professional/
   - type: Documentation
