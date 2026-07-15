@@ -38,6 +38,8 @@ apis:
       - type: Reference
         url: https://www.bloomberg.com/professional/support/api-library/
 common:
+  - type: AgenticAccess
+    url: agentic-access/bloomberg-emsx-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/bloomberg-emsx-vulnerability-disclosure.yml
   - type: DomainSecurity
