@@ -1,0 +1,205 @@
+openapi: 3.1.0
+info:
+  title: Bloomberg EMSX Trading Brokers API
+  description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.
+  version: '1.0'
+  contact:
+    name: Bloomberg Professional Support
+    url: https://www.bloomberg.com/professional/support/
+  termsOfService: https://www.bloomberg.com/notices/tos/
+servers:
+- url: https://api.bloomberg.com/emsxapi/v1
+  description: Bloomberg EMSX Production API
+security:
+- bearerAuth: []
+tags:
+- name: Brokers
+  description: Query available brokers and broker strategies
+paths:
+  /brokers:
+    get:
+      operationId: listBrokers
+      summary: Bloomberg EMSX List available brokers
+      description: Retrieve a list of brokers available for routing orders. Can be filtered by asset class and security type. Returns broker codes, names, and supported strategies.
+      tags:
+      - Brokers
+      parameters:
+      - name: assetClass
+        in: query
+        description: Filter brokers by asset class
+        schema:
+          type: string
+          enum:
+          - Equity
+          - Fixed Income
+          - Futures
+          - Options
+          - FX
+      - name: ticker
+        in: query
+        description: Bloomberg ticker to find brokers available for a specific security
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of available brokers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brokers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Broker'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /brokers/{brokerCode}/strategies:
+    get:
+      operationId: listBrokerStrategies
+      summary: Bloomberg EMSX List broker strategies
+      description: Retrieve the list of execution strategies available from a specific broker, including algorithmic strategies and their configurable parameters.
+      tags:
+      - Brokers
+      parameters:
+      - name: brokerCode
+        in: path
+        required: true
+        description: Bloomberg broker code
+        schema:
+          type: string
+      - name: assetClass
+        in: query
+        description: Filter strategies by asset class
+        schema:
+          type: string
+          enum:
+          - Equity
+          - Fixed Income
+          - Futures
+          - Options
+          - FX
+      responses:
+        '200':
+          description: List of broker strategies
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  strategies:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BrokerStrategy'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Broker not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Broker:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Bloomberg broker code
+        name:
+          type: string
+          description: Full broker name
+        assetClasses:
+          type: array
+          items:
+            type: string
+          description: Supported asset classes
+        supportsAlgoTrading:
+          type: boolean
+          description: Whether the broker supports algorithmic trading
+        strategies:
+          type: array
+          items:
+            type: string
+          description: List of available strategy names
+        isActive:
+          type: boolean
+          description: Whether the broker is currently active
+    BrokerStrategy:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Strategy name
+        description:
+          type: string
+          description: Strategy description
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrategyParameter'
+          description: Configurable strategy parameters
+    StrategyParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Parameter name
+        description:
+          type: string
+          description: Parameter description
+        type:
+          type: string
+          enum:
+          - string
+          - integer
+          - number
+          - boolean
+          description: Parameter data type
+        required:
+          type: boolean
+          description: Whether the parameter is required
+        defaultValue:
+          description: Default value for the parameter
+        allowedValues:
+          type: array
+          items: {}
+          description: List of allowed values if restricted
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information
+  responses:
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bloomberg API authentication token obtained via Bloomberg B-PIPE or Bloomberg Terminal authentication
+externalDocs:
+  description: Bloomberg EMSX API Documentation
+  url: https://www.bloomberg.com/professional/support/api-library/

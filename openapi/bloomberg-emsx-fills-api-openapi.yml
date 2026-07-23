@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Bloomberg EMSX Trading Brokers Fills API
+  description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.
+  version: '1.0'
+  contact:
+    name: Bloomberg Professional Support
+    url: https://www.bloomberg.com/professional/support/
+  termsOfService: https://www.bloomberg.com/notices/tos/
+servers:
+- url: https://api.bloomberg.com/emsxapi/v1
+  description: Bloomberg EMSX Production API
+security:
+- bearerAuth: []
+tags:
+- name: Fills
+  description: Query and monitor trade executions and fills
+paths:
+  /fills:
+    get:
+      operationId: listFills
+      summary: Bloomberg EMSX List fills
+      description: Retrieve a list of trade executions and fills. Supports filtering by ticker, broker, date range, and associated order or route.
+      tags:
+      - Fills
+      parameters:
+      - $ref: '#/components/parameters/teamName'
+      - name: ticker
+        in: query
+        description: Filter fills by Bloomberg security ticker
+        schema:
+          type: string
+      - name: broker
+        in: query
+        description: Filter fills by broker code
+        schema:
+          type: string
+      - name: orderSequenceNumber
+        in: query
+        description: Filter fills by parent order sequence number
+        schema:
+          type: integer
+      - name: routeId
+        in: query
+        description: Filter fills by route identifier
+        schema:
+          type: integer
+      - name: fromDate
+        in: query
+        description: Filter fills on or after this date
+        schema:
+          type: string
+          format: date
+      - name: toDate
+        in: query
+        description: Filter fills on or before this date
+        schema:
+          type: string
+          format: date
+      - name: limit
+        in: query
+        description: Maximum number of fills to return
+        schema:
+          type: integer
+          default: 100
+          maximum: 1000
+      - name: offset
+        in: query
+        description: Number of fills to skip for pagination
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: List of fills retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fills:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Fill'
+                  totalCount:
+                    type: integer
+                    description: Total number of fills matching the filter
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /fills/{fillId}:
+    get:
+      operationId: getFill
+      summary: Bloomberg EMSX Get fill details
+      description: Retrieve detailed information about a specific fill or execution, including price, quantity, broker, timestamp, and settlement details.
+      tags:
+      - Fills
+      parameters:
+      - name: fillId
+        in: path
+        required: true
+        description: Unique identifier of the fill
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Fill details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fill'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information
+    Fill:
+      type: object
+      properties:
+        fillId:
+          type: integer
+          description: Unique fill identifier
+        orderSequenceNumber:
+          type: integer
+          description: Parent order sequence number
+        routeId:
+          type: integer
+          description: Parent route identifier
+        ticker:
+          type: string
+          description: Bloomberg security ticker
+        side:
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - SHORT
+          - COVER
+          description: Fill side
+        fillAmount:
+          type: number
+          description: Filled quantity
+        fillPrice:
+          type: number
+          description: Fill price
+        broker:
+          type: string
+          description: Executing broker code
+        brokerName:
+          type: string
+          description: Executing broker name
+        exchange:
+          type: string
+          description: Exchange where the fill occurred
+        currency:
+          type: string
+          description: Trade currency (ISO 4217)
+        settlementDate:
+          type: string
+          format: date
+          description: Settlement date
+        tradeDate:
+          type: string
+          format: date
+          description: Trade date
+        fillTime:
+          type: string
+          format: date-time
+          description: Timestamp of the fill
+        account:
+          type: string
+          description: Trading account
+        isManual:
+          type: boolean
+          description: Whether this is a manually entered fill
+        contraParty:
+          type: string
+          description: Counterparty identifier
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bloomberg API authentication token obtained via Bloomberg B-PIPE or Bloomberg Terminal authentication
+externalDocs:
+  description: Bloomberg EMSX API Documentation
+  url: https://www.bloomberg.com/professional/support/api-library/

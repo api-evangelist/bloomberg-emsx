@@ -1,0 +1,710 @@
+openapi: 3.1.0
+info:
+  title: Bloomberg EMSX Trading Brokers Orders API
+  description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.
+  version: '1.0'
+  contact:
+    name: Bloomberg Professional Support
+    url: https://www.bloomberg.com/professional/support/
+  termsOfService: https://www.bloomberg.com/notices/tos/
+servers:
+- url: https://api.bloomberg.com/emsxapi/v1
+  description: Bloomberg EMSX Production API
+security:
+- bearerAuth: []
+tags:
+- name: Orders
+  description: Create, modify, delete, and query trading orders
+paths:
+  /orders:
+    get:
+      operationId: listOrders
+      summary: Bloomberg EMSX List orders
+      description: Retrieve a list of orders in the EMSX blotter. Supports filtering by status, ticker, side, and date range. Returns order-level fields including ticker, amount, limit price, order type, time in force, and current fill status.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/teamName'
+      - name: status
+        in: query
+        description: Filter orders by status
+        schema:
+          type: string
+          enum:
+          - NEW
+          - WORKING
+          - PARTIALLY_FILLED
+          - FILLED
+          - CANCELLED
+          - REJECTED
+          - EXPIRED
+      - name: ticker
+        in: query
+        description: Filter by Bloomberg security ticker
+        schema:
+          type: string
+      - name: side
+        in: query
+        description: Filter by order side
+        schema:
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - SHORT
+          - COVER
+      - name: fromDate
+        in: query
+        description: Filter orders created on or after this date
+        schema:
+          type: string
+          format: date
+      - name: toDate
+        in: query
+        description: Filter orders created on or before this date
+        schema:
+          type: string
+          format: date
+      - name: limit
+        in: query
+        description: Maximum number of orders to return
+        schema:
+          type: integer
+          default: 100
+          maximum: 1000
+      - name: offset
+        in: query
+        description: Number of orders to skip for pagination
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: List of orders retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  totalCount:
+                    type: integer
+                    description: Total number of orders matching the filter
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      operationId: createOrder
+      summary: Bloomberg EMSX Create a new order
+      description: Create a new order in the EMSX blotter. The order is placed on the blotter and can subsequently be routed to a broker for execution. Supports equity, fixed income, futures, and options instruments.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/teamName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          description: Order validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders/{orderSequenceNumber}:
+    get:
+      operationId: getOrder
+      summary: Bloomberg EMSX Get order details
+      description: Retrieve detailed information about a specific order by its EMSX sequence number, including all order fields, current status, and associated routes.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/orderSequenceNumber'
+      responses:
+        '200':
+          description: Order details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: modifyOrder
+      summary: Bloomberg EMSX Modify an existing order
+      description: Modify fields on an existing order such as amount, limit price, order type, or time in force. Only unfilled or partially filled orders can be modified.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/orderSequenceNumber'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyOrderRequest'
+      responses:
+        '200':
+          description: Order modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Order cannot be modified in its current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: deleteOrder
+      summary: Bloomberg EMSX Delete an order
+      description: Delete an order from the EMSX blotter. Only orders with no active routes can be deleted. Orders with active routes must have their routes cancelled first.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/orderSequenceNumber'
+      responses:
+        '204':
+          description: Order deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Order has active routes and cannot be deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders/createAndRoute:
+    post:
+      operationId: createOrderAndRoute
+      summary: Bloomberg EMSX Create an order and route it simultaneously
+      description: Create a new order and immediately route it to a specified broker in a single operation. This combines order creation and route creation for streamlined execution workflows.
+      tags:
+      - Orders
+      parameters:
+      - $ref: '#/components/parameters/teamName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAndRouteRequest'
+      responses:
+        '201':
+          description: Order created and routed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAndRouteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Order or route validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /orders/groupRoute:
+    post:
+      operationId: groupRouteOrders
+      summary: Bloomberg EMSX Route multiple orders to a broker
+      description: Route a group of existing orders to a specified broker in a single batch operation. All orders in the group are routed with the same broker and strategy parameters.
+      tags:
+      - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupRouteRequest'
+      responses:
+        '200':
+          description: Orders routed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GroupRouteResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    CreateAndRouteRequest:
+      type: object
+      required:
+      - ticker
+      - side
+      - amount
+      - orderType
+      - timeInForce
+      - broker
+      properties:
+        ticker:
+          type: string
+          description: Bloomberg security ticker symbol
+        side:
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - SHORT
+          - COVER
+          description: Order side
+        amount:
+          type: number
+          minimum: 1
+          description: Order quantity
+        orderType:
+          type: string
+          enum:
+          - MKT
+          - LMT
+          - STP
+          - STP_LMT
+          - MOC
+          - LOC
+          - VWAP
+          - TWAP
+          description: Order type
+        limitPrice:
+          type: number
+          description: Limit price
+        stopPrice:
+          type: number
+          description: Stop price
+        timeInForce:
+          type: string
+          enum:
+          - DAY
+          - GTC
+          - IOC
+          - FOK
+          - GTD
+          - OPG
+          - CLO
+          description: Time in force
+        broker:
+          type: string
+          description: Broker code for routing
+        strategy:
+          type: string
+          description: Broker execution strategy
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Strategy-specific parameters
+        account:
+          type: string
+          description: Trading account identifier
+        notes:
+          type: string
+          description: Free-text notes
+    GroupRouteResult:
+      type: object
+      properties:
+        orderSequenceNumber:
+          type: integer
+          description: Order sequence number
+        routeId:
+          type: integer
+          description: Created route identifier
+        status:
+          type: string
+          description: Routing result status
+        message:
+          type: string
+          description: Status message or error detail
+    CreateOrderRequest:
+      type: object
+      required:
+      - ticker
+      - side
+      - amount
+      - orderType
+      - timeInForce
+      properties:
+        ticker:
+          type: string
+          description: Bloomberg security ticker symbol
+        side:
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - SHORT
+          - COVER
+          description: Order side
+        amount:
+          type: number
+          minimum: 1
+          description: Order quantity
+        orderType:
+          type: string
+          enum:
+          - MKT
+          - LMT
+          - STP
+          - STP_LMT
+          - MOC
+          - LOC
+          - VWAP
+          - TWAP
+          description: Order type
+        limitPrice:
+          type: number
+          description: Limit price (required for LMT and STP_LMT orders)
+        stopPrice:
+          type: number
+          description: Stop price (required for STP and STP_LMT orders)
+        timeInForce:
+          type: string
+          enum:
+          - DAY
+          - GTC
+          - IOC
+          - FOK
+          - GTD
+          - OPG
+          - CLO
+          description: Time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Expiration date (required for GTD orders)
+        account:
+          type: string
+          description: Trading account identifier
+        notes:
+          type: string
+          description: Free-text notes
+        customFields:
+          type: object
+          additionalProperties: true
+          description: Custom user-defined fields
+    Order:
+      type: object
+      properties:
+        sequenceNumber:
+          type: integer
+          description: EMSX order sequence number (unique identifier)
+        ticker:
+          type: string
+          description: Bloomberg security ticker symbol
+        side:
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - SHORT
+          - COVER
+          description: Order side
+        amount:
+          type: number
+          description: Total order quantity
+        orderType:
+          type: string
+          enum:
+          - MKT
+          - LMT
+          - STP
+          - STP_LMT
+          - MOC
+          - LOC
+          - VWAP
+          - TWAP
+          description: Order type
+        limitPrice:
+          type: number
+          description: Limit price for limit orders
+        stopPrice:
+          type: number
+          description: Stop price for stop orders
+        timeInForce:
+          type: string
+          enum:
+          - DAY
+          - GTC
+          - IOC
+          - FOK
+          - GTD
+          - OPG
+          - CLO
+          description: Time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Expiration date for GTD orders
+        status:
+          type: string
+          enum:
+          - NEW
+          - WORKING
+          - PARTIALLY_FILLED
+          - FILLED
+          - CANCELLED
+          - REJECTED
+          - EXPIRED
+          description: Current order status
+        filledAmount:
+          type: number
+          description: Total quantity filled across all routes
+        averagePrice:
+          type: number
+          description: Volume-weighted average fill price
+        remainingAmount:
+          type: number
+          description: Remaining unfilled quantity
+        assetClass:
+          type: string
+          enum:
+          - Equity
+          - Fixed Income
+          - Futures
+          - Options
+          - FX
+          description: Asset class of the security
+        exchange:
+          type: string
+          description: Exchange or marketplace
+        currency:
+          type: string
+          description: Trading currency (ISO 4217)
+        account:
+          type: string
+          description: Trading account identifier
+        notes:
+          type: string
+          description: Free-text notes attached to the order
+        traderName:
+          type: string
+          description: Name of the trader who created the order
+        createdTime:
+          type: string
+          format: date-time
+          description: Timestamp when the order was created
+        lastModifiedTime:
+          type: string
+          format: date-time
+          description: Timestamp when the order was last modified
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/RouteSummary'
+          description: Summary of routes associated with this order
+        customFields:
+          type: object
+          additionalProperties: true
+          description: Custom user-defined fields
+    OrderResponse:
+      type: object
+      properties:
+        sequenceNumber:
+          type: integer
+          description: EMSX order sequence number
+        status:
+          type: string
+          description: Order status
+        message:
+          type: string
+          description: Status message
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information
+    RouteSummary:
+      type: object
+      properties:
+        routeId:
+          type: integer
+          description: Route identifier
+        broker:
+          type: string
+          description: Broker code
+        status:
+          type: string
+          description: Route status
+        filledAmount:
+          type: number
+          description: Quantity filled
+        averagePrice:
+          type: number
+          description: Average fill price
+    GroupRouteRequest:
+      type: object
+      required:
+      - orderSequenceNumbers
+      - broker
+      properties:
+        orderSequenceNumbers:
+          type: array
+          items:
+            type: integer
+          description: List of order sequence numbers to route
+        broker:
+          type: string
+          description: Broker code for routing
+        strategy:
+          type: string
+          description: Broker execution strategy
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Strategy-specific parameters
+    ModifyOrderRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          minimum: 1
+          description: Updated order quantity
+        orderType:
+          type: string
+          enum:
+          - MKT
+          - LMT
+          - STP
+          - STP_LMT
+          - MOC
+          - LOC
+          - VWAP
+          - TWAP
+          description: Updated order type
+        limitPrice:
+          type: number
+          description: Updated limit price
+        stopPrice:
+          type: number
+          description: Updated stop price
+        timeInForce:
+          type: string
+          enum:
+          - DAY
+          - GTC
+          - IOC
+          - FOK
+          - GTD
+          - OPG
+          - CLO
+          description: Updated time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Updated expiration date
+        notes:
+          type: string
+          description: Updated notes
+    CreateAndRouteResponse:
+      type: object
+      properties:
+        orderSequenceNumber:
+          type: integer
+          description: EMSX order sequence number
+        routeId:
+          type: integer
+          description: Route identifier
+        status:
+          type: string
+          description: Combined status message
+  parameters:
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
+    orderSequenceNumber:
+      name: orderSequenceNumber
+      in: path
+      required: true
+      description: EMSX order sequence number
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bloomberg API authentication token obtained via Bloomberg B-PIPE or Bloomberg Terminal authentication
+externalDocs:
+  description: Bloomberg EMSX API Documentation
+  url: https://www.bloomberg.com/professional/support/api-library/

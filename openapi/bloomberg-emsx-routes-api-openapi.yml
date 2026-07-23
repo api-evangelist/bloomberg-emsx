@@ -1,0 +1,423 @@
+openapi: 3.1.0
+info:
+  title: Bloomberg EMSX Trading Brokers Routes API
+  description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.
+  version: '1.0'
+  contact:
+    name: Bloomberg Professional Support
+    url: https://www.bloomberg.com/professional/support/
+  termsOfService: https://www.bloomberg.com/notices/tos/
+servers:
+- url: https://api.bloomberg.com/emsxapi/v1
+  description: Bloomberg EMSX Production API
+security:
+- bearerAuth: []
+tags:
+- name: Routes
+  description: Create, modify, delete, and manage order routes to brokers
+paths:
+  /routes:
+    get:
+      operationId: listRoutes
+      summary: Bloomberg EMSX List routes
+      description: Retrieve a list of routes across all orders. Supports filtering by route status, broker, and associated order. Returns route-level fields including broker, strategy, filled amount, and average price.
+      tags:
+      - Routes
+      parameters:
+      - $ref: '#/components/parameters/teamName'
+      - name: status
+        in: query
+        description: Filter routes by status
+        schema:
+          type: string
+          enum:
+          - NEW
+          - WORKING
+          - PARTIALLY_FILLED
+          - FILLED
+          - CANCELLED
+          - REJECTED
+      - name: broker
+        in: query
+        description: Filter by broker code
+        schema:
+          type: string
+      - name: orderSequenceNumber
+        in: query
+        description: Filter routes by parent order sequence number
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        description: Maximum number of routes to return
+        schema:
+          type: integer
+          default: 100
+          maximum: 1000
+      - name: offset
+        in: query
+        description: Number of routes to skip for pagination
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: List of routes retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  routes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Route'
+                  totalCount:
+                    type: integer
+                    description: Total number of routes matching the filter
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+  /routes/{routeId}:
+    get:
+      operationId: getRoute
+      summary: Bloomberg EMSX Get route details
+      description: Retrieve detailed information about a specific route, including broker, strategy, fill status, and all route-level fields.
+      tags:
+      - Routes
+      parameters:
+      - $ref: '#/components/parameters/routeId'
+      responses:
+        '200':
+          description: Route details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: modifyRoute
+      summary: Bloomberg EMSX Modify an existing route
+      description: Modify fields on an existing route such as amount, limit price, or strategy parameters. Only working or partially filled routes can be modified.
+      tags:
+      - Routes
+      parameters:
+      - $ref: '#/components/parameters/routeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifyRouteRequest'
+      responses:
+        '200':
+          description: Route modified successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Route cannot be modified in its current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      operationId: cancelRoute
+      summary: Bloomberg EMSX Cancel a route
+      description: Cancel an active route. Sends a cancel request to the broker. Only working or partially filled routes can be cancelled.
+      tags:
+      - Routes
+      parameters:
+      - $ref: '#/components/parameters/routeId'
+      responses:
+        '204':
+          description: Route cancellation requested successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Route cannot be cancelled in its current state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /routes/manualFill:
+    post:
+      operationId: createManualFill
+      summary: Bloomberg EMSX Create a manual fill
+      description: Manually record a fill against a route. Used for reporting executions that occurred outside of electronic routing, such as voice-brokered trades.
+      tags:
+      - Routes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManualFillRequest'
+      responses:
+        '201':
+          description: Manual fill created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FillResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          description: Fill validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    RouteResponse:
+      type: object
+      properties:
+        routeId:
+          type: integer
+          description: Route identifier
+        status:
+          type: string
+          description: Route status
+        message:
+          type: string
+          description: Status message
+    ModifyRouteRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          minimum: 1
+          description: Updated route quantity
+        limitPrice:
+          type: number
+          description: Updated limit price
+        orderType:
+          type: string
+          description: Updated order type
+        timeInForce:
+          type: string
+          description: Updated time in force
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Updated strategy parameters
+    ManualFillRequest:
+      type: object
+      required:
+      - orderSequenceNumber
+      - routeId
+      - fillAmount
+      - fillPrice
+      properties:
+        orderSequenceNumber:
+          type: integer
+          description: Parent order sequence number
+        routeId:
+          type: integer
+          description: Route identifier to fill against
+        fillAmount:
+          type: number
+          minimum: 1
+          description: Fill quantity
+        fillPrice:
+          type: number
+          description: Fill price
+        broker:
+          type: string
+          description: Executing broker code
+        settlementDate:
+          type: string
+          format: date
+          description: Settlement date
+        notes:
+          type: string
+          description: Notes for the manual fill
+    Route:
+      type: object
+      properties:
+        routeId:
+          type: integer
+          description: EMSX route identifier
+        orderSequenceNumber:
+          type: integer
+          description: Parent order sequence number
+        ticker:
+          type: string
+          description: Bloomberg security ticker
+        side:
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - SHORT
+          - COVER
+          description: Route side
+        amount:
+          type: number
+          description: Route quantity
+        filledAmount:
+          type: number
+          description: Quantity filled on this route
+        averagePrice:
+          type: number
+          description: Average fill price on this route
+        remainingAmount:
+          type: number
+          description: Remaining unfilled quantity
+        broker:
+          type: string
+          description: Broker code
+        brokerName:
+          type: string
+          description: Full broker name
+        strategy:
+          type: string
+          description: Execution strategy name
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Strategy-specific parameters
+        status:
+          type: string
+          enum:
+          - NEW
+          - WORKING
+          - PARTIALLY_FILLED
+          - FILLED
+          - CANCELLED
+          - REJECTED
+          description: Current route status
+        limitPrice:
+          type: number
+          description: Limit price for the route
+        orderType:
+          type: string
+          description: Order type on the route
+        timeInForce:
+          type: string
+          description: Time in force on the route
+        account:
+          type: string
+          description: Trading account
+        exchange:
+          type: string
+          description: Destination exchange
+        reasonCode:
+          type: string
+          description: Rejection or cancellation reason code
+        reasonDescription:
+          type: string
+          description: Human-readable reason description
+        createdTime:
+          type: string
+          format: date-time
+          description: Timestamp when route was created
+        lastModifiedTime:
+          type: string
+          format: date-time
+          description: Timestamp when route was last modified
+        lastFillTime:
+          type: string
+          format: date-time
+          description: Timestamp of the most recent fill
+        customFields:
+          type: object
+          additionalProperties: true
+          description: Custom user-defined fields
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information
+    FillResponse:
+      type: object
+      properties:
+        fillId:
+          type: integer
+          description: Created fill identifier
+        status:
+          type: string
+          description: Fill status
+        message:
+          type: string
+          description: Status message
+  parameters:
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
+    routeId:
+      name: routeId
+      in: path
+      required: true
+      description: EMSX route identifier
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bloomberg API authentication token obtained via Bloomberg B-PIPE or Bloomberg Terminal authentication
+externalDocs:
+  description: Bloomberg EMSX API Documentation
+  url: https://www.bloomberg.com/professional/support/api-library/
