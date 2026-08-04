@@ -1,0 +1,24 @@
+{
+  "provider": "bloomberg-emsx",
+  "sources": [
+    "bloomberg-emsx-brokers-api-openapi.yml",
+    "bloomberg-emsx-field-lists-api-openapi.yml",
+    "bloomberg-emsx-fills-api-openapi.yml",
+    "bloomberg-emsx-orders-api-openapi.yml",
+    "bloomberg-emsx-routes-api-openapi.yml",
+    "bloomberg-emsx-teams-api-openapi.yml"
+  ],
+  "outputs": [
+    "bloomberg-emsx-brokers-api-openapi.yml",
+    "bloomberg-emsx-field-lists-api-openapi.yml",
+    "bloomberg-emsx-fills-api-openapi.yml",
+    "bloomberg-emsx-orders-api-openapi.yml",
+    "bloomberg-emsx-routes-api-openapi.yml",
+    "bloomberg-emsx-teams-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
