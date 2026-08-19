@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bloomberg EMSX Trading Brokers Field Lists API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Field Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List available order fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fields/order"
+          },
+          "docs": "Retrieve the list of available fields for orders, including field names, types, and descriptions."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX List available route fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fields/route"
+          },
+          "docs": "Retrieve the list of available fields for routes, including field names, types, and descriptions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

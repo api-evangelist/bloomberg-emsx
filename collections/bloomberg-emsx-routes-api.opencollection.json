@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bloomberg EMSX Trading Brokers Routes API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Routes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List routes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes",
+            "params": [
+              {
+                "name": "teamName",
+                "value": "",
+                "type": "query",
+                "description": "EMSX team name for shared blotter access"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter routes by status"
+              },
+              {
+                "name": "broker",
+                "value": "",
+                "type": "query",
+                "description": "Filter by broker code"
+              },
+              {
+                "name": "orderSequenceNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter routes by parent order sequence number"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of routes to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of routes to skip for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of routes across all orders. Supports filtering by route status, broker, and associated order. Returns route-level fields including broker, strategy, filled amount, and average price."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Get route details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/:routeId",
+            "params": [
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "path",
+                "description": "EMSX route identifier"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific route, including broker, strategy, fill status, and all route-level fields."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Modify an existing route",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/:routeId",
+            "params": [
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "path",
+                "description": "EMSX route identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modify fields on an existing route such as amount, limit price, or strategy parameters. Only working or partially filled routes can be modified."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Cancel a route",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/:routeId",
+            "params": [
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "path",
+                "description": "EMSX route identifier"
+              }
+            ]
+          },
+          "docs": "Cancel an active route. Sends a cancel request to the broker. Only working or partially filled routes can be cancelled."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Create a manual fill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.bloomberg.com/emsxapi/v1/routes/manualFill",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Manually record a fill against a route. Used for reporting executions that occurred outside of electronic routing, such as voice-brokered trades."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

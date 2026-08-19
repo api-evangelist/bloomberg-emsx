@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bloomberg EMSX Trading Brokers Fills API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List fills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fills",
+            "params": [
+              {
+                "name": "teamName",
+                "value": "",
+                "type": "query",
+                "description": "EMSX team name for shared blotter access"
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by Bloomberg security ticker"
+              },
+              {
+                "name": "broker",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by broker code"
+              },
+              {
+                "name": "orderSequenceNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by parent order sequence number"
+              },
+              {
+                "name": "routeId",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills by route identifier"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills on or after this date"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "Filter fills on or before this date"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of fills to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of fills to skip for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of trade executions and fills. Supports filtering by ticker, broker, date range, and associated order or route."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX Get fill details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/fills/:fillId",
+            "params": [
+              {
+                "name": "fillId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the fill"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a specific fill or execution, including price, quantity, broker, timestamp, and settlement details."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

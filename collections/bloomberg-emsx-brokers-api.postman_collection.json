@@ -1,0 +1,419 @@
+{
+  "item": [
+    {
+      "id": "0db9af24-25fd-402e-8b31-fdda81b3900e",
+      "name": "Brokers",
+      "description": {
+        "content": "Query available brokers and broker strategies",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b3a3fa3-6fd3-4b58-a040-b568961ecfeb",
+          "name": "Bloomberg EMSX List available brokers",
+          "request": {
+            "name": "Bloomberg EMSX List available brokers",
+            "description": {
+              "content": "Retrieve a list of brokers available for routing orders. Can be filtered by asset class and security type. Returns broker codes, names, and supported strategies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brokers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "assetClass",
+                  "value": "<string>",
+                  "description": "Filter brokers by asset class"
+                },
+                {
+                  "disabled": false,
+                  "key": "ticker",
+                  "value": "<string>",
+                  "description": "Bloomberg ticker to find brokers available for a specific security"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3926317c-1ef2-40db-91e7-5fb11d4c0437",
+              "name": "List of available brokers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"brokers\": [\n    {\n      \"code\": \"string\",\n      \"name\": \"string\",\n      \"assetClasses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"supportsAlgoTrading\": false,\n      \"strategies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isActive\": false\n    },\n    {\n      \"code\": \"string\",\n      \"name\": \"string\",\n      \"assetClasses\": [\n        \"string\",\n        \"string\"\n      ],\n      \"supportsAlgoTrading\": false,\n      \"strategies\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isActive\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7025fb25-bd29-485d-8198-2eb4bad7a3b3",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ticker",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6962a3de-6814-44f8-9d4b-88426ead283f",
+          "name": "Bloomberg EMSX List broker strategies",
+          "request": {
+            "name": "Bloomberg EMSX List broker strategies",
+            "description": {
+              "content": "Retrieve the list of execution strategies available from a specific broker, including algorithmic strategies and their configurable parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "brokers",
+                ":brokerCode",
+                "strategies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "assetClass",
+                  "value": "<string>",
+                  "description": "Filter strategies by asset class"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "brokerCode",
+                  "description": "(Required) Bloomberg broker code"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "114d821f-122b-4dcc-979d-9fa082d01ccf",
+              "name": "List of broker strategies",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers",
+                    ":brokerCode",
+                    "strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brokerCode",
+                      "description": "(Required) Bloomberg broker code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"strategies\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"number\",\n          \"required\": false,\n          \"defaultValue\": {}\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"boolean\",\n          \"required\": true,\n          \"defaultValue\": {}\n        }\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"string\",\n          \"required\": false,\n          \"defaultValue\": {}\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"number\",\n          \"required\": true,\n          \"defaultValue\": {}\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79ef5bbe-5c91-4e43-9d24-a2b8de226b90",
+              "name": "Authentication required or invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers",
+                    ":brokerCode",
+                    "strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brokerCode",
+                      "description": "(Required) Bloomberg broker code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca331bc7-ffe0-4cf6-bf9e-8860a9ef2127",
+              "name": "Broker not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "brokers",
+                    ":brokerCode",
+                    "strategies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assetClass",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "brokerCode",
+                      "description": "(Required) Bloomberg broker code"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.bloomberg.com/emsxapi/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "444c0960-73d5-4658-a121-9bb5ccc5cedc",
+    "name": "Bloomberg EMSX Trading Brokers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
+      "type": "text/plain"
+    }
+  }
+}

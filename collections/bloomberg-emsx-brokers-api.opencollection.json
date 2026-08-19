@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bloomberg EMSX Trading Brokers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Brokers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bloomberg EMSX List available brokers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/brokers",
+            "params": [
+              {
+                "name": "assetClass",
+                "value": "",
+                "type": "query",
+                "description": "Filter brokers by asset class"
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "Bloomberg ticker to find brokers available for a specific security"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of brokers available for routing orders. Can be filtered by asset class and security type. Returns broker codes, names, and supported strategies."
+        },
+        {
+          "info": {
+            "name": "Bloomberg EMSX List broker strategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.bloomberg.com/emsxapi/v1/brokers/:brokerCode/strategies",
+            "params": [
+              {
+                "name": "brokerCode",
+                "value": "",
+                "type": "path",
+                "description": "Bloomberg broker code"
+              },
+              {
+                "name": "assetClass",
+                "value": "",
+                "type": "query",
+                "description": "Filter strategies by asset class"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of execution strategies available from a specific broker, including algorithmic strategies and their configurable parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
