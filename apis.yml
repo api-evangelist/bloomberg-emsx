@@ -21,6 +21,12 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bloomberg-
 tags:
   - Bloomberg
   - Execution Management
+  - Financial-Services
+  - Order Management
+  - Trading
+tags_raw:
+  - Bloomberg
+  - Execution Management
   - Financial Services
   - Order Management
   - Trading
@@ -37,6 +43,15 @@ apis:
     execution notifications for equity, fixed income, futures, and options trading.
   humanURL: https://emsx-api-doc.readthedocs.io/
   tags:
+  - Brokers
+  - Equity
+  - Execution
+  - Fills
+  - Fixed Income
+  - Order
+  - Routes
+  - Trading
+  tags_raw:
   - Brokers
   - Equity
   - Execution
@@ -82,6 +97,8 @@ apis:
   description: Create, modify, delete, and query trading orders
   humanURL: https://emsx-api-doc.readthedocs.io/
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -100,6 +117,8 @@ apis:
   description: Manage EMSX trading teams
   humanURL: https://emsx-api-doc.readthedocs.io/
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
