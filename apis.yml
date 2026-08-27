@@ -1,8 +1,7 @@
 aid: bloomberg-emsx
 name: Bloomberg EMSX
-description: >-
-  Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution
-  management platform for trading operations.
+description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order
+  and execution management platform for trading operations.
 type: Index
 accessModel:
   pricing: freemium
@@ -19,28 +18,27 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bloomberg-emsx.png
 tags:
-  - Bloomberg
-  - Execution Management
-  - Financial-Services
-  - Order Management
-  - Trading
+- Bloomberg
+- Execution Management
+- Financial-Services
+- Order Management
+- Trading
 tags_raw:
-  - Bloomberg
-  - Execution Management
-  - Financial Services
-  - Order Management
-  - Trading
+- Bloomberg
+- Execution Management
+- Financial Services
+- Order Management
+- Trading
 url: https://raw.githubusercontent.com/api-evangelist/bloomberg-emsx/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-05-19'
+modified: '2026-08-27'
 specificationVersion: '0.23'
 apis:
 - aid: bloomberg-emsx:bloomberg-emsx-trading-api
   name: Bloomberg EMSX Trading API
-  description: >-
-    API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform.
-    Supports order lifecycle management, broker selection, route management, fill tracking, and real-time
-    execution notifications for equity, fixed income, futures, and options trading.
+  description: API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform.
+    Supports order lifecycle management, broker selection, route management, fill tracking, and real-time execution
+    notifications for equity, fixed income, futures, and options trading.
   humanURL: https://emsx-api-doc.readthedocs.io/
   tags:
   - Brokers
@@ -124,24 +122,31 @@ apis:
   - type: OpenAPI
     url: openapi/bloomberg-emsx-teams-api-openapi.yml
 common:
-  - type: AgenticAccess
-    url: agentic-access/bloomberg-emsx-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/bloomberg-emsx-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/bloomberg-emsx-domain-security.yml
-  - type: Authentication
-    url: authentication/bloomberg-emsx-authentication.yml
-  - type: Portal
-    url: https://www.bloomberg.com/professional/
-  - type: Documentation
-    url: https://www.bloomberg.com/professional/support/api-library/
-  - type: TermsOfService
-    url: https://www.bloomberg.com/notices/tos/
-  - type: PrivacyPolicy
-    url: https://www.bloomberg.com/privacy/
-  - type: Support
-    url: https://www.bloomberg.com/professional/support/
+- type: ParentCompany
+  url: https://apis.io/providers/bloomberg/
+  name: Bloomberg
+  x-relationship: product
+  x-generated-by: bloomberg-family:2026-08-27
+- type: AgenticAccess
+  url: agentic-access/bloomberg-emsx-agentic-access.yml
+- type: VulnerabilityDisclosure
+  url: security/bloomberg-emsx-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/bloomberg-emsx-domain-security.yml
+- type: Authentication
+  url: authentication/bloomberg-emsx-authentication.yml
+- type: Portal
+  url: https://www.bloomberg.com/professional/
+- type: Documentation
+  url: https://www.bloomberg.com/professional/support/api-library/
+- type: TermsOfService
+  url: https://www.bloomberg.com/notices/tos/
+- type: PrivacyPolicy
+  url: https://www.bloomberg.com/privacy/
+- type: Support
+  url: https://www.bloomberg.com/professional/support/
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-parent: bloomberg
+x-relationship: product
