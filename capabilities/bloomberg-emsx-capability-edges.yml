@@ -4,7 +4,6 @@ generated_by: planning/capability-mapping/scripts/classify_capabilities.py
 model: claude-opus-5
 frame:
 - Banking & Capital Markets
-- Software & Technology
 min_confidence: 0.7
 capability_model:
   source: https://github.com/vincentmakes/turbo-ea-capabilities
@@ -20,40 +19,38 @@ edges:
   capability_id_l1: BC-1370
   capability_name: Trading Order Management
   confidence: 0.95
-  evidence: POST /orders createOrder 'Create a new order'; POST /orders/createAndRoute 'Create an order
-    and route it simultaneously'; POST /orders/groupRoute 'Route multiple orders to a broker'
-  reason: Order creation, modification, cancellation and routing to brokers in an execution management
-    system is exactly trading order capture, execution and routing; no other reading fits.
+  evidence: '"POST /orders createOrder Bloomberg EMSX Create a new order"; "POST /orders/createAndRoute
+    createOrderAndRoute ... Create an order and route it simultaneously"; "groupRouteOrders ... Route
+    multiple orders to a broker"'
+  reason: Operations create, modify, cancel and route trading orders to brokers — order capture, execution
+    and routing, i.e. Trading Order Management in capital markets front office.
 - tag: Routes
   spec_file: bloomberg-emsx-routes-api-openapi.yml
   capability_id: BC-1370.30
   capability_id_l1: BC-1370
   capability_name: Trading Order Management
-  confidence: 0.9
-  evidence: GET /routes listRoutes; PATCH /routes/{routeId} modifyRoute; DELETE /routes/{routeId} cancelRoute;
-    POST /routes/manualFill createManualFill
-  reason: '''Routes'' here are broker execution routes for orders — modify/cancel route and manual fill
-    entry are order execution and routing operations in the trading front office.'
+  confidence: 0.85
+  evidence: '"GET /routes listRoutes", "DELETE /routes/{routeId} cancelRoute", "POST /routes/manualFill
+    createManualFill Bloomberg EMSX Create a manual fill"'
+  reason: Routes represent broker execution routes of orders with fills; this is order routing/execution
+    management within trading order management rather than post-trade operations.
 - tag: Brokers
   spec_file: bloomberg-emsx-brokers-api-openapi.yml
   capability_id: BC-1370.30
   capability_id_l1: BC-1370
   capability_name: Trading Order Management
-  confidence: 0.7
-  evidence: GET /brokers listBrokers ... GET /brokers/{brokerCode}/strategies listBrokerStrategies; API
-    'supports order lifecycle management, broker selection, route management'
-  reason: Read-only broker and broker-strategy lookup exists to support order routing/broker selection
-    in an execution management system, so it sits within front-office trading order management rather
-    than any counterparty-onboarding capability. Confidence held down because the operations are pure
-    reference lookups.
+  confidence: 0.75
+  evidence: 'GET /brokers listBrokers ''List available brokers''; GET /brokers/{brokerCode}/strategies;
+    spec: ''The API supports order lifecycle management, broker selection, route management'''
+  reason: Broker and broker-strategy lookup exists to support order routing/execution in an EMS, i.e.
+    trading order management.
 - tag: Fills
   spec_file: bloomberg-emsx-fills-api-openapi.yml
   capability_id: BC-1370.30
   capability_id_l1: BC-1370
   capability_name: Trading Order Management
-  confidence: 0.7
-  evidence: GET /fills listFills ... GET /fills/{fillId} getFill 'Get fill details'; description mentions
-    'real-time fill notifications'
-  reason: Fills are execution reports against routed orders in a front-office EMS, which belongs to trading
-    order management (order capture and execution monitoring). Some ambiguity with trade confirmation/capture
-    in operations, hence 0.7.
+  confidence: 0.75
+  evidence: 'GET /fills listFills; GET /fills/{fillId} ''Get fill details''; spec: ''execution monitoring
+    ... real-time fill notifications'''
+  reason: Execution fill retrieval within an execution management system belongs to order capture/execution
+    monitoring; could alternatively be viewed as trade capture, hence 0.75.
