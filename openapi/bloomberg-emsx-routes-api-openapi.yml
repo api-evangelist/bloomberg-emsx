@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Bloomberg EMSX Trading Brokers Routes API
+  title: Bloomberg EMSX Trading Routes API
   description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.
   version: '1.0'
   contact:
@@ -184,31 +184,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Insufficient permissions for this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     RouteResponse:
       type: object
@@ -222,57 +197,6 @@ components:
         message:
           type: string
           description: Status message
-    ModifyRouteRequest:
-      type: object
-      properties:
-        amount:
-          type: number
-          minimum: 1
-          description: Updated route quantity
-        limitPrice:
-          type: number
-          description: Updated limit price
-        orderType:
-          type: string
-          description: Updated order type
-        timeInForce:
-          type: string
-          description: Updated time in force
-        strategyParameters:
-          type: object
-          additionalProperties: true
-          description: Updated strategy parameters
-    ManualFillRequest:
-      type: object
-      required:
-      - orderSequenceNumber
-      - routeId
-      - fillAmount
-      - fillPrice
-      properties:
-        orderSequenceNumber:
-          type: integer
-          description: Parent order sequence number
-        routeId:
-          type: integer
-          description: Route identifier to fill against
-        fillAmount:
-          type: number
-          minimum: 1
-          description: Fill quantity
-        fillPrice:
-          type: number
-          description: Fill price
-        broker:
-          type: string
-          description: Executing broker code
-        settlementDate:
-          type: string
-          format: date
-          description: Settlement date
-        notes:
-          type: string
-          description: Notes for the manual fill
     Route:
       type: object
       properties:
@@ -365,6 +289,18 @@ components:
           type: object
           additionalProperties: true
           description: Custom user-defined fields
+    FillResponse:
+      type: object
+      properties:
+        fillId:
+          type: integer
+          description: Created fill identifier
+        status:
+          type: string
+          description: Fill status
+        message:
+          type: string
+          description: Status message
     Error:
       type: object
       properties:
@@ -386,25 +322,58 @@ components:
                 type: string
                 description: Detail about the field error
           description: Detailed error information
-    FillResponse:
+    ModifyRouteRequest:
       type: object
       properties:
-        fillId:
+        amount:
+          type: number
+          minimum: 1
+          description: Updated route quantity
+        limitPrice:
+          type: number
+          description: Updated limit price
+        orderType:
+          type: string
+          description: Updated order type
+        timeInForce:
+          type: string
+          description: Updated time in force
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Updated strategy parameters
+    ManualFillRequest:
+      type: object
+      required:
+      - orderSequenceNumber
+      - routeId
+      - fillAmount
+      - fillPrice
+      properties:
+        orderSequenceNumber:
           type: integer
-          description: Created fill identifier
-        status:
+          description: Parent order sequence number
+        routeId:
+          type: integer
+          description: Route identifier to fill against
+        fillAmount:
+          type: number
+          minimum: 1
+          description: Fill quantity
+        fillPrice:
+          type: number
+          description: Fill price
+        broker:
           type: string
-          description: Fill status
-        message:
+          description: Executing broker code
+        settlementDate:
           type: string
-          description: Status message
+          format: date
+          description: Settlement date
+        notes:
+          type: string
+          description: Notes for the manual fill
   parameters:
-    teamName:
-      name: teamName
-      in: query
-      description: EMSX team name for shared blotter access
-      schema:
-        type: string
     routeId:
       name: routeId
       in: path
@@ -412,6 +381,37 @@ components:
       description: EMSX route identifier
       schema:
         type: integer
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

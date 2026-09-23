@@ -1,12 +1,7 @@
 {
   "provider": "bloomberg-emsx",
   "sources": [
-    "bloomberg-emsx-brokers-api-openapi.yml",
-    "bloomberg-emsx-field-lists-api-openapi.yml",
-    "bloomberg-emsx-fills-api-openapi.yml",
-    "bloomberg-emsx-orders-api-openapi.yml",
-    "bloomberg-emsx-routes-api-openapi.yml",
-    "bloomberg-emsx-teams-api-openapi.yml"
+    "_original/bloomberg-emsx-trading-openapi.yml"
   ],
   "outputs": [
     "bloomberg-emsx-brokers-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "bloomberg-emsx-trading-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "bloomberg-emsx-brokers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bloomberg-emsx-field-lists-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bloomberg-emsx-fills-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bloomberg-emsx-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bloomberg-emsx-routes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "bloomberg-emsx-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

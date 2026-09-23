@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Bloomberg EMSX Trading Brokers Orders API
+  title: Bloomberg EMSX Trading Orders API
   description: Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.
   version: '1.0'
   contact:
@@ -266,32 +266,138 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    BadRequest:
-      description: Invalid request parameters
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Insufficient permissions for this operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    GroupRouteRequest:
+      type: object
+      required:
+      - orderSequenceNumbers
+      - broker
+      properties:
+        orderSequenceNumbers:
+          type: array
+          items:
+            type: integer
+          description: List of order sequence numbers to route
+        broker:
+          type: string
+          description: Broker code for routing
+        strategy:
+          type: string
+          description: Broker execution strategy
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Strategy-specific parameters
+    CreateOrderRequest:
+      type: object
+      required:
+      - ticker
+      - side
+      - amount
+      - orderType
+      - timeInForce
+      properties:
+        ticker:
+          type: string
+          description: Bloomberg security ticker symbol
+        side:
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - SHORT
+          - COVER
+          description: Order side
+        amount:
+          type: number
+          minimum: 1
+          description: Order quantity
+        orderType:
+          type: string
+          enum:
+          - MKT
+          - LMT
+          - STP
+          - STP_LMT
+          - MOC
+          - LOC
+          - VWAP
+          - TWAP
+          description: Order type
+        limitPrice:
+          type: number
+          description: Limit price (required for LMT and STP_LMT orders)
+        stopPrice:
+          type: number
+          description: Stop price (required for STP and STP_LMT orders)
+        timeInForce:
+          type: string
+          enum:
+          - DAY
+          - GTC
+          - IOC
+          - FOK
+          - GTD
+          - OPG
+          - CLO
+          description: Time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Expiration date (required for GTD orders)
+        account:
+          type: string
+          description: Trading account identifier
+        notes:
+          type: string
+          description: Free-text notes
+        customFields:
+          type: object
+          additionalProperties: true
+          description: Custom user-defined fields
+    ModifyOrderRequest:
+      type: object
+      properties:
+        amount:
+          type: number
+          minimum: 1
+          description: Updated order quantity
+        orderType:
+          type: string
+          enum:
+          - MKT
+          - LMT
+          - STP
+          - STP_LMT
+          - MOC
+          - LOC
+          - VWAP
+          - TWAP
+          description: Updated order type
+        limitPrice:
+          type: number
+          description: Updated limit price
+        stopPrice:
+          type: number
+          description: Updated stop price
+        timeInForce:
+          type: string
+          enum:
+          - DAY
+          - GTC
+          - IOC
+          - FOK
+          - GTD
+          - OPG
+          - CLO
+          description: Updated time in force
+        goodTillDate:
+          type: string
+          format: date
+          description: Updated expiration date
+        notes:
+          type: string
+          description: Updated notes
     CreateAndRouteRequest:
       type: object
       required:
@@ -362,88 +468,6 @@ components:
         notes:
           type: string
           description: Free-text notes
-    GroupRouteResult:
-      type: object
-      properties:
-        orderSequenceNumber:
-          type: integer
-          description: Order sequence number
-        routeId:
-          type: integer
-          description: Created route identifier
-        status:
-          type: string
-          description: Routing result status
-        message:
-          type: string
-          description: Status message or error detail
-    CreateOrderRequest:
-      type: object
-      required:
-      - ticker
-      - side
-      - amount
-      - orderType
-      - timeInForce
-      properties:
-        ticker:
-          type: string
-          description: Bloomberg security ticker symbol
-        side:
-          type: string
-          enum:
-          - BUY
-          - SELL
-          - SHORT
-          - COVER
-          description: Order side
-        amount:
-          type: number
-          minimum: 1
-          description: Order quantity
-        orderType:
-          type: string
-          enum:
-          - MKT
-          - LMT
-          - STP
-          - STP_LMT
-          - MOC
-          - LOC
-          - VWAP
-          - TWAP
-          description: Order type
-        limitPrice:
-          type: number
-          description: Limit price (required for LMT and STP_LMT orders)
-        stopPrice:
-          type: number
-          description: Stop price (required for STP and STP_LMT orders)
-        timeInForce:
-          type: string
-          enum:
-          - DAY
-          - GTC
-          - IOC
-          - FOK
-          - GTD
-          - OPG
-          - CLO
-          description: Time in force
-        goodTillDate:
-          type: string
-          format: date
-          description: Expiration date (required for GTD orders)
-        account:
-          type: string
-          description: Trading account identifier
-        notes:
-          type: string
-          description: Free-text notes
-        customFields:
-          type: object
-          additionalProperties: true
-          description: Custom user-defined fields
     Order:
       type: object
       properties:
@@ -558,18 +582,6 @@ components:
           type: object
           additionalProperties: true
           description: Custom user-defined fields
-    OrderResponse:
-      type: object
-      properties:
-        sequenceNumber:
-          type: integer
-          description: EMSX order sequence number
-        status:
-          type: string
-          description: Order status
-        message:
-          type: string
-          description: Status message
     Error:
       type: object
       properties:
@@ -609,70 +621,33 @@ components:
         averagePrice:
           type: number
           description: Average fill price
-    GroupRouteRequest:
-      type: object
-      required:
-      - orderSequenceNumbers
-      - broker
-      properties:
-        orderSequenceNumbers:
-          type: array
-          items:
-            type: integer
-          description: List of order sequence numbers to route
-        broker:
-          type: string
-          description: Broker code for routing
-        strategy:
-          type: string
-          description: Broker execution strategy
-        strategyParameters:
-          type: object
-          additionalProperties: true
-          description: Strategy-specific parameters
-    ModifyOrderRequest:
+    GroupRouteResult:
       type: object
       properties:
-        amount:
-          type: number
-          minimum: 1
-          description: Updated order quantity
-        orderType:
+        orderSequenceNumber:
+          type: integer
+          description: Order sequence number
+        routeId:
+          type: integer
+          description: Created route identifier
+        status:
           type: string
-          enum:
-          - MKT
-          - LMT
-          - STP
-          - STP_LMT
-          - MOC
-          - LOC
-          - VWAP
-          - TWAP
-          description: Updated order type
-        limitPrice:
-          type: number
-          description: Updated limit price
-        stopPrice:
-          type: number
-          description: Updated stop price
-        timeInForce:
+          description: Routing result status
+        message:
           type: string
-          enum:
-          - DAY
-          - GTC
-          - IOC
-          - FOK
-          - GTD
-          - OPG
-          - CLO
-          description: Updated time in force
-        goodTillDate:
+          description: Status message or error detail
+    OrderResponse:
+      type: object
+      properties:
+        sequenceNumber:
+          type: integer
+          description: EMSX order sequence number
+        status:
           type: string
-          format: date
-          description: Updated expiration date
-        notes:
+          description: Order status
+        message:
           type: string
-          description: Updated notes
+          description: Status message
     CreateAndRouteResponse:
       type: object
       properties:
@@ -686,12 +661,6 @@ components:
           type: string
           description: Combined status message
   parameters:
-    teamName:
-      name: teamName
-      in: query
-      description: EMSX team name for shared blotter access
-      schema:
-        type: string
     orderSequenceNumber:
       name: orderSequenceNumber
       in: path
@@ -699,6 +668,37 @@ components:
       description: EMSX order sequence number
       schema:
         type: integer
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
+  responses:
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
