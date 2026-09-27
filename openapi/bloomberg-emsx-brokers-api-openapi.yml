@@ -101,6 +101,45 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Broker:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Bloomberg broker code
+        name:
+          type: string
+          description: Full broker name
+        assetClasses:
+          type: array
+          items:
+            type: string
+          description: Supported asset classes
+        supportsAlgoTrading:
+          type: boolean
+          description: Whether the broker supports algorithmic trading
+        strategies:
+          type: array
+          items:
+            type: string
+          description: List of available strategy names
+        isActive:
+          type: boolean
+          description: Whether the broker is currently active
+    BrokerStrategy:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Strategy name
+        description:
+          type: string
+          description: Strategy description
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrategyParameter'
+          description: Configurable strategy parameters
     StrategyParameter:
       type: object
       properties:
@@ -127,20 +166,6 @@ components:
           type: array
           items: {}
           description: List of allowed values if restricted
-    BrokerStrategy:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Strategy name
-        description:
-          type: string
-          description: Strategy description
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/StrategyParameter'
-          description: Configurable strategy parameters
     Error:
       type: object
       properties:
@@ -162,31 +187,6 @@ components:
                 type: string
                 description: Detail about the field error
           description: Detailed error information
-    Broker:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Bloomberg broker code
-        name:
-          type: string
-          description: Full broker name
-        assetClasses:
-          type: array
-          items:
-            type: string
-          description: Supported asset classes
-        supportsAlgoTrading:
-          type: boolean
-          description: Whether the broker supports algorithmic trading
-        strategies:
-          type: array
-          items:
-            type: string
-          description: List of available strategy names
-        isActive:
-          type: boolean
-          description: Whether the broker is currently active
   responses:
     Unauthorized:
       description: Authentication required or invalid credentials

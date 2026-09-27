@@ -185,18 +185,26 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    RouteResponse:
+    ModifyRouteRequest:
       type: object
       properties:
-        routeId:
-          type: integer
-          description: Route identifier
-        status:
+        amount:
+          type: number
+          minimum: 1
+          description: Updated route quantity
+        limitPrice:
+          type: number
+          description: Updated limit price
+        orderType:
           type: string
-          description: Route status
-        message:
+          description: Updated order type
+        timeInForce:
           type: string
-          description: Status message
+          description: Updated time in force
+        strategyParameters:
+          type: object
+          additionalProperties: true
+          description: Updated strategy parameters
     Route:
       type: object
       properties:
@@ -289,59 +297,6 @@ components:
           type: object
           additionalProperties: true
           description: Custom user-defined fields
-    FillResponse:
-      type: object
-      properties:
-        fillId:
-          type: integer
-          description: Created fill identifier
-        status:
-          type: string
-          description: Fill status
-        message:
-          type: string
-          description: Status message
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error
-              message:
-                type: string
-                description: Detail about the field error
-          description: Detailed error information
-    ModifyRouteRequest:
-      type: object
-      properties:
-        amount:
-          type: number
-          minimum: 1
-          description: Updated route quantity
-        limitPrice:
-          type: number
-          description: Updated limit price
-        orderType:
-          type: string
-          description: Updated order type
-        timeInForce:
-          type: string
-          description: Updated time in force
-        strategyParameters:
-          type: object
-          additionalProperties: true
-          description: Updated strategy parameters
     ManualFillRequest:
       type: object
       required:
@@ -373,29 +328,54 @@ components:
         notes:
           type: string
           description: Notes for the manual fill
-  parameters:
-    routeId:
-      name: routeId
-      in: path
-      required: true
-      description: EMSX route identifier
-      schema:
-        type: integer
-    teamName:
-      name: teamName
-      in: query
-      description: EMSX team name for shared blotter access
-      schema:
-        type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information
+    RouteResponse:
+      type: object
+      properties:
+        routeId:
+          type: integer
+          description: Route identifier
+        status:
+          type: string
+          description: Route status
+        message:
+          type: string
+          description: Status message
+    FillResponse:
+      type: object
+      properties:
+        fillId:
+          type: integer
+          description: Created fill identifier
+        status:
+          type: string
+          description: Fill status
+        message:
+          type: string
+          description: Status message
   responses:
     Unauthorized:
       description: Authentication required or invalid credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Forbidden:
-      description: Insufficient permissions for this operation
       content:
         application/json:
           schema:
@@ -412,6 +392,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
+    routeId:
+      name: routeId
+      in: path
+      required: true
+      description: EMSX route identifier
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http
