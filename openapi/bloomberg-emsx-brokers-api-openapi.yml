@@ -100,46 +100,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Broker:
+    Error:
       type: object
       properties:
         code:
           type: string
-          description: Bloomberg broker code
-        name:
+          description: Error code
+        message:
           type: string
-          description: Full broker name
-        assetClasses:
+          description: Human-readable error message
+        details:
           type: array
           items:
-            type: string
-          description: Supported asset classes
-        supportsAlgoTrading:
-          type: boolean
-          description: Whether the broker supports algorithmic trading
-        strategies:
-          type: array
-          items:
-            type: string
-          description: List of available strategy names
-        isActive:
-          type: boolean
-          description: Whether the broker is currently active
-    BrokerStrategy:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Strategy name
-        description:
-          type: string
-          description: Strategy description
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/StrategyParameter'
-          description: Configurable strategy parameters
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information
     StrategyParameter:
       type: object
       properties:
@@ -166,34 +155,45 @@ components:
           type: array
           items: {}
           description: List of allowed values if restricted
-    Error:
+    BrokerStrategy:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Strategy name
+        description:
+          type: string
+          description: Strategy description
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/StrategyParameter'
+          description: Configurable strategy parameters
+    Broker:
       type: object
       properties:
         code:
           type: string
-          description: Error code
-        message:
+          description: Bloomberg broker code
+        name:
           type: string
-          description: Human-readable error message
-        details:
+          description: Full broker name
+        assetClasses:
           type: array
           items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error
-              message:
-                type: string
-                description: Detail about the field error
-          description: Detailed error information
-  responses:
-    Unauthorized:
-      description: Authentication required or invalid credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+            type: string
+          description: Supported asset classes
+        supportsAlgoTrading:
+          type: boolean
+          description: Whether the broker supports algorithmic trading
+        strategies:
+          type: array
+          items:
+            type: string
+          description: List of available strategy names
+        isActive:
+          type: boolean
+          description: Whether the broker is currently active
   securitySchemes:
     bearerAuth:
       type: http
