@@ -136,6 +136,12 @@ apis:
   - type: OpenAPI
     url: openapi/bloomberg-emsx-teams-api-openapi.yml
 common:
+- type: Plans
+  url: plans/bloomberg-emsx-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/bloomberg-emsx-rate-limits.yml
+- type: FinOps
+  url: finops/bloomberg-emsx-finops.yml
 - type: Website
   url: https://bloomberg.com
 - type: CapabilityMap
