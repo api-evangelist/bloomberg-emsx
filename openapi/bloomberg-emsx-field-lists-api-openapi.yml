@@ -67,6 +67,24 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    FieldDefinition:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Field name
+        description:
+          type: string
+          description: Field description
+        type:
+          type: string
+          description: Field data type
+        isReadOnly:
+          type: boolean
+          description: Whether the field is read-only
+        isRequired:
+          type: boolean
+          description: Whether the field is required for creation
     Error:
       type: object
       properties:
@@ -88,24 +106,6 @@ components:
                 type: string
                 description: Detail about the field error
           description: Detailed error information
-    FieldDefinition:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Field name
-        description:
-          type: string
-          description: Field description
-        type:
-          type: string
-          description: Field data type
-        isReadOnly:
-          type: boolean
-          description: Whether the field is read-only
-        isRequired:
-          type: boolean
-          description: Whether the field is required for creation
   securitySchemes:
     bearerAuth:
       type: http

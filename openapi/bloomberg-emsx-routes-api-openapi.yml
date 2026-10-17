@@ -185,6 +185,18 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   responses:
+    Unauthorized:
+      description: Authentication required or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Forbidden:
       description: Insufficient permissions for this operation
       content:
@@ -197,19 +209,50 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    ManualFillRequest:
+      type: object
+      required:
+      - orderSequenceNumber
+      - routeId
+      - fillAmount
+      - fillPrice
+      properties:
+        orderSequenceNumber:
+          type: integer
+          description: Parent order sequence number
+        routeId:
+          type: integer
+          description: Route identifier to fill against
+        fillAmount:
+          type: number
+          minimum: 1
+          description: Fill quantity
+        fillPrice:
+          type: number
+          description: Fill price
+        broker:
+          type: string
+          description: Executing broker code
+        settlementDate:
+          type: string
+          format: date
+          description: Settlement date
+        notes:
+          type: string
+          description: Notes for the manual fill
+    FillResponse:
+      type: object
+      properties:
+        fillId:
+          type: integer
+          description: Created fill identifier
+        status:
+          type: string
+          description: Fill status
+        message:
+          type: string
+          description: Status message
     ModifyRouteRequest:
       type: object
       properties:
@@ -230,39 +273,6 @@ components:
           type: object
           additionalProperties: true
           description: Updated strategy parameters
-    FillResponse:
-      type: object
-      properties:
-        fillId:
-          type: integer
-          description: Created fill identifier
-        status:
-          type: string
-          description: Fill status
-        message:
-          type: string
-          description: Status message
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                description: Field that caused the error
-              message:
-                type: string
-                description: Detail about the field error
-          description: Detailed error information
     Route:
       type: object
       properties:
@@ -355,37 +365,6 @@ components:
           type: object
           additionalProperties: true
           description: Custom user-defined fields
-    ManualFillRequest:
-      type: object
-      required:
-      - orderSequenceNumber
-      - routeId
-      - fillAmount
-      - fillPrice
-      properties:
-        orderSequenceNumber:
-          type: integer
-          description: Parent order sequence number
-        routeId:
-          type: integer
-          description: Route identifier to fill against
-        fillAmount:
-          type: number
-          minimum: 1
-          description: Fill quantity
-        fillPrice:
-          type: number
-          description: Fill price
-        broker:
-          type: string
-          description: Executing broker code
-        settlementDate:
-          type: string
-          format: date
-          description: Settlement date
-        notes:
-          type: string
-          description: Notes for the manual fill
     RouteResponse:
       type: object
       properties:
@@ -398,6 +377,27 @@ components:
         message:
           type: string
           description: Status message
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: Field that caused the error
+              message:
+                type: string
+                description: Detail about the field error
+          description: Detailed error information
   parameters:
     teamName:
       name: teamName

@@ -46,6 +46,20 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Team:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Team name
+        description:
+          type: string
+          description: Team description
+        members:
+          type: array
+          items:
+            type: string
+          description: List of team member identifiers
     Error:
       type: object
       properties:
@@ -67,20 +81,6 @@ components:
                 type: string
                 description: Detail about the field error
           description: Detailed error information
-    Team:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Team name
-        description:
-          type: string
-          description: Team description
-        members:
-          type: array
-          items:
-            type: string
-          description: List of team member identifiers
   securitySchemes:
     bearerAuth:
       type: http

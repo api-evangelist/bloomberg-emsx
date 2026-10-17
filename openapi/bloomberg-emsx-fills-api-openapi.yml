@@ -116,8 +116,8 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    Forbidden:
-      description: Insufficient permissions for this operation
+    Unauthorized:
+      description: Authentication required or invalid credentials
       content:
         application/json:
           schema:
@@ -128,12 +128,19 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required or invalid credentials
+    Forbidden:
+      description: Insufficient permissions for this operation
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    teamName:
+      name: teamName
+      in: query
+      description: EMSX team name for shared blotter access
+      schema:
+        type: string
   schemas:
     Fill:
       type: object
@@ -218,13 +225,6 @@ components:
                 type: string
                 description: Detail about the field error
           description: Detailed error information
-  parameters:
-    teamName:
-      name: teamName
-      in: query
-      description: EMSX team name for shared blotter access
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
