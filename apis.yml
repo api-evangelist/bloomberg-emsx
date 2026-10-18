@@ -55,7 +55,7 @@ apis:
     and real-time execution notifications for equity, fixed income, futures, and options trading.
   humanURL: https://emsx-api-doc.readthedocs.io/
   tags:
-  - Brokers
+  - Brokerage
   - Equity
   - Execution
   - Fills
@@ -82,6 +82,8 @@ apis:
   description: Query available brokers and broker strategies
   humanURL: https://emsx-api-doc.readthedocs.io/
   tags:
+  - Brokerage
+  tags_raw:
   - Brokers
   properties:
   - type: OpenAPI
