@@ -138,6 +138,8 @@ apis:
   - type: OpenAPI
     url: openapi/bloomberg-emsx-teams-api-openapi.yml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/bloomberg-emsx/overview
 - type: Plans
   url: plans/bloomberg-emsx-plans-pricing.yml
 - type: RateLimits
