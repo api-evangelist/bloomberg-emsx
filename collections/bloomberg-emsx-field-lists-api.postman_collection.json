@@ -1,271 +1,277 @@
 {
+  "info": {
+    "_postman_id": "bef44def-be3d-465f-a99e-d7dd0826c8b2",
+    "name": "Bloomberg EMSX Trading Field Lists API",
+    "description": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T03:09:29.000Z",
+    "updatedAt": "2026-10-22T03:09:29.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-bef44def-be3d-465f-a99e-d7dd0826c8b2"
+  },
   "item": [
     {
-      "id": "f9498b3c-dcdd-4421-844a-da4e83367a11",
-      "name": "Field Lists",
-      "description": {
-        "content": "Retrieve available order and route fields",
-        "type": "text/plain"
-      },
+      "name": "fields",
       "item": [
         {
-          "id": "7ff068f6-a09a-487b-af07-2f24e1d17d52",
-          "name": "Bloomberg EMSX List available order fields",
-          "request": {
-            "name": "Bloomberg EMSX List available order fields",
-            "description": {
-              "content": "Retrieve the list of available fields for orders, including field names, types, and descriptions.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "fields",
-                "order"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "order",
+          "item": [
             {
-              "id": "4574da10-09ca-46f4-be72-8e83b0c3a0fd",
-              "name": "List of order fields",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "fields",
-                    "order"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+              "name": "Bloomberg EMSX List available order fields",
+              "id": "d06d930c-bd0d-4fc2-81d4-602f60747767",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"fields\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": true,\n      \"isRequired\": false\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": true,\n      \"isRequired\": true\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2ec5c4ee-f9b2-4637-bf57-744edce1313f",
-              "name": "Authentication required or invalid credentials",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "fields",
-                    "order"
-                  ],
+                  "raw": "{{baseUrl}}/fields/order",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
+                  "path": [
+                    "fields",
+                    "order"
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Retrieve the list of available fields for orders, including field names, types, and descriptions."
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "fb1d5d18-c592-404d-850d-3ef46618b0ad",
+                  "name": "List of order fields",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/fields/order",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "fields",
+                        "order"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"fields\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isReadOnly\": \"<boolean>\",\n      \"isRequired\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isReadOnly\": \"<boolean>\",\n      \"isRequired\": \"<boolean>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T03:09:30.000Z",
+                  "updatedAt": "2026-10-22T03:09:30.000Z",
+                  "uid": "35240-fb1d5d18-c592-404d-850d-3ef46618b0ad"
+                },
+                {
+                  "id": "8dc9dd2e-ff1d-4718-915b-85724ca9cb6c",
+                  "name": "Authentication required or invalid credentials",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/fields/order",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "fields",
+                        "order"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T03:09:30.000Z",
+                  "updatedAt": "2026-10-22T03:09:30.000Z",
+                  "uid": "35240-8dc9dd2e-ff1d-4718-915b-85724ca9cb6c"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T03:09:30.000Z",
+              "updatedAt": "2026-10-22T03:09:30.000Z",
+              "uid": "35240-d06d930c-bd0d-4fc2-81d4-602f60747767"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "5c962ee9-7649-436d-a9f9-df3af66b02a0",
+          "createdAt": "2026-10-22T03:09:29.000Z",
+          "updatedAt": "2026-10-22T03:09:29.000Z",
+          "uid": "35240-5c962ee9-7649-436d-a9f9-df3af66b02a0"
         },
         {
-          "id": "f1796cb1-7591-4479-a11c-ac8740b671f6",
-          "name": "Bloomberg EMSX List available route fields",
-          "request": {
-            "name": "Bloomberg EMSX List available route fields",
-            "description": {
-              "content": "Retrieve the list of available fields for routes, including field names, types, and descriptions.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "fields",
-                "route"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "route",
+          "item": [
             {
-              "id": "d3a75ee0-90de-494c-8eed-0af8d93cdb48",
-              "name": "List of route fields",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "fields",
-                    "route"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+              "name": "Bloomberg EMSX List available route fields",
+              "id": "b236c98d-dd6d-4e8c-b77f-02416f35971d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"fields\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": true,\n      \"isRequired\": false\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"string\",\n      \"isReadOnly\": true,\n      \"isRequired\": true\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "2def9136-c0d7-431e-9747-6c09d41e82ae",
-              "name": "Authentication required or invalid credentials",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "fields",
-                    "route"
-                  ],
+                  "raw": "{{baseUrl}}/fields/route",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
+                  "path": [
+                    "fields",
+                    "route"
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Retrieve the list of available fields for routes, including field names, types, and descriptions."
               },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "829784aa-25e6-426c-a3a6-8d4956f489a8",
+                  "name": "List of route fields",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/fields/route",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "fields",
+                        "route"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"fields\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isReadOnly\": \"<boolean>\",\n      \"isRequired\": \"<boolean>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"type\": \"<string>\",\n      \"isReadOnly\": \"<boolean>\",\n      \"isRequired\": \"<boolean>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T03:09:30.000Z",
+                  "updatedAt": "2026-10-22T03:09:30.000Z",
+                  "uid": "35240-829784aa-25e6-426c-a3a6-8d4956f489a8"
+                },
+                {
+                  "id": "73e821e1-64b4-4641-8055-83d0dffa4a0a",
+                  "name": "Authentication required or invalid credentials",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/fields/route",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "fields",
+                        "route"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T03:09:30.000Z",
+                  "updatedAt": "2026-10-22T03:09:30.000Z",
+                  "uid": "35240-73e821e1-64b4-4641-8055-83d0dffa4a0a"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T03:09:30.000Z",
+              "updatedAt": "2026-10-22T03:09:30.000Z",
+              "uid": "35240-b236c98d-dd6d-4e8c-b77f-02416f35971d"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "22f56463-2b54-402a-a4b3-02cf09d58587",
+          "createdAt": "2026-10-22T03:09:29.000Z",
+          "updatedAt": "2026-10-22T03:09:29.000Z",
+          "uid": "35240-22f56463-2b54-402a-a4b3-02cf09d58587"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.bloomberg.com/emsxapi/v1",
-      "key": "baseUrl"
+      "id": "4cb59ba5-c3ff-4ec1-8ad5-aa14710cdc82",
+      "createdAt": "2026-10-22T03:09:29.000Z",
+      "updatedAt": "2026-10-22T03:09:29.000Z",
+      "uid": "35240-4cb59ba5-c3ff-4ec1-8ad5-aa14710cdc82"
     }
   ],
   "auth": {
@@ -273,17 +279,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "4f05d0c1-d2dc-46f2-80e2-72fef2cd5303",
-    "name": "Bloomberg EMSX Trading Brokers Field Lists API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bloomberg.com/emsxapi/v1"
     }
-  }
+  ]
 }

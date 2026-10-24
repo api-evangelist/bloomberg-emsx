@@ -1,144 +1,138 @@
 {
+  "info": {
+    "_postman_id": "eb80fa0f-ca3c-49d0-b7e8-bede3b443609",
+    "name": "Bloomberg EMSX Trading Teams API",
+    "description": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T03:09:59.000Z",
+    "updatedAt": "2026-10-22T03:10:00.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-eb80fa0f-ca3c-49d0-b7e8-bede3b443609"
+  },
   "item": [
     {
-      "id": "81bafc1c-8189-4bdf-acbe-e4fe56a5a429",
-      "name": "Teams",
-      "description": {
-        "content": "Manage EMSX trading teams",
-        "type": "text/plain"
-      },
+      "name": "teams",
       "item": [
         {
-          "id": "b5430fcf-c9d8-425f-9456-5975d0375969",
           "name": "Bloomberg EMSX List EMSX teams",
+          "id": "b6cf1773-fd77-4a8b-a552-df365aa10bc1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Bloomberg EMSX List EMSX teams",
-            "description": {
-              "content": "Retrieve a list of EMSX trading teams that the authenticated user has access to.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "teams"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "GET",
             "header": [
               {
                 "key": "Accept",
                 "value": "application/json"
               }
             ],
-            "method": "GET",
-            "auth": null
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "teams"
+              ]
+            },
+            "description": "Retrieve a list of EMSX trading teams that the authenticated user has access to."
           },
           "response": [
             {
-              "id": "a7cedc2d-3fae-4cd3-a70f-f9ef084cf56b",
+              "id": "51785b91-c1f8-40cf-9543-da8329d74b3a",
               "name": "List of teams",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "teams"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/teams",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "teams"
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"teams\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"members\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"members\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"teams\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"members\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"members\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T03:10:00.000Z",
+              "updatedAt": "2026-10-22T03:10:00.000Z",
+              "uid": "35240-51785b91-c1f8-40cf-9543-da8329d74b3a"
             },
             {
-              "id": "0fc8343a-b8d2-47f8-9000-1bd171198d02",
+              "id": "fc58e9f5-bea9-405e-bc36-cacf1db6d47c",
               "name": "Authentication required or invalid credentials",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "teams"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/teams",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "teams"
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T03:10:00.000Z",
+              "updatedAt": "2026-10-22T03:10:00.000Z",
+              "uid": "35240-fc58e9f5-bea9-405e-bc36-cacf1db6d47c"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T03:10:00.000Z",
+          "updatedAt": "2026-10-22T03:10:00.000Z",
+          "uid": "35240-b6cf1773-fd77-4a8b-a552-df365aa10bc1"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.bloomberg.com/emsxapi/v1",
-      "key": "baseUrl"
+      "id": "531a899f-de95-436c-868c-00b337a3cdfd",
+      "createdAt": "2026-10-22T03:10:00.000Z",
+      "updatedAt": "2026-10-22T03:10:00.000Z",
+      "uid": "35240-531a899f-de95-436c-868c-00b337a3cdfd"
     }
   ],
   "auth": {
@@ -146,17 +140,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "7259557c-a9e4-43cc-a281-e38490f533bd",
-    "name": "Bloomberg EMSX Trading Brokers Teams API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bloomberg.com/emsxapi/v1"
     }
-  }
+  ]
 }

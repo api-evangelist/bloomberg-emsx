@@ -1,553 +1,561 @@
 {
+  "info": {
+    "_postman_id": "66711a15-5b6f-4d78-bc9a-a41f3a0efb3a",
+    "name": "Bloomberg EMSX Trading Fills API",
+    "description": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T03:09:42.000Z",
+    "updatedAt": "2026-10-22T03:09:43.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-66711a15-5b6f-4d78-bc9a-a41f3a0efb3a"
+  },
   "item": [
     {
-      "id": "dd7fdfe8-9d40-4bc4-a318-7e2095b36dc8",
-      "name": "Fills",
-      "description": {
-        "content": "Query and monitor trade executions and fills",
-        "type": "text/plain"
-      },
+      "name": "fills",
       "item": [
         {
-          "id": "239213e0-5279-41c4-826a-e2ed8782da5b",
+          "name": "{fillId}",
+          "item": [
+            {
+              "name": "Bloomberg EMSX Get fill details",
+              "id": "c737d151-2a10-49f8-b9cb-33246f165bbc",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fills/:fillId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fills",
+                    ":fillId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "6d29ffa4-ce5b-4b35-9997-f853fefc2fe9",
+                      "key": "fillId",
+                      "value": "<integer>",
+                      "description": "(Required) Unique identifier of the fill"
+                    }
+                  ]
+                },
+                "description": "Retrieve detailed information about a specific fill or execution, including price, quantity, broker, timestamp, and settlement details."
+              },
+              "response": [
+                {
+                  "id": "a001568d-9151-4158-a740-059140bb4a4c",
+                  "name": "Fill details retrieved successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/fills/:fillId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "fills",
+                        ":fillId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "fillId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"fillId\": \"<integer>\",\n  \"orderSequenceNumber\": \"<integer>\",\n  \"routeId\": \"<integer>\",\n  \"ticker\": \"<string>\",\n  \"side\": \"BUY\",\n  \"fillAmount\": \"<number>\",\n  \"fillPrice\": \"<number>\",\n  \"broker\": \"<string>\",\n  \"brokerName\": \"<string>\",\n  \"exchange\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"settlementDate\": \"<date>\",\n  \"tradeDate\": \"<date>\",\n  \"fillTime\": \"<dateTime>\",\n  \"account\": \"<string>\",\n  \"isManual\": \"<boolean>\",\n  \"contraParty\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T03:09:43.000Z",
+                  "updatedAt": "2026-10-22T03:09:43.000Z",
+                  "uid": "35240-a001568d-9151-4158-a740-059140bb4a4c"
+                },
+                {
+                  "id": "bfae2ccc-6e5e-484c-9cd9-1caec6e29dfb",
+                  "name": "Authentication required or invalid credentials",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/fills/:fillId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "fills",
+                        ":fillId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "fillId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T03:09:43.000Z",
+                  "updatedAt": "2026-10-22T03:09:43.000Z",
+                  "uid": "35240-bfae2ccc-6e5e-484c-9cd9-1caec6e29dfb"
+                },
+                {
+                  "id": "f860b5f4-d8f0-4d23-9cf9-8aafdc1e0d68",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/fills/:fillId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "fills",
+                        ":fillId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "fillId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-10-22T03:09:43.000Z",
+                  "updatedAt": "2026-10-22T03:09:43.000Z",
+                  "uid": "35240-f860b5f4-d8f0-4d23-9cf9-8aafdc1e0d68"
+                }
+              ],
+              "createdAt": "2026-10-22T03:09:43.000Z",
+              "updatedAt": "2026-10-22T03:09:43.000Z",
+              "uid": "35240-c737d151-2a10-49f8-b9cb-33246f165bbc"
+            }
+          ],
+          "id": "ef957d4e-0fe6-421d-8f22-8af33a3351f9",
+          "createdAt": "2026-10-22T03:09:43.000Z",
+          "updatedAt": "2026-10-22T03:09:43.000Z",
+          "uid": "35240-ef957d4e-0fe6-421d-8f22-8af33a3351f9"
+        },
+        {
           "name": "Bloomberg EMSX List fills",
+          "id": "2a2fbb3c-1b29-4ccb-b93d-f7f5a4e384a7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
-            "name": "Bloomberg EMSX List fills",
-            "description": {
-              "content": "Retrieve a list of trade executions and fills. Supports filtering by ticker, broker, date range, and associated order or route.",
-              "type": "text/plain"
-            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
             "url": {
+              "raw": "{{baseUrl}}/fills?teamName=<string>&ticker=<string>&broker=<string>&orderSequenceNumber=<integer>&routeId=<integer>&fromDate=<date>&toDate=<date>&limit=100&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
               "path": [
                 "fills"
               ],
-              "host": [
-                "{{baseUrl}}"
-              ],
               "query": [
                 {
-                  "disabled": false,
+                  "description": "EMSX team name for shared blotter access",
                   "key": "teamName",
-                  "value": "<string>",
-                  "description": "EMSX team name for shared blotter access"
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter fills by Bloomberg security ticker",
                   "key": "ticker",
-                  "value": "<string>",
-                  "description": "Filter fills by Bloomberg security ticker"
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter fills by broker code",
                   "key": "broker",
-                  "value": "<string>",
-                  "description": "Filter fills by broker code"
+                  "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter fills by parent order sequence number",
                   "key": "orderSequenceNumber",
-                  "value": "<integer>",
-                  "description": "Filter fills by parent order sequence number"
+                  "value": "<integer>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter fills by route identifier",
                   "key": "routeId",
-                  "value": "<integer>",
-                  "description": "Filter fills by route identifier"
+                  "value": "<integer>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter fills on or after this date",
                   "key": "fromDate",
-                  "value": "<date>",
-                  "description": "Filter fills on or after this date"
+                  "value": "<date>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter fills on or before this date",
                   "key": "toDate",
-                  "value": "<date>",
-                  "description": "Filter fills on or before this date"
+                  "value": "<date>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Maximum number of fills to return",
                   "key": "limit",
-                  "value": "100",
-                  "description": "Maximum number of fills to return"
+                  "value": "100"
                 },
                 {
-                  "disabled": false,
+                  "description": "Number of fills to skip for pagination",
                   "key": "offset",
-                  "value": "0",
-                  "description": "Number of fills to skip for pagination"
-                }
-              ],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "6e603c7f-9760-4714-a706-bd9375096bc7",
-              "name": "List of fills retrieved successfully",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "fills"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "teamName",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ticker",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "broker",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "orderSequenceNumber",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "routeId",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "100"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"fills\": [\n    {\n      \"fillId\": 7962,\n      \"orderSequenceNumber\": 8849,\n      \"routeId\": 773,\n      \"ticker\": \"string\",\n      \"side\": \"SELL\",\n      \"fillAmount\": 982.7647074759637,\n      \"fillPrice\": 8935.673341760144,\n      \"broker\": \"string\",\n      \"brokerName\": \"string\",\n      \"exchange\": \"string\",\n      \"currency\": \"string\",\n      \"settlementDate\": \"2019-07-17\",\n      \"tradeDate\": \"1995-08-10\",\n      \"fillTime\": \"1982-02-21T05:47:15.797Z\",\n      \"account\": \"string\",\n      \"isManual\": true,\n      \"contraParty\": \"string\"\n    },\n    {\n      \"fillId\": 8822,\n      \"orderSequenceNumber\": 7109,\n      \"routeId\": 5248,\n      \"ticker\": \"string\",\n      \"side\": \"BUY\",\n      \"fillAmount\": 1459.5661045728348,\n      \"fillPrice\": 6679.607428639264,\n      \"broker\": \"string\",\n      \"brokerName\": \"string\",\n      \"exchange\": \"string\",\n      \"currency\": \"string\",\n      \"settlementDate\": \"2020-10-07\",\n      \"tradeDate\": \"1983-10-03\",\n      \"fillTime\": \"1977-10-18T10:19:43.737Z\",\n      \"account\": \"string\",\n      \"isManual\": true,\n      \"contraParty\": \"string\"\n    }\n  ],\n  \"totalCount\": 9588\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "dc286f1e-7638-45e9-aa6f-6513ec8b5a20",
-              "name": "Authentication required or invalid credentials",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "fills"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "teamName",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ticker",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "broker",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "orderSequenceNumber",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "routeId",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "100"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b221c4f7-7758-44b0-b561-68c26b414339",
-              "name": "Insufficient permissions for this operation",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "fills"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "teamName",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "ticker",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "broker",
-                      "value": "<string>"
-                    },
-                    {
-                      "key": "orderSequenceNumber",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "routeId",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "fromDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "toDate",
-                      "value": "<date>"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "100"
-                    },
-                    {
-                      "key": "offset",
-                      "value": "0"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Forbidden",
-              "code": 403,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "547103b4-3e46-41da-8727-430edc21ff77",
-          "name": "Bloomberg EMSX Get fill details",
-          "request": {
-            "name": "Bloomberg EMSX Get fill details",
-            "description": {
-              "content": "Retrieve detailed information about a specific fill or execution, including price, quantity, broker, timestamp, and settlement details.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "fills",
-                ":fillId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<integer>",
-                  "key": "fillId",
-                  "description": "(Required) Unique identifier of the fill"
+                  "value": "0"
                 }
               ]
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
+            "description": "Retrieve a list of trade executions and fills. Supports filtering by ticker, broker, date range, and associated order or route."
           },
           "response": [
             {
-              "id": "4f212124-8592-45b6-8d24-a4fa90ad0d5f",
-              "name": "Fill details retrieved successfully",
+              "id": "1e95347b-1ae5-44d7-b29c-ffa2b9595328",
+              "name": "List of fills retrieved successfully",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "fills",
-                    ":fillId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "fillId",
-                      "description": "(Required) Unique identifier of the fill"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/fills?teamName=<string>&ticker=<string>&broker=<string>&orderSequenceNumber=<integer>&routeId=<integer>&fromDate=<date>&toDate=<date>&limit=100&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fills"
+                  ],
+                  "query": [
+                    {
+                      "description": "EMSX team name for shared blotter access",
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by Bloomberg security ticker",
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by broker code",
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by parent order sequence number",
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter fills by route identifier",
+                      "key": "routeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter fills on or after this date",
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter fills on or before this date",
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Maximum number of fills to return",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Number of fills to skip for pagination",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"fillId\": 9592,\n  \"orderSequenceNumber\": 920,\n  \"routeId\": 4072,\n  \"ticker\": \"string\",\n  \"side\": \"SELL\",\n  \"fillAmount\": 1350.289340881833,\n  \"fillPrice\": 781.6154531053976,\n  \"broker\": \"string\",\n  \"brokerName\": \"string\",\n  \"exchange\": \"string\",\n  \"currency\": \"string\",\n  \"settlementDate\": \"1977-12-10\",\n  \"tradeDate\": \"1993-01-25\",\n  \"fillTime\": \"1958-03-09T08:57:58.552Z\",\n  \"account\": \"string\",\n  \"isManual\": false,\n  \"contraParty\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"fills\": [\n    {\n      \"fillId\": \"<integer>\",\n      \"orderSequenceNumber\": \"<integer>\",\n      \"routeId\": \"<integer>\",\n      \"ticker\": \"<string>\",\n      \"side\": \"SHORT\",\n      \"fillAmount\": \"<number>\",\n      \"fillPrice\": \"<number>\",\n      \"broker\": \"<string>\",\n      \"brokerName\": \"<string>\",\n      \"exchange\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"settlementDate\": \"<date>\",\n      \"tradeDate\": \"<date>\",\n      \"fillTime\": \"<dateTime>\",\n      \"account\": \"<string>\",\n      \"isManual\": \"<boolean>\",\n      \"contraParty\": \"<string>\"\n    },\n    {\n      \"fillId\": \"<integer>\",\n      \"orderSequenceNumber\": \"<integer>\",\n      \"routeId\": \"<integer>\",\n      \"ticker\": \"<string>\",\n      \"side\": \"SELL\",\n      \"fillAmount\": \"<number>\",\n      \"fillPrice\": \"<number>\",\n      \"broker\": \"<string>\",\n      \"brokerName\": \"<string>\",\n      \"exchange\": \"<string>\",\n      \"currency\": \"<string>\",\n      \"settlementDate\": \"<date>\",\n      \"tradeDate\": \"<date>\",\n      \"fillTime\": \"<dateTime>\",\n      \"account\": \"<string>\",\n      \"isManual\": \"<boolean>\",\n      \"contraParty\": \"<string>\"\n    }\n  ],\n  \"totalCount\": \"<integer>\"\n}",
+              "createdAt": "2026-10-22T03:09:43.000Z",
+              "updatedAt": "2026-10-22T03:09:43.000Z",
+              "uid": "35240-1e95347b-1ae5-44d7-b29c-ffa2b9595328"
             },
             {
-              "id": "31714002-192d-46c8-9219-0b513a41e817",
+              "id": "fbacc1a1-0c98-4158-92fa-427fe89fa6b1",
               "name": "Authentication required or invalid credentials",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "fills",
-                    ":fillId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "fillId",
-                      "description": "(Required) Unique identifier of the fill"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/fills?teamName=<string>&ticker=<string>&broker=<string>&orderSequenceNumber=<integer>&routeId=<integer>&fromDate=<date>&toDate=<date>&limit=100&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fills"
+                  ],
+                  "query": [
+                    {
+                      "description": "EMSX team name for shared blotter access",
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by Bloomberg security ticker",
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by broker code",
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by parent order sequence number",
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter fills by route identifier",
+                      "key": "routeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter fills on or after this date",
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter fills on or before this date",
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Maximum number of fills to return",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Number of fills to skip for pagination",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T03:09:43.000Z",
+              "updatedAt": "2026-10-22T03:09:43.000Z",
+              "uid": "35240-fbacc1a1-0c98-4158-92fa-427fe89fa6b1"
             },
             {
-              "id": "615672e5-1cfd-4485-9b34-1740ebdc11d1",
-              "name": "Resource not found",
+              "id": "14da807a-9932-44e6-bf1e-5cea84dd947e",
+              "name": "Insufficient permissions for this operation",
               "originalRequest": {
-                "url": {
-                  "path": [
-                    "fills",
-                    ":fillId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<integer>",
-                      "key": "fillId",
-                      "description": "(Required) Unique identifier of the fill"
-                    }
-                  ]
-                },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
                   }
                 ],
-                "method": "GET",
-                "body": {}
+                "url": {
+                  "raw": "{{baseUrl}}/fills?teamName=<string>&ticker=<string>&broker=<string>&orderSequenceNumber=<integer>&routeId=<integer>&fromDate=<date>&toDate=<date>&limit=100&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fills"
+                  ],
+                  "query": [
+                    {
+                      "description": "EMSX team name for shared blotter access",
+                      "key": "teamName",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by Bloomberg security ticker",
+                      "key": "ticker",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by broker code",
+                      "key": "broker",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter fills by parent order sequence number",
+                      "key": "orderSequenceNumber",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter fills by route identifier",
+                      "key": "routeId",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter fills on or after this date",
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter fills on or before this date",
+                      "key": "toDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Maximum number of fills to return",
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "description": "Number of fills to skip for pagination",
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ]
+                }
               },
-              "status": "Not Found",
-              "code": 404,
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": [\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    },\n    {\n      \"field\": \"string\",\n      \"message\": \"string\"\n    }\n  ]\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"details\": [\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"message\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-10-22T03:09:43.000Z",
+              "updatedAt": "2026-10-22T03:09:43.000Z",
+              "uid": "35240-14da807a-9932-44e6-bf1e-5cea84dd947e"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-22T03:09:43.000Z",
+          "updatedAt": "2026-10-22T03:09:43.000Z",
+          "uid": "35240-2a2fbb3c-1b29-4ccb-b93d-f7f5a4e384a7"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://api.bloomberg.com/emsxapi/v1",
-      "key": "baseUrl"
+      "id": "e566ba9e-6e28-4344-b5d1-9cf7ae1ee056",
+      "createdAt": "2026-10-22T03:09:43.000Z",
+      "updatedAt": "2026-10-22T03:09:43.000Z",
+      "uid": "35240-e566ba9e-6e28-4344-b5d1-9cf7ae1ee056"
     }
   ],
   "auth": {
@@ -555,17 +563,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "66f20731-fd29-4ad4-bf8c-257927217b5a",
-    "name": "Bloomberg EMSX Trading Brokers Fills API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform. It enables automated order creation, routing, modification, and execution monitoring for equity, fixed income, futures, and options trading across global markets. The API supports order lifecycle management, broker selection, route management, and real-time fill notifications through the Bloomberg Terminal and B-PIPE infrastructure.\n\nContact Support:\n Name: Bloomberg Professional Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.bloomberg.com/emsxapi/v1"
     }
-  }
+  ]
 }
