@@ -1,4 +1,4 @@
-# Bloomberg EMSX (bloomberg-emsx)
+# Bloomberg EMSX
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,60 +66,149 @@
 
 Bloomberg Execution Management System (EMSX) API provides programmatic access to Bloomberg's order and execution management platform for trading operations.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/bloomberg-emsx/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/bloomberg-emsx/refs/heads/main/apis.yml)
+**Areas:** Bloomberg · Execution Management · Financial Services · Order Management · Trading
 
-## Scope
+## Bloomberg EMSX on APIs.io
 
-- **Type:** Index
+Everything profiled for Bloomberg EMSX is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/bloomberg-emsx/](https://apis.io/providers/bloomberg-emsx/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (7)
 
-- Bloomberg
-- Execution Management
-- Financial Services
-- Order Management
-- Trading
+- [Bloomberg EMSX Trading API](https://apis.io/apis/bloomberg-emsx/bloomberg-emsx-trading-api/) — API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform. Supports order lifecycle management, broker selection,…
+- [Bloomberg EMSX Brokers API](https://apis.io/apis/bloomberg-emsx/bloomberg-emsx-brokers-api/) — Query available brokers and broker strategies
+- [Bloomberg EMSX Field Lists API](https://apis.io/apis/bloomberg-emsx/bloomberg-emsx-field-lists-api/) — Retrieve available order and route fields
+- [Bloomberg EMSX Fills API](https://apis.io/apis/bloomberg-emsx/bloomberg-emsx-fills-api/) — Query and monitor trade executions and fills
+- [Bloomberg EMSX Orders API](https://apis.io/apis/bloomberg-emsx/bloomberg-emsx-orders-api/) — Create, modify, delete, and query trading orders
+- [Bloomberg EMSX Routes API](https://apis.io/apis/bloomberg-emsx/bloomberg-emsx-routes-api/) — Create, modify, delete, and manage order routes to brokers
+- [Bloomberg EMSX Teams API](https://apis.io/apis/bloomberg-emsx/bloomberg-emsx-teams-api/) — Manage EMSX trading teams
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Bloomberg EMSX Trading API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-API for order creation, routing, management and execution monitoring through Bloomberg EMSX platform. Supports order lifecycle management, broker selection, route management, fill tracking, and real-time execution notifications for equity, fixed income, futures, and options trading.
+- [Bloomberg Emsx Agentic Access](https://apis.io/agentic-access/bloomberg-emsx/bloomberg-emsx-agentic-access/)
 
-- **Human URL:** [https://emsx-api-doc.readthedocs.io/](https://emsx-api-doc.readthedocs.io/)
+#### JSON Schema (3)
 
-#### Tags
+The data models the API reads and writes.
 
-- Brokers
-- Equity
-- Execution
-- Fills
-- Fixed Income
-- Orders
-- Routes
-- Trading
+- [Bloomberg EMSX Fill](https://apis.io/schemas/bloomberg-emsx/bloomberg-emsx-fill/)
+- [Bloomberg EMSX Order](https://apis.io/schemas/bloomberg-emsx/bloomberg-emsx-order/)
+- [Bloomberg EMSX Route](https://apis.io/schemas/bloomberg-emsx/bloomberg-emsx-route/)
 
-#### Properties
+#### JSON-LD (1)
 
-- [Documentation](https://emsx-api-doc.readthedocs.io/)
-- [Reference](https://www.bloomberg.com/professional/support/api-library/)
-- [Postman Collection](collections/bloomberg-emsx-trading.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/bloomberg-emsx-trading.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Linked-data contexts for the provider's vocabulary.
 
-## Common Properties
+- [Bloomberg Emsx Context](https://apis.io/jsonld/bloomberg-emsx/bloomberg-emsx-context/)
 
-- [Portal](https://www.bloomberg.com/professional/)
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [Bloomberg EMSX Trading Brokers API](https://apis.io/collections/bloomberg-emsx/open-bloomberg-emsx-brokers-api/)
+- [Bloomberg EMSX Trading Brokers Field Lists API](https://apis.io/collections/bloomberg-emsx/open-bloomberg-emsx-field-lists-api/)
+- [Bloomberg EMSX Trading Brokers Fills API](https://apis.io/collections/bloomberg-emsx/open-bloomberg-emsx-fills-api/)
+- [Bloomberg EMSX Trading Brokers Orders API](https://apis.io/collections/bloomberg-emsx/open-bloomberg-emsx-orders-api/)
+- [Bloomberg EMSX Trading Brokers Routes API](https://apis.io/collections/bloomberg-emsx/open-bloomberg-emsx-routes-api/)
+- [Bloomberg EMSX Trading Brokers Teams API](https://apis.io/collections/bloomberg-emsx/open-bloomberg-emsx-teams-api/)
+- [Bloomberg EMSX Trading API](https://apis.io/collections/bloomberg-emsx/open-bloomberg-emsx-trading/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Bloomberg EMSX — jsonschema rules](https://apis.io/rules/bloomberg-emsx/bloomberg-emsx-jsonschema-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Bloomberg Emsx Authentication](https://apis.io/security/bloomberg-emsx/bloomberg-emsx-authentication/)
+- [Bloomberg Emsx Domain Security](https://apis.io/security/bloomberg-emsx/bloomberg-emsx-domain-security/)
+- [Bloomberg Emsx Vulnerability Disclosure](https://apis.io/security/bloomberg-emsx/bloomberg-emsx-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Bloomberg Emsx Plans Pricing](https://apis.io/plans/bloomberg-emsx/bloomberg-emsx-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Bloomberg Emsx Rate Limits](https://apis.io/rate-limits/bloomberg-emsx/bloomberg-emsx-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Bloomberg Emsx Finops](https://apis.io/finops/bloomberg-emsx/bloomberg-emsx-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://bloomberg.com)
 - [Documentation](https://www.bloomberg.com/professional/support/api-library/)
-- [Terms of Service](https://www.bloomberg.com/notices/tos/)
-- [Privacy Policy](https://www.bloomberg.com/privacy/)
 - [Support](https://www.bloomberg.com/professional/support/)
+- [Terms of service](https://www.bloomberg.com/notices/tos/)
+- [Privacy policy](https://www.bloomberg.com/privacy/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 37.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 48.2 |
+| Contract quality | 58.0 |
+| Contract governance | 9.8 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 42.9 |
+| Access clarity | 28.9 |
+
+**Agent readiness 25.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 34.3** — Securities & Market Data
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/bloomberg-emsx/](https://apis.io/providers/bloomberg-emsx/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Bloomberg EMSX: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/bloomberg-emsx/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
